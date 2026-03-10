@@ -1,0 +1,225 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap");
+:root {
+  --cream: #fffaf0;
+  --warm-dark: #2d1a0e;
+  --spice: #c8753a;
+  --gold: #e8a055;
+  --muted: #7a5c40;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: var(--cream);
+  font-family: "Lato", sans-serif;
+}
+
+.seller-orders-hero {
+  background: linear-gradient(160deg, #1e1008 0%, #2d1a0e 100%);
+  padding: 120px 80px 56px;
+}
+.seller-orders-hero-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.section-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.orders-title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  color: #fff8ef;
+}
+.orders-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.orders-body {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 40px 80px;
+}
+
+.order-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 28px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 16px rgba(45, 26, 14, 0.05);
+  border: 1px solid rgba(45, 26, 14, 0.06);
+}
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.order-id {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.order-date {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.status-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 50px;
+}
+
+.order-customer {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.order-customer strong {
+  color: var(--warm-dark);
+}
+.order-address {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.order-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.order-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.order-item-img {
+  width: 52px;
+  height: 52px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+.order-item-placeholder {
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(135deg, #fef3e0, #fde9c5);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+.order-item-name {
+  font-size: 0.92rem;
+  color: var(--warm-dark);
+  flex: 1;
+}
+.order-item-qty {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.order-item-price {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--spice);
+}
+
+.order-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid rgba(45, 26, 14, 0.08);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.order-total {
+  font-family: "Playfair Display", serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--warm-dark);
+}
+
+.action-btns {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.action-btn {
+  padding: 7px 18px;
+  border-radius: 50px;
+  border: none;
+  font-family: "Lato", sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.action-btn.accept {
+  background: #dbeafe;
+  color: #1e40af;
+}
+.action-btn.accept:hover {
+  background: #1e40af;
+  color: #fff;
+}
+.action-btn.prepare {
+  background: #ffedd5;
+  color: #9a3412;
+}
+.action-btn.prepare:hover {
+  background: #9a3412;
+  color: #fff;
+}
+.action-btn.complete {
+  background: #dcfce7;
+  color: #166534;
+}
+.action-btn.complete:hover {
+  background: #166534;
+  color: #fff;
+}
+.action-btn.decline {
+  background: #fee2e2;
+  color: #991b1b;
+}
+.action-btn.decline:hover {
+  background: #991b1b;
+  color: #fff;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+}
+.empty-state p {
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+  color: var(--muted);
+  margin-top: 16px;
+}
+
+@media (max-width: 768px) {
+  .seller-orders-hero {
+    padding: 100px 24px 40px;
+  }
+  .orders-body {
+    padding: 32px 20px 60px;
+  }
+}

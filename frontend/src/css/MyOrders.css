@@ -1,0 +1,191 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap");
+:root {
+  --cream: #fffaf0;
+  --warm-dark: #2d1a0e;
+  --spice: #c8753a;
+  --gold: #e8a055;
+  --muted: #7a5c40;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: var(--cream);
+  font-family: "Lato", sans-serif;
+}
+
+.orders-hero {
+  background: linear-gradient(160deg, #fef3e0 0%, #fde9c5 60%, #f5d9a8 100%);
+  padding: 120px 80px 56px;
+}
+.orders-hero-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.section-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--spice);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.orders-title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  color: var(--warm-dark);
+}
+.orders-title em {
+  font-style: italic;
+  color: var(--spice);
+}
+
+.orders-body {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 40px 80px;
+}
+
+.order-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 28px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 16px rgba(45, 26, 14, 0.05);
+  border: 1px solid rgba(45, 26, 14, 0.06);
+}
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.order-id {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-family: "Lato", monospace;
+}
+.order-date {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.status-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 50px;
+}
+
+.order-seller {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+.order-seller strong {
+  color: var(--warm-dark);
+}
+
+.order-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.order-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.order-item-img {
+  width: 52px;
+  height: 52px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+.order-item-placeholder {
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(135deg, #fef3e0, #fde9c5);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+.order-item-name {
+  font-size: 0.92rem;
+  color: var(--warm-dark);
+  flex: 1;
+}
+.order-item-qty {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.order-item-price {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--spice);
+}
+
+.order-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid rgba(45, 26, 14, 0.08);
+}
+.order-address {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.order-total {
+  font-family: "Playfair Display", serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--warm-dark);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+}
+.empty-state p {
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+  color: var(--muted);
+  margin-top: 16px;
+}
+.browse-btn {
+  margin-top: 24px;
+  padding: 13px 32px;
+  background: var(--warm-dark);
+  color: #fff8ef;
+  border: none;
+  border-radius: 50px;
+  font-family: "Lato", sans-serif;
+  font-size: 0.88rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.browse-btn:hover {
+  background: var(--spice);
+}
+
+@media (max-width: 768px) {
+  .orders-hero {
+    padding: 100px 24px 40px;
+  }
+  .orders-body {
+    padding: 32px 20px 60px;
+  }
+}
