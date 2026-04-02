@@ -7,7 +7,7 @@ const orderItemSchema = new mongoose.Schema({
     required: true,
   },
   quantity: { type: Number, required: true },
-  price: { type: Number, required: true }, // snapshot price at time of order
+  price: { type: Number, required: true },
 });
 
 const orderSchema = new mongoose.Schema(
@@ -26,7 +26,14 @@ const orderSchema = new mongoose.Schema(
     totalAmount: { type: Number, required: true },
     status: {
       type: String,
-      enum: ["pending", "accepted", "preparing", "completed", "declined"],
+      enum: [
+        "pending",
+        "accepted",
+        "preparing",
+        "completed",
+        "declined",
+        "delivered",
+      ],
       default: "pending",
     },
     specialRequest: { type: String, default: "" },

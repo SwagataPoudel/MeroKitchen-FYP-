@@ -9,6 +9,9 @@ var usersRouter = require("./routes/users");
 var productsRouter = require("./routes/products");
 var cartRouter = require("./routes/cart");
 var ordersRouter = require("./routes/orders");
+var reviewsRouter = require("./routes/reviews");
+var chatRouter = require("./routes/Chat");
+var adminRouter = require("./routes/admin"); // ← added
 require("dotenv").config();
 
 var app = express();
@@ -20,11 +23,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use("/chat", chatRouter);
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/products", productsRouter);
 app.use("/cart", cartRouter);
 app.use("/orders", ordersRouter);
+app.use("/reviews", reviewsRouter);
+app.use("/admin", adminRouter); // ← added
 
 const mongoose = require("mongoose");
 

@@ -1,13 +1,21 @@
 import { useEffect, useState } from "react";
 import { getSellerOrders, updateOrderStatus } from "../api/orderApi";
 import "../css/SellerOrders.css";
+import ChatBox from "../components/ChatBox";
+import SellerChatRequests from "../components/SellerChatRequests";
 
 const STATUS_COLORS = {
   pending: { bg: "#fef9c3", color: "#854d0e" },
   accepted: { bg: "#dbeafe", color: "#1e40af" },
   preparing: { bg: "#ffedd5", color: "#9a3412" },
-  completed: { bg: "#dcfce7", color: "#166534" },
+  completed: { bg: "#fef08a", color: "#713f12" }, // changed
+  delivered: { bg: "#dcfce7", color: "#166534" }, // new
   declined: { bg: "#fee2e2", color: "#991b1b" },
+};
+
+const STATUS_LABELS = {
+  completed: "Ready for Delivery 🛵",
+  delivered: "Delivered ✓",
 };
 
 const NEXT_ACTIONS = {
@@ -21,6 +29,7 @@ const NEXT_ACTIONS = {
 export default function SellerOrders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [openOrderChat, setOpenOrderChat] = useState(null);
 
   const fetchOrders = () => {
     getSellerOrders()
@@ -55,6 +64,7 @@ export default function SellerOrders() {
         </div>
 
         <div className="orders-body">
+          <SellerChatRequests />
           {loading ? (
             <p
               style={{
@@ -92,7 +102,7 @@ export default function SellerOrders() {
                       className="status-badge"
                       style={{ background: s.bg, color: s.color }}
                     >
-                      {order.status}
+                      {STATUS_LABELS[order.status] || order.status}
                     </span>
                   </div>
 
@@ -168,6 +178,38 @@ export default function SellerOrders() {
                         >
                           Decline
                         </button>
+                      )}
+                    </div>
+                    <div style={{ marginTop: "0.75rem" }}>
+                      <button
+                        onClick={() =>
+                          setOpenOrderChat(
+                            openOrderChat === order._id ? null : order._id,
+                          )
+                        }
+                        style={{
+                          backgroundColor: "#4F46E5",
+                          color: "#fff",
+                          border: "none",
+                          borderRadius: "8px",
+                          padding: "0.4rem 1rem",
+                          cursor: "pointer",
+                        }}
+                      >
+                        💬{" "}
+                        {openOrderChat === order._id
+                          ? "Close Chat"
+                          : "Chat with Customer"}
+                      </button>
+                      {openOrderChat === order._id && (
+                        <div style={{ marginTop: "1rem" }}>
+                          <ChatBox
+                            currentUserId={localStorage.getItem("userId")}
+                            currentUserRole="seller"
+                            otherUserId={order.customer?._id}
+                            roomId={`order_${order._id}`}
+                          />
+                        </div>
                       )}
                     </div>
                   </div>

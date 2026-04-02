@@ -130,7 +130,24 @@ export default function BrowseProducts() {
                   <div className="product-body">
                     <div className="product-cat">{p.category}</div>
                     <div className="product-name">{p.name}</div>
-                    <div className="product-seller">by {p.seller?.name}</div>
+                    <div
+                      className="product-seller"
+                      style={{ cursor: "pointer" }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/users/${p.seller?._id}`);
+                      }}
+                    >
+                      by{" "}
+                      <span
+                        style={{
+                          color: "var(--spice)",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        {p.seller?.name}
+                      </span>
+                    </div>
                     <div className="product-desc">
                       {p.description.slice(0, 80)}...
                     </div>
@@ -148,6 +165,25 @@ export default function BrowseProducts() {
                     <div className="prep-time">
                       ⏱ {p.preparationTime} mins prep
                     </div>
+                    {p.ratings?.count > 0 && (
+                      <div className="product-rating">
+                        {[1, 2, 3, 4, 5].map((s) => (
+                          <span
+                            key={s}
+                            className={
+                              s <= Math.round(p.ratings.average)
+                                ? "star filled"
+                                : "star"
+                            }
+                          >
+                            ★
+                          </span>
+                        ))}
+                        <span className="rating-text">
+                          {p.ratings.average.toFixed(1)} ({p.ratings.count})
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}

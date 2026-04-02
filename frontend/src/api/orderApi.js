@@ -10,5 +10,8 @@ API.interceptors.request.use((req) => {
 export const placeOrder = (data) => API.post("/orders", data);
 export const getMyOrders = () => API.get("/orders/my");
 export const getSellerOrders = () => API.get("/orders/seller");
-export const updateOrderStatus = (id, status) => API.put(`/orders/${id}/status`, { status });
+export const updateOrderStatus = (id, status) =>
+  API.put(`/orders/${id}/status`, { status });
 export const getOrderById = (id) => API.get(`/orders/${id}`);
+export const markDelivered = (id) =>
+  API.put(`/orders/${id}/status`, { status: "delivered" });

@@ -8,7 +8,10 @@ API.interceptors.request.use((req) => {
 });
 
 export const getCart = () => API.get("/cart");
-export const addToCart = (productId, quantity = 1) => API.post("/cart/add", { productId, quantity });
-export const updateCartItem = (productId, quantity) => API.put("/cart/update", { productId, quantity });
-export const removeFromCart = (productId) => API.delete(`/cart/remove/${productId}`);
+export const addToCart = (productId, quantity = 1) =>
+  API.post("/cart/add", { productId, quantity });
+export const updateCartItem = (productId, quantity) =>
+  API.put("/cart/update", { productId, quantity });
+export const removeFromCart = (productId) =>
+  API.delete(`/cart/remove/${productId}`);
 export const clearCart = () => API.delete("/cart/clear");

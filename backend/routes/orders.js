@@ -34,14 +34,11 @@ router.get(
   sellerOnlyMiddleware,
   getSellerOrdersController,
 );
-router.put(
-  "/:id/status",
-  validateTokenMiddleware,
-  sellerOnlyMiddleware,
-  updateOrderStatusController,
-);
 
-// Shared (customer or seller)
+// ✅ NO role middleware here — controller handles seller vs customer logic internally
+router.put("/:id/status", validateTokenMiddleware, updateOrderStatusController);
+
+// Shared
 router.get("/:id", validateTokenMiddleware, getOrderByIdController);
 
 module.exports = router;

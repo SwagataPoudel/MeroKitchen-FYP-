@@ -46,6 +46,7 @@ const productSchema = new mongoose.Schema(
       average: { type: Number, default: 0 },
       count: { type: Number, default: 0 },
     },
+    cuisineTypes: [{ type: String }],
   },
   { timestamps: true },
 );

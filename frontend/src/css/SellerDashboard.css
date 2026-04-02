@@ -320,3 +320,70 @@ body {
     flex-wrap: wrap;
   }
 }
+
+/* Edit button */
+.edit-btn {
+  padding: 7px 16px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1.5px solid #bfdbfe;
+  border-radius: 50px;
+  font-family: "Lato", sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.edit-btn:hover {
+  background: #1d4ed8;
+  color: #fff;
+  border-color: #1d4ed8;
+}
+
+/* Cuisine chips in form */
+.cuisine-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cuisine-chip {
+  padding: 7px 14px;
+  border: 1.5px solid rgba(45, 26, 14, 0.15);
+  border-radius: 50px;
+  background: #fafafa;
+  font-family: "Lato", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.cuisine-chip:hover {
+  border-color: var(--spice);
+  color: var(--spice);
+}
+.cuisine-chip.active {
+  background: var(--spice);
+  border-color: var(--spice);
+  color: #fff;
+}
+
+/* Cuisine tags on listing card */
+.listing-cuisines {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+.listing-cuisine-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 50px;
+  background: rgba(200, 117, 58, 0.08);
+  color: var(--spice);
+  border: 1px solid rgba(200, 117, 58, 0.2);
+}

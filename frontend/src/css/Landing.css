@@ -31,14 +31,12 @@ body {
 /* ── HERO ────────────────────────────────── */
 .hero {
   min-height: 100vh;
-  background: linear-gradient(160deg, #fef3e0 0%, #fde9c5 60%, #f5d9a8 100%);
+    
+  background-size: cover;
+  background-position: center;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: center;
-  padding: 120px 80px 80px;
-  gap: 64px;
-  position: relative;
-  overflow: hidden;
+  
 }
 
 .hero::before {
@@ -198,21 +196,35 @@ body {
 }
 
 .hero-plate {
-  width: 420px;
-  height: 420px;
+  width: 500px;
+  height: 410px;
   background: linear-gradient(135deg, #fff, #fdecc8);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 160px;
+  font-size: 150px;
   box-shadow:
     0 32px 80px rgba(200, 117, 58, 0.25),
     0 8px 24px rgba(200, 117, 58, 0.15);
   position: relative;
-  animation: floatPlate 5s ease-in-out infinite;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
+.hero-plate:hover {
+  transform: translateY(-12px) scale(1.03);
+  box-shadow:
+    0 48px 100px rgba(200, 117, 58, 0.35),
+    0 16px 40px rgba(200, 117, 58, 0.2);
+}
+
+.hero-plate img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
 @keyframes floatPlate {
   0%,
   100% {
@@ -303,12 +315,26 @@ section {
 /* ── ABOUT ───────────────────────────────── */
 .about-section {
   background: var(--warm-dark);
+  background-color: #ce742a;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: 80px;
+  position: relative;
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+  padding-bottom: 120px; /* extra space for the slant */
 }
-
+.about-section::after {
+  content: '';
+  position: absolute;
+  bottom: -50px;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: inherit;
+  clip-path: polygon(0 0, 100% 0, 100% 0%, 0 100%);
+  z-index: 1;
+}
 .about-visual {
   display: flex;
   gap: 20px;
@@ -318,31 +344,34 @@ section {
 .about-card {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 28px;
+  border-radius: 50%;
+  padding: 0;              /* remove padding so image fills edge to edge */
   flex: 1;
+  aspect-ratio: 1 / 1;    /* forces card to be a perfect circle */
+  overflow: hidden;        /* clips image to the card's circle shape */
 }
 
 .about-card:last-child {
   margin-bottom: 40px;
 }
 
-.about-card-emoji {
-  font-size: 2.5rem;
-  margin-bottom: 14px;
+.about-card-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;        /* no need — parent clips it */
+  overflow: hidden;
+  margin-bottom: 0;
 }
 
-.about-card h3 {
-  font-family: "Playfair Display", serif;
-  font-size: 1rem;
-  color: #fff8ef;
-  margin-bottom: 8px;
+.about-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
+.about-card h3,
 .about-card p {
-  font-size: 0.88rem;
-  color: rgba(255, 255, 255, 0.5);
-  line-height: 1.6;
+  display: none;           /* text won't fit inside the circle — hide or move outside */
 }
 
 .about-text .section-label {
@@ -380,7 +409,10 @@ section {
 
 /* ── MENU ────────────────────────────────── */
 .menu-section {
-  background: var(--section-bg);
+  margin-top: 0;
+  padding-top: 80px;
+  position: relative;
+  z-index: 2;
 }
 
 .menu-header {
@@ -514,7 +546,38 @@ section {
 
 /* ── HOW IT WORKS ────────────────────────── */
 .how-section {
-  background: var(--cream);
+  background: #221710;
+  color: #fff8ef;
+}
+
+.how-section .section-label {
+  color: #c8753a;
+}
+
+.how-section .section-title {
+  color: #fff8ef;
+}
+
+.how-section .section-title em {
+  color: #e8a055;
+}
+
+.how-section .section-sub {
+  color: #c4a882;
+}
+
+
+
+.how-section .step-card h3 {
+  color: #fff8ef;
+}
+
+.how-section .step-card p {
+  color: #c4a882;
+}
+
+.how-section .step-num {
+  color: #c8753a;
 }
 
 .steps-header {
@@ -693,7 +756,7 @@ section {
 
 /* ── CTA BANNER ──────────────────────────── */
 .cta-section {
-  background: linear-gradient(135deg, #1e1008 0%, #2d1a0e 60%, #3d2410 100%);
+  background: #ce742a;
   text-align: center;
   padding: 100px 80px;
   position: relative;

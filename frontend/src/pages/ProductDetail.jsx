@@ -2,16 +2,21 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getProductById } from "../api/productApi";
 import { addToCart } from "../api/cartApi";
+import { getProductReviews } from "../api/reviewApi";
 import "../css/ProductDetail.css";
+import ChatRequestButton from "../components/ChatRequestButton";
+
+const REVIEWS_PER_PAGE = 3;
 
 export default function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // ✅ ALL hooks must be here at the top — before any early returns
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [cartMsg, setCartMsg] = useState("");
+  const [reviews, setReviews] = useState([]);
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     getProductById(id)
@@ -20,7 +25,14 @@ export default function ProductDetail() {
       .finally(() => setLoading(false));
   }, [id]);
 
-  // ✅ Early returns come AFTER all hooks
+  useEffect(() => {
+    if (id) {
+      getProductReviews(id)
+        .then((res) => setReviews(res.data.reviews))
+        .catch(console.error);
+    }
+  }, [id]);
+
   if (loading)
     return (
       <p
@@ -56,10 +68,10 @@ export default function ProductDetail() {
     }
   };
 
+  const visibleReviews = showAll ? reviews : reviews.slice(0, REVIEWS_PER_PAGE);
+
   return (
     <>
-      
-
       <div className="detail-page">
         <button className="back-btn" onClick={() => navigate("/products")}>
           ← Back to Menu
@@ -80,10 +92,19 @@ export default function ProductDetail() {
             <div className="detail-cat">{product.category}</div>
             <h1 className="detail-name">{product.name}</h1>
             <p className="detail-seller">
-              Prepared by <strong>{product.seller?.name}</strong>
+              Prepared by{" "}
+              <strong
+                style={{
+                  cursor: "pointer",
+                  color: "var(--spice)",
+                  textDecoration: "underline",
+                }}
+                onClick={() => navigate(`/users/${product.seller?._id}`)}
+              >
+                {product.seller?.name}
+              </strong>
             </p>
             <p className="detail-desc">{product.description}</p>
-
             <div className="detail-price-row">
               <span className="detail-price">Rs. {product.price}</span>
               <span
@@ -95,7 +116,6 @@ export default function ProductDetail() {
                 {product.availability ? "Available" : "Unavailable"}
               </span>
             </div>
-
             <div className="detail-meta">
               <div className="meta-item">
                 <div className="meta-value">⏱ {product.preparationTime}</div>
@@ -114,9 +134,10 @@ export default function ProductDetail() {
                 <div className="meta-label">Rating</div>
               </div>
             </div>
-
             <div className="ingredients-section">
-              <div className="ingredients-title">What's inside</div>
+              <div className="ingredients-title">
+                What's inside (ingredients)
+              </div>
               <div className="ingredient-tags">
                 {product.ingredients.map((ing, i) => (
                   <span key={i} className="ingredient-tag">
@@ -126,15 +147,113 @@ export default function ProductDetail() {
               </div>
             </div>
 
+            {product.cuisineTypes?.length > 0 && (
+              <div className="ingredients-section">
+                <div className="ingredients-title">Cuisine Types</div>
+                <div className="ingredient-tags">
+                  {product.cuisineTypes.map((c, i) => (
+                    <span key={i} className="ingredient-tag">
+                      {c}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {product.availability && (
               <>
                 <button className="order-btn" onClick={handleAddToCart}>
                   Add to Cart 🛒
                 </button>
                 {cartMsg && <p className="cart-msg">{cartMsg}</p>}
+                <ChatRequestButton
+                  productId={product._id}
+                  sellerId={product.seller?._id}
+                />
               </>
             )}
           </div>
+        </div>
+
+        {/* Reviews Section */}
+        <div className="reviews-section">
+          <div className="reviews-header">
+            <h2 className="reviews-title">
+              {reviews.length > 0 ? "What people are saying" : "No reviews yet"}
+            </h2>
+            {reviews.length > 0 && (
+              <div className="reviews-summary">
+                <div className="reviews-stars-row">
+                  {[1, 2, 3, 4, 5].map((s) => (
+                    <span
+                      key={s}
+                      className={
+                        s <= Math.round(product.ratings?.average)
+                          ? "sum-star filled"
+                          : "sum-star"
+                      }
+                    >
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <span className="reviews-avg">
+                  {product.ratings?.average?.toFixed(1)}
+                </span>
+                <span className="reviews-count">
+                  · {product.ratings?.count} review
+                  {product.ratings?.count !== 1 ? "s" : ""}
+                </span>
+              </div>
+            )}
+          </div>
+
+          {reviews.length === 0 ? (
+            <p className="no-reviews-text">
+              Be the first to review after your order is delivered!
+            </p>
+          ) : (
+            <>
+              <div className="reviews-list">
+                {visibleReviews.map((r) => (
+                  <div key={r._id} className="review-card">
+                    <div className="review-top">
+                      <div className="reviewer-name">{r.customer?.name}</div>
+                      <div className="review-stars">
+                        {[1, 2, 3, 4, 5].map((s) => (
+                          <span
+                            key={s}
+                            className={s <= r.rating ? "star filled" : "star"}
+                          >
+                            ★
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    {r.comment && <p className="review-comment">{r.comment}</p>}
+                    <div className="review-date">
+                      {new Date(r.createdAt).toLocaleDateString("en-NP", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {reviews.length > REVIEWS_PER_PAGE && (
+                <button
+                  className="show-more-btn"
+                  onClick={() => setShowAll((prev) => !prev)}
+                >
+                  {showAll
+                    ? "Show less ↑"
+                    : `Show all ${reviews.length} reviews ↓`}
+                </button>
+              )}
+            </>
+          )}
         </div>
       </div>
     </>

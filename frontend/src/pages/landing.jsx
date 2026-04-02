@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import "../css/Landing.css";
+import heroBg from "../assets/landingbanner.jpg";
+import hero1 from "../assets/hero1.jpg";
+import img1 from "../assets/img1.jpg";
+import ingredient from "../assets/ingredients.jpg";
+import { useNavigate } from "react-router-dom";
 
-// ─── Sample Data ─────────────────────────────────────────────────────────────
 const menuItems = [
   {
     id: 1,
@@ -113,6 +117,7 @@ const steps = [
 const Landing = () => {
   const [activeFilter, setActiveFilter] = useState("All");
   const [visible, setVisible] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 100);
@@ -123,11 +128,14 @@ const Landing = () => {
 
   return (
     <>
-      
-
       <main>
         {/* ── HERO ─────────────────────────────── */}
-        <section className="hero">
+        <section
+          className="hero"
+          style={{
+            backgroundImage: `url(${heroBg})`,
+          }}
+        >
           <div className="hero-content">
             <div className="hero-badge">🏠 Home-Cooked · Delivered Fresh</div>
             <h1>
@@ -151,7 +159,9 @@ const Landing = () => {
               >
                 Explore Today's Menu
               </button>
-              <button className="btn-ghost">Watch Our Story</button>
+              <button className="btn-ghost" onClick={() => navigate("/about")}>
+                Watch Our Story
+              </button>
             </div>
             <div className="hero-stats">
               <div className="stat-item">
@@ -170,12 +180,13 @@ const Landing = () => {
           </div>
 
           <div className="hero-visual">
-            <div className="hero-plate">🍲</div>
+            <div className="hero-plate">
+              <img src={hero1} alt="Hero dish" />
+            </div>
             <div className="hero-float-tag tag-top">
               <span className="tag-dot" style={{ background: "#4a9c5d" }} />
               Fresh Ingredients Daily
             </div>
-            <div className="hero-float-tag tag-bot">🚴 Delivery in 45 mins</div>
           </div>
         </section>
 
@@ -183,14 +194,18 @@ const Landing = () => {
         <section id="about" className="about-section">
           <div className="about-visual">
             <div className="about-card">
-              <div className="about-card-emoji">🌿</div>
+              <div className="about-card-image">
+                <img src={ingredient} alt="Local Ingredients" />
+              </div>
               <h3>Local Ingredients</h3>
               <p>
                 Sourced from trusted local farmers and markets every morning.
               </p>
             </div>
             <div className="about-card">
-              <div className="about-card-emoji">👨‍👩‍👧</div>
+              <div className="about-card-image">
+                <img src={img1} alt="Family Tradition" />
+              </div>
               <h3>Family Tradition</h3>
               <p>
                 Three-generation recipes passed down with care and precision.
@@ -200,9 +215,7 @@ const Landing = () => {
 
           <div className="about-text">
             <div className="section-label">Our Story</div>
-            <h2 className="section-title">
-              Cooking the way <em>Aamai</em> did
-            </h2>
+            <h2 className="section-title">Cooking the way Aamai did</h2>
             <p className="section-sub">
               Mero Kitchen began in a small home in Kathmandu — a mother's wish
               to share her recipes with the whole neighbourhood. Today we bring
@@ -214,6 +227,13 @@ const Landing = () => {
               <li>Eco-friendly, compostable packaging</li>
               <li>Hygiene-certified home kitchen</li>
             </ul>
+            <button
+              className="btn-primary"
+              style={{ marginTop: "28px" }}
+              onClick={() => navigate("/about")}
+            >
+              Read Our Full Story →
+            </button>
           </div>
         </section>
 
@@ -261,6 +281,12 @@ const Landing = () => {
                 </div>
               </div>
             ))}
+          </div>
+
+          <div style={{ textAlign: "center", marginTop: "40px" }}>
+            <button className="btn-primary" onClick={() => navigate("/menu")}>
+              View Full Menu →
+            </button>
           </div>
         </section>
 
@@ -325,15 +351,24 @@ const Landing = () => {
         <section className="cta-section">
           <div className="section-label">Ready to Eat?</div>
           <h2 className="section-title">
-            Order your first <em>homemade</em> meal today
+            Order your first homemade meal today
           </h2>
           <p className="section-sub">
             Join hundreds of families enjoying fresh, authentic Nepali food
             every day.
           </p>
           <div className="cta-btns">
-            <button className="btn-accent">Order Now 🍽️</button>
-            <button className="btn-outline-light">Chat on WhatsApp</button>
+            <button className="btn-accent" onClick={() => navigate("/menu")}>
+              Order Now 🍽️
+            </button>
+            <button
+              className="btn-outline-light"
+              onClick={() =>
+                window.open("https://wa.me/977XXXXXXXXX", "_blank")
+              }
+            >
+              Chat on WhatsApp
+            </button>
           </div>
         </section>
       </main>

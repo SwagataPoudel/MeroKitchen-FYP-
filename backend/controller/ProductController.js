@@ -1,10 +1,16 @@
 const Product = require("../model/ProductModel");
 
-// POST /products — seller creates a product
 async function createProductController(req, res) {
   try {
-    const { name, description, price, ingredients, category, preparationTime } =
-      req.body;
+    const {
+      name,
+      description,
+      price,
+      ingredients,
+      category,
+      preparationTime,
+      cuisineTypes,
+    } = req.body;
 
     if (
       !name ||
@@ -17,15 +23,19 @@ async function createProductController(req, res) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    // req.files comes from multer
     const photos = req.files
       ? req.files.map((f) => `/uploads/products/${f.filename}`)
       : [];
 
-    // ingredients sent as comma-separated string from frontend
     const ingredientList = Array.isArray(ingredients)
       ? ingredients
       : ingredients.split(",").map((i) => i.trim());
+
+    const cuisineList = Array.isArray(cuisineTypes)
+      ? cuisineTypes
+      : cuisineTypes
+        ? cuisineTypes.split(",").map((c) => c.trim())
+        : [];
 
     const product = new Product({
       name,
@@ -35,7 +45,8 @@ async function createProductController(req, res) {
       category,
       preparationTime,
       photos,
-      seller: req.user.id, // injected by validateTokenMiddleware
+      cuisineTypes: cuisineList,
+      seller: req.user.id,
     });
 
     await product.save();
@@ -47,11 +58,9 @@ async function createProductController(req, res) {
   }
 }
 
-// GET /products — public, with optional filters
 async function getAllProductsController(req, res) {
   try {
     const { category, minPrice, maxPrice, availability } = req.query;
-
     const filter = {};
     if (category) filter.category = category;
     if (availability !== undefined)
@@ -61,11 +70,9 @@ async function getAllProductsController(req, res) {
       if (minPrice) filter.price.$gte = Number(minPrice);
       if (maxPrice) filter.price.$lte = Number(maxPrice);
     }
-
     const products = await Product.find(filter)
-      .populate("seller", "name email") // show seller name + email
+      .populate("seller", "name email")
       .sort({ createdAt: -1 });
-
     res.status(200).json({ products });
   } catch (error) {
     res
@@ -74,16 +81,13 @@ async function getAllProductsController(req, res) {
   }
 }
 
-// GET /products/:id — public, single product
 async function getProductByIdController(req, res) {
   try {
     const product = await Product.findById(req.params.id).populate(
       "seller",
       "name email",
     );
-    if (!product) {
-      return res.status(404).json({ message: "Product not found" });
-    }
+    if (!product) return res.status(404).json({ message: "Product not found" });
     res.status(200).json({ product });
   } catch (error) {
     res
@@ -92,32 +96,27 @@ async function getProductByIdController(req, res) {
   }
 }
 
-// PUT /products/:id — seller updates their own product
 async function updateProductController(req, res) {
   try {
     const product = await Product.findById(req.params.id);
-    if (!product) {
-      return res.status(404).json({ message: "Product not found" });
-    }
-
-    // make sure the seller owns this product
-    if (product.seller.toString() !== req.user.id) {
+    if (!product) return res.status(404).json({ message: "Product not found" });
+    if (product.seller.toString() !== req.user.id)
       return res
         .status(403)
         .json({ message: "You can only update your own products" });
-    }
 
     const updates = { ...req.body };
 
-    // handle new photos if uploaded
-    if (req.files && req.files.length > 0) {
+    if (req.files && req.files.length > 0)
       updates.photos = req.files.map((f) => `/uploads/products/${f.filename}`);
-    }
 
-    // handle ingredients if sent as string
-    if (updates.ingredients && typeof updates.ingredients === "string") {
+    if (updates.ingredients && typeof updates.ingredients === "string")
       updates.ingredients = updates.ingredients.split(",").map((i) => i.trim());
-    }
+
+    if (updates.cuisineTypes && typeof updates.cuisineTypes === "string")
+      updates.cuisineTypes = updates.cuisineTypes
+        .split(",")
+        .map((c) => c.trim());
 
     const updated = await Product.findByIdAndUpdate(req.params.id, updates, {
       new: true,
@@ -132,20 +131,14 @@ async function updateProductController(req, res) {
   }
 }
 
-// DELETE /products/:id — seller deletes their own product
 async function deleteProductController(req, res) {
   try {
     const product = await Product.findById(req.params.id);
-    if (!product) {
-      return res.status(404).json({ message: "Product not found" });
-    }
-
-    if (product.seller.toString() !== req.user.id) {
+    if (!product) return res.status(404).json({ message: "Product not found" });
+    if (product.seller.toString() !== req.user.id)
       return res
         .status(403)
         .json({ message: "You can only delete your own products" });
-    }
-
     await Product.findByIdAndDelete(req.params.id);
     res.status(200).json({ message: "Product deleted successfully" });
   } catch (error) {
