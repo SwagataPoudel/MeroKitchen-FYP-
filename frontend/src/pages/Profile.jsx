@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../css/Auth.css";
 import "../css/Profile.css";
+import logoImg from "../assets/logo.png";
 
 const CUISINE_OPTIONS = [
   "Newari",
@@ -269,7 +270,9 @@ export default function Profile() {
       <div className="auth-card profile-card">
         {/* Logo */}
         <div className="auth-logo" onClick={() => navigate("/")}>
-          <div className="auth-logo-icon">🍲</div>
+          <div className="auth-logo-icon">
+            <img src={logoImg} alt="Mero Kitchen" />
+          </div>
           <div className="auth-logo-text">
             Mero <span>Kitchen</span>
           </div>

@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Auth from "./pages/Auth";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -18,7 +18,7 @@ import ManageReviews from "./pages/admin/ManageReviews";
 import AdminHome from "./pages/admin/AdminHome";
 import Profile from "./pages/Profile";
 import PublicProfile from "./pages/PublicProfile";
-import VerificationRequests from "./pages/admin/VerificationRequests"; 
+import VerificationRequests from "./pages/admin/VerificationRequests";
 import AboutUs from "./pages/AboutUs";
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
@@ -31,6 +31,8 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
 };
 
 function App() {
+  const location = useLocation();
+
   return (
     <>
       <ScrollToTop />
@@ -48,25 +50,20 @@ function App() {
           <Route path="orders" element={<ManageOrders />} />
           <Route path="products" element={<ManageProducts />} />
           <Route path="reviews" element={<ManageReviews />} />
-          <Route path="verifications" element={<VerificationRequests />} /> {/* NEW */}
-         
+          <Route path="verifications" element={<VerificationRequests />} />
         </Route>
 
-        {/* ─── All Other Routes (with Header/Footer) ─── */}
         <Route
           path="*"
           element={
             <>
               <Header />
               <Routes>
-                {/* Public */}
                 <Route path="/" element={<Landing />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/products" element={<BrowseProducts />} />
                 <Route path="/products/:id" element={<ProductDetail />} />
                 <Route path="/about" element={<AboutUs />} />
-
-                {/* Seller only */}
                 <Route
                   path="/seller/dashboard"
                   element={
@@ -83,8 +80,6 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
-
-                {/* Customer only */}
                 <Route
                   path="/cart"
                   element={
@@ -109,13 +104,10 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
-
                 <Route path="/users/:id" element={<PublicProfile />} />
-
-                {/* Fallback */}
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
-              <Footer />
+              {location.pathname !== "/auth" && <Footer />}
             </>
           }
         />

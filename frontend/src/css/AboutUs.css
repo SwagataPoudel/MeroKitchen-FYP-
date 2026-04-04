@@ -23,7 +23,7 @@
 .au-section-title {
   font-family: "Playfair Display", serif;
   font-size: clamp(2rem, 4vw, 3rem);
-  color: #fff8ef;
+  color: #c8753a;
   line-height: 1.15;
   margin-bottom: 48px;
 }
@@ -149,7 +149,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   min-height: 80vh;
-  background: #211208;
+  background: #faf9f8;
 }
 
 .au-story-text {
@@ -169,11 +169,11 @@
 
 .au-story-text h2 em {
   font-style: italic;
-  color: #e8956d;
+  color: #c8753a;
 }
 
 .au-story-text p {
-  color: #c9b8a8;
+  color: #af9680;
   font-size: 1rem;
   line-height: 1.8;
   margin-bottom: 18px;
@@ -317,7 +317,7 @@
 /* ── TEAM ─────────────────────────────────────────────────────────────── */
 .au-team {
   padding: 100px 80px;
-  background: #211208;
+  background: #fffffe;
 }
 
 .au-team-header {
@@ -334,7 +334,7 @@
 }
 
 .au-team-card {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(214, 164, 55, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20px;
   padding: 40px 32px;
@@ -366,7 +366,7 @@
 .au-team-card h3 {
   font-family: "Playfair Display", serif;
   font-size: 1.15rem;
-  color: #fff8ef;
+  color:#c8753a;
   margin-bottom: 6px;
 }
 
@@ -380,7 +380,7 @@
 
 .au-team-card p {
   font-size: 0.88rem;
-  color: #9a8878;
+  color: #c8753a;
   line-height: 1.7;
 }
 

@@ -1,11 +1,34 @@
 .profile-page {
-  padding-top: 100px;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 120px 24px 60px;
+  background: linear-gradient(160deg, #fef3e0 0%, #fde9c5 60%, #f5d9a8 100%);
 }
 
-.profile-card {
-  max-width: 560px;
+/* Override auth-card styles for profile */
+.profile-page .auth-card {
+  width: 100%;
+  max-width: 680px;
+  min-height: unset;
+  display: block;
+  border-radius: 28px;
+  padding: 48px;
+  background: #fff;
+  box-shadow: 0 24px 64px rgba(45, 26, 14, 0.12);
+  margin: 0;
 }
 
+/* Override auth-card-image and auth-card-form — not needed here */
+.profile-page .auth-card-image {
+  display: none;
+}
+
+.profile-page .auth-card-form {
+  width: 100%;
+  padding: 0;
+}
 /* Photo */
 .profile-photo-section {
   display: flex;

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Header.css";
+import logoImg from "../assets/logo.png";
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -31,11 +32,13 @@ const Header = () => {
   return (
     <header className={`header${scrolled ? " scrolled" : ""}`}>
       <div className="header-logo" onClick={() => navigate("/")}>
-        <div className="logo-icon">🍲</div>
-        <div className="logo-text">
-          Mero <span>Kitchen</span>
-        </div>
-      </div>
+  <div className="logo-icon">
+    <img src={logoImg} alt="Mero Kitchen" style={{ width: "36px", height: "36px", objectFit: "contain" }} />
+  </div>
+  <div className="logo-text">
+    Mero <span>Kitchen</span>
+  </div>
+</div>
 
       <nav>
         <button className="nav-link" onClick={() => navigate("/landing")}>

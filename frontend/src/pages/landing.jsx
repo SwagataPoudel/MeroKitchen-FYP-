@@ -163,29 +163,11 @@ const Landing = () => {
                 Watch Our Story
               </button>
             </div>
-            <div className="hero-stats">
-              <div className="stat-item">
-                <div className="stat-num">500+</div>
-                <div className="stat-label">Happy Families</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-num">30+</div>
-                <div className="stat-label">Home Recipes</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-num">4.9★</div>
-                <div className="stat-label">Avg Rating</div>
-              </div>
-            </div>
           </div>
 
           <div className="hero-visual">
             <div className="hero-plate">
               <img src={hero1} alt="Hero dish" />
-            </div>
-            <div className="hero-float-tag tag-top">
-              <span className="tag-dot" style={{ background: "#4a9c5d" }} />
-              Fresh Ingredients Daily
             </div>
           </div>
         </section>

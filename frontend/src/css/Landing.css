@@ -92,7 +92,7 @@ body {
   font-family: "Playfair Display", serif;
   font-size: clamp(2.8rem, 5vw, 4.2rem);
   line-height: 1.15;
-  color: var(--warm-dark);
+  color:  #ce742a;
   margin-bottom: 24px;
 }
 
@@ -140,7 +140,7 @@ body {
 
 .btn-ghost {
   background: transparent;
-  color: var(--warm-dark);
+  color:  #ce742a;
   border: 2px solid var(--warm-dark);
   padding: 13px 34px;
   border-radius: 50px;
@@ -233,22 +233,6 @@ body {
   50% {
     transform: translateY(-14px);
   }
-}
-
-.hero-float-tag {
-  position: absolute;
-  background: #fff;
-  border-radius: 16px;
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--warm-dark);
-  white-space: nowrap;
-  animation: floatTag 4s ease-in-out infinite;
 }
 
 @keyframes floatTag {

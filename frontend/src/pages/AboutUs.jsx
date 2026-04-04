@@ -27,24 +27,24 @@ const values = [
 ];
 
 const team = [
-  {
-    name: "Maya Devi Shrestha",
-    role: "Head Cook & Founder",
-    bio: "Maya started Mero Kitchen after 30 years of cooking for her family. Her dal bhat is the stuff of legend in Baneshwor.",
-    initial: "M",
-  },
-  {
-    name: "Rajan Tamang",
-    role: "Delivery & Operations",
-    bio: "Rajan ensures every meal arrives hot and on time. He knows every lane in Kathmandu by heart.",
-    initial: "R",
-  },
-  {
-    name: "Anisha Maharjan",
-    role: "Menu & Recipe Curation",
-    bio: "Anisha brings Newari culinary heritage to the menu, reviving forgotten recipes with a modern touch.",
-    initial: "A",
-  },
+ {
+  name: "Swagata Poudel",
+  role: "Founder",
+  bio: "Swagata founded Mero Kitchen with a vision to empower home cooks across Kathmandu, giving them a platform to share their passion and grow their small businesses.",
+  initial: "S",
+},
+{
+  name: "Sampada Poudel",
+  role: "Management and Operations",
+  bio: "Sampada oversees the day-to-day operations of Mero Kitchen, ensuring smooth coordination between sellers, customers, and the team.",
+  initial: "S",
+},
+{
+  name: "Shristika Dhungana",
+  role: "Customer Relations and Care",
+  bio: "Shristika is dedicated to making every customer feel valued, handling feedback with care and ensuring a delightful experience from order to delivery.",
+  initial: "S",
+},
 ];
 
 const milestones = [
