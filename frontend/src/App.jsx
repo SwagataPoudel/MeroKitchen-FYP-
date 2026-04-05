@@ -20,6 +20,7 @@ import Profile from "./pages/Profile";
 import PublicProfile from "./pages/PublicProfile";
 import VerificationRequests from "./pages/admin/VerificationRequests";
 import AboutUs from "./pages/AboutUs";
+import SellerLanding from "./pages/SellerLanding";
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const token = localStorage.getItem("token");
@@ -72,6 +73,7 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
+                <Route path="/sell-with-us" element={<SellerLanding />} />
                 <Route
                   path="/seller/orders"
                   element={

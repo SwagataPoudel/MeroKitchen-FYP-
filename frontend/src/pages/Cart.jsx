@@ -88,7 +88,7 @@ export default function Cart() {
             </p>
           ) : !cart?.items?.length ? (
             <div className="empty-state">
-              <div style={{ fontSize: "4rem" }}>🛒</div>
+              <div style={{ fontSize: "4rem" }}></div>
               <p>Your cart is empty.</p>
               <button
                 className="browse-btn"

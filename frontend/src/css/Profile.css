@@ -4,7 +4,7 @@
   align-items: flex-start;
   justify-content: center;
   padding: 120px 24px 60px;
-  background: linear-gradient(160deg, #fef3e0 0%, #fde9c5 60%, #f5d9a8 100%);
+  background: black;
 }
 
 /* Override auth-card styles for profile */

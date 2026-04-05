@@ -18,7 +18,7 @@ body {
 }
 
 .browse-hero {
-  background: linear-gradient(160deg, #fef3e0 0%, #fde9c5 60%, #f5d9a8 100%);
+  background: black;
   padding: 140px 80px 60px;
   text-align: center;
 }
@@ -33,15 +33,15 @@ body {
 .browse-hero h1 {
   font-family: "Playfair Display", serif;
   font-size: clamp(2.2rem, 4vw, 3.2rem);
-  color: var(--warm-dark);
+  color: #c8753a;
   margin-bottom: 16px;
 }
 .browse-hero h1 em {
   font-style: italic;
-  color: var(--spice);
+  color: #c8753a;
 }
 .browse-hero p {
-  color: var(--muted);
+  color:#c8753a;
   font-size: 1rem;
   line-height: 1.7;
 }

@@ -2,6 +2,10 @@ import "../css/AboutUs.css";
 import img1 from "../assets/img1.jpg";
 import ingredient from "../assets/ingredients.jpg";
 import hero1 from "../assets/hero1.jpg";
+import about2 from "../assets/about2.jpg";
+import swagataImg from "../assets/swagata.jpeg";
+import sampadaImg from "../assets/sampada.jpeg";
+import shristikaImg from "../assets/shristika.jpeg";
 
 const values = [
   {
@@ -26,25 +30,26 @@ const values = [
   },
 ];
 
+// ✅ Updated team with images
 const team = [
- {
-  name: "Swagata Poudel",
-  role: "Founder",
-  bio: "Swagata founded Mero Kitchen with a vision to empower home cooks across Kathmandu, giving them a platform to share their passion and grow their small businesses.",
-  initial: "S",
-},
-{
-  name: "Sampada Poudel",
-  role: "Management and Operations",
-  bio: "Sampada oversees the day-to-day operations of Mero Kitchen, ensuring smooth coordination between sellers, customers, and the team.",
-  initial: "S",
-},
-{
-  name: "Shristika Dhungana",
-  role: "Customer Relations and Care",
-  bio: "Shristika is dedicated to making every customer feel valued, handling feedback with care and ensuring a delightful experience from order to delivery.",
-  initial: "S",
-},
+  {
+    name: "Swagata Poudel",
+    role: "Founder",
+    bio: "Swagata founded Mero Kitchen with a vision to empower home cooks across Kathmandu, giving them a platform to share their passion and grow their small businesses.",
+    image: swagataImg,
+  },
+  {
+    name: "Sampada Poudel",
+    role: "Management and Operations",
+    bio: "Sampada oversees the day-to-day operations of Mero Kitchen, ensuring smooth coordination between sellers, customers, and the team.",
+    image: sampadaImg,
+  },
+  {
+    name: "Shristika Dhungana",
+    role: "Customer Relations and Care",
+    bio: "Shristika is dedicated to making every customer feel valued, handling feedback with care and ensuring a delightful experience from order to delivery.",
+    image: shristikaImg,
+  },
 ];
 
 const milestones = [
@@ -59,40 +64,43 @@ const AboutUs = () => {
   return (
     <main className="about-page">
 
-      {/* ── HERO SPLIT ─────────────────────────── */}
+      {/* HERO */}
       <section className="au-hero">
         <div className="au-hero-image">
           <img src={img1} alt="Our kitchen" />
           <div className="au-hero-image-overlay" />
           <div className="au-hero-badge">Est. 2019 · Kathmandu</div>
         </div>
+
         <div className="au-hero-text">
           <div className="au-label">Who We Are</div>
-          <h1>
-            A Kitchen Full of <em>Stories</em>
-          </h1>
+          <h1>A Kitchen Full of <em>Stories</em></h1>
+
           <p>
             Mero Kitchen was born from a simple belief — that the best food
-            is made with love, patience, and ingredients you can trust. What
-            started as one mother cooking for her neighbourhood has grown into
-            a community of hundreds of families who share a table with us
-            every single day.
+            is made with love, patience, and ingredients you can trust.
           </p>
+
           <p>
             We don't have a restaurant. We have a home. And in that home,
             every meal is prepared as if it's going to our own family.
           </p>
+
           <div className="au-hero-stats">
             <div className="au-stat">
               <span className="au-stat-num">500+</span>
               <span className="au-stat-label">Families Served</span>
             </div>
+
             <div className="au-stat-divider" />
+
             <div className="au-stat">
               <span className="au-stat-num">6+</span>
               <span className="au-stat-label">Years Cooking</span>
             </div>
+
             <div className="au-stat-divider" />
+
             <div className="au-stat">
               <span className="au-stat-num">30+</span>
               <span className="au-stat-label">Home Recipes</span>
@@ -101,22 +109,17 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* ── OUR STORY SPLIT (reversed) ────────── */}
+      {/* STORY */}
       <section className="au-story">
         <div className="au-story-text">
           <div className="au-label">Our Story</div>
           <h2>How it all <em>began</em></h2>
+
           <p>
-            In 2019, Maya Devi Shrestha — a retired schoolteacher and lifelong
-            home cook — began sending tiffin boxes to neighbours who missed
-            homemade food. Word spread quickly. Within months, she had more
-            orders than she could handle alone.
+            In 2019, Maya Devi Shrestha began sending tiffin boxes to neighbours.
+            Word spread quickly and soon demand grew rapidly.
           </p>
-          <p>
-            Her daughter joined. Then a neighbour. Today, Mero Kitchen is a
-            small but passionate team keeping alive the recipes that have
-            nourished Nepali families for generations.
-          </p>
+
           <div className="au-timeline">
             {milestones.map((m) => (
               <div key={m.year} className="au-timeline-item">
@@ -127,20 +130,19 @@ const AboutUs = () => {
             ))}
           </div>
         </div>
+
         <div className="au-story-image">
-          <img src={ingredient} alt="Fresh ingredients" />
-          <div className="au-story-card">
-            <div className="au-story-card-emoji">👩‍🍳</div>
-            <p>"I cook every meal as if my own children will eat it."</p>
-            <span>— Maya Devi, Founder</span>
-          </div>
+          <img src={about2} alt="cookimage" />
         </div>
       </section>
 
-      {/* ── VALUES ───────────────────────────── */}
+      {/* VALUES */}
       <section className="au-values">
-        <div className="au-label" style={{ textAlign: "center" }}>What We Stand For</div>
+        <div className="au-label" style={{ textAlign: "center" }}>
+          What We Stand For
+        </div>
         <h2 className="au-section-title">Our <em>Values</em></h2>
+
         <div className="au-values-grid">
           {values.map((v) => (
             <div key={v.title} className="au-value-card">
@@ -152,16 +154,22 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* ── TEAM ─────────────────────────────── */}
+      {/* TEAM */}
       <section className="au-team">
         <div className="au-team-header">
           <div className="au-label">The People Behind the Food</div>
           <h2 className="au-section-title">Meet the <em>Team</em></h2>
         </div>
+
         <div className="au-team-grid">
           {team.map((t) => (
             <div key={t.name} className="au-team-card">
-              <div className="au-team-avatar">{t.initial}</div>
+
+              {/* ✅ IMAGE INSTEAD OF INITIAL */}
+              <div className="au-team-avatar">
+                <img src={t.image} alt={t.name} />
+              </div>
+
               <h3>{t.name}</h3>
               <div className="au-team-role">{t.role}</div>
               <p>{t.bio}</p>
@@ -170,21 +178,21 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* ── CTA ──────────────────────────────── */}
+      {/* CTA */}
       <section className="au-cta">
         <div className="au-cta-image">
           <img src={hero1} alt="Our food" />
           <div className="au-cta-overlay" />
         </div>
+
         <div className="au-cta-text">
           <h2>Come eat with <em>us</em></h2>
           <p>
             Join hundreds of families who trust us with their daily meals.
-            Authentic, fresh, and made with love — every single day.
           </p>
+
           <div className="au-cta-btns">
-            <button className="au-btn-primary">Order Today 🍽️</button>
-            <button className="au-btn-ghost">Chat on WhatsApp</button>
+            <button className="au-btn-primary">Order Today </button>
           </div>
         </div>
       </section>

@@ -31,17 +31,33 @@ const Header = () => {
 
   return (
     <header className={`header${scrolled ? " scrolled" : ""}`}>
-      <div className="header-logo" onClick={() => navigate("/")}>
-  <div className="logo-icon">
-    <img src={logoImg} alt="Mero Kitchen" style={{ width: "36px", height: "36px", objectFit: "contain" }} />
-  </div>
-  <div className="logo-text">
-    Mero <span>Kitchen</span>
-  </div>
-</div>
+      <div
+        className="header-logo"
+        onClick={() => {
+          if (role === "seller") navigate("/sell-with-us");
+          else navigate("/");
+        }}
+      >
+        <div className="logo-icon">
+          <img
+            src={logoImg}
+            alt="Mero Kitchen"
+            style={{ width: "36px", height: "36px", objectFit: "contain" }}
+          />
+        </div>
+        <div className="logo-text">
+          Mero <span>Kitchen</span>
+        </div>
+      </div>
 
       <nav>
-        <button className="nav-link" onClick={() => navigate("/landing")}>
+        <button
+          className="nav-link"
+          onClick={() => {
+            if (role === "seller") navigate("/sell-with-us");
+            else navigate("/");
+          }}
+        >
           Home
         </button>
         <button className="nav-link" onClick={() => navigate("/about")}>
@@ -56,7 +72,7 @@ const Header = () => {
               My Orders
             </button>
             <button className="nav-link" onClick={() => navigate("/cart")}>
-              Cart 🛒
+              Cart 
             </button>
             <button className="nav-link" onClick={() => navigate("/profile")}>
               Profile
@@ -66,9 +82,6 @@ const Header = () => {
 
         {token && role === "seller" && (
           <>
-            <button className="nav-link" onClick={() => navigate("/landing")}>
-              Home
-            </button>
             <button
               className="nav-link"
               onClick={() => navigate("/seller/dashboard")}

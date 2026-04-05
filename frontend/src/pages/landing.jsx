@@ -1,140 +1,65 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import "../css/Landing.css";
 import heroBg from "../assets/landingbanner.jpg";
 import hero1 from "../assets/hero1.jpg";
 import img1 from "../assets/img1.jpg";
 import ingredient from "../assets/ingredients.jpg";
+import menu1 from "../assets/menu1.jpg";
+import menu2 from "../assets/menu2.jpg";
+import menu3 from "../assets/menu3.jpg";
+import menu4 from "../assets/menu4.jpg";
+import menu5 from "../assets/menu5.jpg";
+import menu6 from "../assets/menu6.jpg";
+import menu7 from "../assets/menu7.jpg";
+import menu8 from "../assets/menu8.jpg";
+import browseimg from "../assets/browseimg.png";
+import placeorder from "../assets/placeorder.png";
+import cook from "../assets/cook.jpg";
 import { useNavigate } from "react-router-dom";
 
 const menuItems = [
-  {
-    id: 1,
-    emoji: "🍛",
-    name: "Dal Bhat Set",
-    desc: "Classic Nepali comfort — steamed rice, lentil soup, seasonal veggies & pickle.",
-    price: "Rs. 280",
-    tag: "Bestseller",
-    tagColor: "#c8753a",
-  },
-  {
-    id: 2,
-    emoji: "🥟",
-    name: "Momo Basket",
-    desc: "Juicy steamed dumplings with homemade tomato chutney. 10 pcs per order.",
-    price: "Rs. 180",
-    tag: "🔥 Hot",
-    tagColor: "#d94f4f",
-  },
-  {
-    id: 3,
-    emoji: "🥘",
-    name: "Thukpa Bowl",
-    desc: "Hearty Tibetan noodle soup brimming with fresh vegetables and aromatic broth.",
-    price: "Rs. 220",
-    tag: "New",
-    tagColor: "#4a9c5d",
-  },
-  {
-    id: 4,
-    emoji: "🍱",
-    name: "Newari Khaja Set",
-    desc: "Traditional Newari snack platter with chiura, sapu mhichā, and more.",
-    price: "Rs. 350",
-    tag: "Special",
-    tagColor: "#7b5ea7",
-  },
-  {
-    id: 5,
-    emoji: "🫕",
-    name: "Gundruk Soup",
-    desc: "Fermented leafy greens slow-cooked into a tangy, nutritious winter broth.",
-    price: "Rs. 160",
-    tag: null,
-  },
-  {
-    id: 6,
-    emoji: "🍰",
-    name: "Sel Roti & Chia Pudding",
-    desc: "Crispy homemade sel roti paired with a creamy, lightly sweetened chia pudding.",
-    price: "Rs. 140",
-    tag: "Dessert",
-    tagColor: "#c87dba",
-  },
+  { id: 1, name: "Dal Bhat Set", img: menu1 },
+  { id: 2, name: "Momo Basket", img: menu2 },
+  { id: 3, name: "Thukpa Bowl", img: menu3 },
+  { id: 4, name: "Newari Khaja Set", img: menu4 },
+  { id: 5, name: "Gundruk Soup", img: menu5 },
+  { id: 6, name: "Sel Roti & Chia Pudding", img: menu6 },
+  { id: 7, name: "Samay Baji", img: menu7 },
+  { id: 8, name: "Butter Tea & Snack", img: menu8 },
 ];
 
 const reviews = [
   {
-    id: 1,
-    name: "Sita Tamang",
-    loc: "Baneshwor",
-    stars: 5,
+    id: 1, name: "Sita Tamang", loc: "Baneshwor", stars: 5,
     text: "Dal Bhat tastes just like what my aamai used to cook. I order every single day now!",
   },
   {
-    id: 2,
-    name: "Rohan Shrestha",
-    loc: "Patan",
-    stars: 5,
+    id: 2, name: "Rohan Shrestha", loc: "Patan", stars: 5,
     text: "Momos are unbelievably good — soft, packed with flavour. Delivery was super fast too.",
   },
   {
-    id: 3,
-    name: "Priya Adhikari",
-    loc: "Balaju",
-    stars: 5,
+    id: 3, name: "Priya Adhikari", loc: "Balaju", stars: 5,
     text: "Finally a food service that cares about ingredients. The thukpa warmed my soul on a rainy day.",
   },
 ];
 
 const steps = [
-  {
-    n: "01",
-    title: "Browse the Menu",
-    desc: "Check out our daily freshly prepared dishes made with seasonal ingredients.",
-    emoji: "📋",
-  },
-  {
-    n: "02",
-    title: "Place Your Order",
-    desc: "Order online or via WhatsApp — no fuss, just simple steps.",
-    emoji: "📱",
-  },
-  {
-    n: "03",
-    title: "We Cook Fresh",
-    desc: "Every meal is prepared to order in our home kitchen by Mero aunties.",
-    emoji: "👩‍🍳",
-  },
-  {
-    n: "04",
-    title: "Delivered Hot",
-    desc: "Your food arrives warm and ready to eat, right at your doorstep.",
-    emoji: "🛵",
-  },
+  { n: "01", title: "Browse the Menu", desc: "Check out our daily freshly prepared dishes made with seasonal ingredients.", img: browseimg },
+  { n: "02", title: "Place Your Order", desc: "Order online or via WhatsApp — no fuss, just simple steps.", img: placeorder },
+  { n: "03", title: "We Cook Fresh", desc: "Every meal is prepared to order in our home kitchen by Mero aunties.", img: cook },
 ];
 
-// ─── Home Page ────────────────────────────────────────────────────────────────
 const Landing = () => {
-  const [activeFilter, setActiveFilter] = useState("All");
-  const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 100);
-    return () => clearTimeout(t);
-  }, []);
-
-  const filters = ["All", "Rice & Curry", "Snacks", "Soups", "Dessert"];
 
   return (
     <>
       <main>
+
         {/* ── HERO ─────────────────────────────── */}
         <section
           className="hero"
-          style={{
-            backgroundImage: `url(${heroBg})`,
-          }}
+          style={{ backgroundImage: `url(${heroBg})` }}
         >
           <div className="hero-content">
             <div className="hero-badge">🏠 Home-Cooked · Delivered Fresh</div>
@@ -152,9 +77,7 @@ const Landing = () => {
               <button
                 className="btn-primary"
                 onClick={() =>
-                  document
-                    .getElementById("menu")
-                    ?.scrollIntoView({ behavior: "smooth" })
+                  document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" })
                 }
               >
                 Explore Today's Menu
@@ -180,18 +103,14 @@ const Landing = () => {
                 <img src={ingredient} alt="Local Ingredients" />
               </div>
               <h3>Local Ingredients</h3>
-              <p>
-                Sourced from trusted local farmers and markets every morning.
-              </p>
+              <p>Sourced from trusted local farmers and markets every morning.</p>
             </div>
             <div className="about-card">
               <div className="about-card-image">
                 <img src={img1} alt="Family Tradition" />
               </div>
               <h3>Family Tradition</h3>
-              <p>
-                Three-generation recipes passed down with care and precision.
-              </p>
+              <p>Three-generation recipes passed down with care and precision.</p>
             </div>
           </div>
 
@@ -222,57 +141,46 @@ const Landing = () => {
         {/* ── MENU ─────────────────────────────── */}
         <section id="menu" className="menu-section">
           <div className="menu-header">
-            <div>
+            <div className="menu-header-left">
               <div className="section-label">Today's Specials</div>
-              <h2 className="section-title">
-                What's <em>cooking</em> today
-              </h2>
-            </div>
-            <div className="filter-tabs">
-              {filters.map((f) => (
-                <button
-                  key={f}
-                  className={`filter-tab ${activeFilter === f ? "active" : ""}`}
-                  onClick={() => setActiveFilter(f)}
-                >
-                  {f}
-                </button>
-              ))}
+              <h2 className="section-title">What's <em>cooking</em> today</h2>
             </div>
           </div>
 
-          <div className="menu-grid">
-            {menuItems.map((item) => (
-              <div key={item.id} className="menu-card">
-                {item.tag && (
-                  <div
-                    className="menu-card-tag"
-                    style={{ background: item.tagColor }}
-                  >
-                    {item.tag}
-                  </div>
-                )}
-                <span className="menu-emoji">{item.emoji}</span>
-                <h3>{item.name}</h3>
-                <p>{item.desc}</p>
-                <div className="menu-card-footer">
-                  <span className="menu-price">{item.price}</span>
-                  <button className="add-btn" title="Add to cart">
-                    +
-                  </button>
-                </div>
-              </div>
-            ))}
+          <div className="menu-mosaic">
+            <div className="mosaic-cell mosaic-large">
+              <img src={menuItems[0].img} alt={menuItems[0].name} />
+            </div>
+            <div className="mosaic-cell mosaic-tall">
+              <img src={menuItems[1].img} alt={menuItems[1].name} />
+            </div>
+            <div className="mosaic-cell mosaic-small">
+              <img src={menuItems[2].img} alt={menuItems[2].name} />
+            </div>
+            <div className="mosaic-cell mosaic-small">
+              <img src={menuItems[3].img} alt={menuItems[3].name} />
+            </div>
+            <div className="mosaic-cell mosaic-small">
+              <img src={menuItems[4].img} alt={menuItems[4].name} />
+            </div>
+            <div className="mosaic-cell mosaic-small">
+              <img src={menuItems[5].img} alt={menuItems[5].name} />
+            </div>
+            <div className="mosaic-cell mosaic-small">
+              <img src={menuItems[6].img} alt={menuItems[6].name} />
+            </div>
+            <div className="mosaic-cell mosaic-small">
+              <img src={menuItems[7].img} alt={menuItems[7].name} />
+            </div>
           </div>
 
-          <div style={{ textAlign: "center", marginTop: "40px" }}>
-            <button className="btn-primary" onClick={() => navigate("/menu")}>
+          <div style={{ textAlign: "center", marginTop: "48px" }}>
+            <button className="btn-primary" onClick={() => navigate("/Auth")}>
               View Full Menu →
             </button>
           </div>
         </section>
 
-        {/* ── HOW IT WORKS ─────────────────────── */}
         <section id="how" className="how-section">
           <div className="steps-header">
             <div className="section-label">Simple Process</div>
@@ -280,8 +188,7 @@ const Landing = () => {
               From our <em>kitchen</em> to your table
             </h2>
             <p className="section-sub">
-              Ordering homemade food has never been easier. Just four simple
-              steps.
+              Ordering homemade food has never been easier. Just three simple steps.
             </p>
           </div>
 
@@ -289,7 +196,7 @@ const Landing = () => {
             {steps.map((s) => (
               <div key={s.n} className="step-card">
                 <div className="step-icon">
-                  {s.emoji}
+                  <img src={s.img} alt={s.title} />
                   <div className="step-num">{s.n}</div>
                 </div>
                 <h3>{s.title}</h3>
@@ -299,60 +206,20 @@ const Landing = () => {
           </div>
         </section>
 
-        {/* ── REVIEWS ──────────────────────────── */}
-        <section id="reviews" className="reviews-section">
-          <div className="reviews-header">
-            <div className="section-label">Love from Customers</div>
-            <h2 className="section-title">
-              What our <em>families</em> say
-            </h2>
-            <p className="section-sub">
-              Over 500 happy households trust Mero Kitchen for their daily
-              meals.
-            </p>
-          </div>
-
-          <div className="reviews-grid">
-            {reviews.map((r) => (
-              <div key={r.id} className="review-card">
-                <div className="stars">{"★".repeat(r.stars)}</div>
-                <p>"{r.text}"</p>
-                <div className="reviewer">
-                  <div className="reviewer-avatar">{r.name[0]}</div>
-                  <div>
-                    <div className="reviewer-name">{r.name}</div>
-                    <div className="reviewer-loc">📍 {r.loc}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ── CTA ──────────────────────────────── */}
         <section className="cta-section">
           <div className="section-label">Ready to Eat?</div>
-          <h2 className="section-title">
-            Order your first homemade meal today
-          </h2>
+          <h2 className="section-title">Order your first homemade meal today</h2>
           <p className="section-sub">
-            Join hundreds of families enjoying fresh, authentic Nepali food
-            every day.
+            Join hundreds of families enjoying fresh, authentic Nepali food every day.
           </p>
           <div className="cta-btns">
-            <button className="btn-accent" onClick={() => navigate("/menu")}>
-              Order Now 🍽️
+            <button className="btn-accent" onClick={() => navigate("/Auth")}>
+              Order Now 
             </button>
-            <button
-              className="btn-outline-light"
-              onClick={() =>
-                window.open("https://wa.me/977XXXXXXXXX", "_blank")
-              }
-            >
-              Chat on WhatsApp
-            </button>
+        
           </div>
         </section>
+
       </main>
     </>
   );

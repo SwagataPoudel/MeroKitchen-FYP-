@@ -32,7 +32,7 @@ export default function ScrollToTop() {
         height: "64px",
         borderRadius: "50%",
         border: "none",
-        backgroundColor: "#ce742a;",
+        backgroundColor: "#ce742a",
         color: "#fff",
         fontSize: "3.2rem",
         cursor: "pointer",
