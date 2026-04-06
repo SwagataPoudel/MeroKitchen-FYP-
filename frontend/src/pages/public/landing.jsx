@@ -1,20 +1,20 @@
 import { useEffect } from "react";
-import "../css/Landing.css";
-import heroBg from "../assets/landingbanner.jpg";
-import hero1 from "../assets/hero1.jpg";
-import img1 from "../assets/img1.jpg";
-import ingredient from "../assets/ingredients.jpg";
-import menu1 from "../assets/menu1.jpg";
-import menu2 from "../assets/menu2.jpg";
-import menu3 from "../assets/menu3.jpg";
-import menu4 from "../assets/menu4.jpg";
-import menu5 from "../assets/menu5.jpg";
-import menu6 from "../assets/menu6.jpg";
-import menu7 from "../assets/menu7.jpg";
-import menu8 from "../assets/menu8.jpg";
-import browseimg from "../assets/browseimg.png";
-import placeorder from "../assets/placeorder.png";
-import cook from "../assets/cook.jpg";
+import "../../css/Landing.css";
+import heroBg from "../../assets/landingbanner.jpg";
+import hero1 from "../../assets/hero1.jpg";
+import img1 from "../../assets/img1.jpg";
+import ingredient from "../../assets/ingredients.jpg";
+import menu1 from "../../assets/menu1.jpg";
+import menu2 from "../../assets/menu2.jpg";
+import menu3 from "../../assets/menu3.jpg";
+import menu4 from "../../assets/menu4.jpg";
+import menu5 from "../../assets/menu5.jpg";
+import menu6 from "../../assets/menu6.jpg";
+import menu7 from "../../assets/menu7.jpg";
+import menu8 from "../../assets/menu8.jpg";
+import browseimg from "../../assets/browseimg.png";
+import placeorder from "../../assets/placeorder.png";
+import cook from "../../assets/cook.jpg";
 import { useNavigate } from "react-router-dom";
 
 const menuItems = [

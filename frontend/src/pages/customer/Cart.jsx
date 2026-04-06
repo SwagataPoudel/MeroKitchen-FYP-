@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getCart, updateCartItem, removeFromCart } from "../api/cartApi";
-import { placeOrder } from "../api/orderApi";
-import "../css/Cart.css";
+import { getCart, updateCartItem, removeFromCart } from "../../api/cartApi";
+import { placeOrder } from "../../api/orderApi";
+import "../../css/Cart.css";
 
 export default function Cart() {
   const [cart, setCart] = useState(null);

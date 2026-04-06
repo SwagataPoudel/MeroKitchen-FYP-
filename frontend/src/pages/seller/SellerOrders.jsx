@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { getSellerOrders, updateOrderStatus } from "../api/orderApi";
-import "../css/SellerOrders.css";
-import ChatBox from "../components/ChatBox";
-import SellerChatRequests from "../components/SellerChatRequests";
+import { getSellerOrders, updateOrderStatus } from "../../api/orderApi";
+import "../../css/SellerOrders.css";
+import ChatBox from "../../components/ChatBox";
+import SellerChatRequests from "../../components/SellerChatRequests";
 
 const STATUS_COLORS = {
   pending: { bg: "#fef9c3", color: "#854d0e" },

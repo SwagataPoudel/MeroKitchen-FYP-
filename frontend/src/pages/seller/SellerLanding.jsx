@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import "../css/SellerLanding.css";
-import banner1 from "../assets/sellerbanner1.jpg";
-import banner2 from "../assets/sellerbanner2.jpg";
-import banner3 from "../assets/sellerbanner3.jpg";
-import banner4 from "../assets/sellerbanner4.jpg";
+import "../../css/SellerLanding.css";
+import banner1 from "../../assets/sellerbanner1.jpg";
+import banner2 from "../../assets/sellerbanner2.jpg";
+import banner3 from "../../assets/sellerbanner3.jpg";
+import banner4 from "../../assets/sellerbanner4.jpg";
 
 const steps = [
   {

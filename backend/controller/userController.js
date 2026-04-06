@@ -8,25 +8,19 @@ const jwt = require("jsonwebtoken");
 async function createUserController(req, res) {
   try {
     const {
-      name,
-      email,
-      password,
-      role,
-      phone,
-      city,
-      defaultDeliveryAddress,
-      kitchenName,
+      name, email, password, role, phone, city,
+      defaultDeliveryAddress, kitchenName, storeLocation,
     } = req.body;
+
     if (!name || !email || !password)
       return res.status(400).json({ message: "All fields are required" });
 
     const existingUser = await User.findOne({ email });
     if (existingUser)
-      return res
-        .status(400)
-        .json({ message: "User with this email already exists" });
+      return res.status(400).json({ message: "User with this email already exists" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
+
     const newUser = new User({
       name,
       email,
@@ -36,17 +30,22 @@ async function createUserController(req, res) {
       city: city || "",
       defaultDeliveryAddress: defaultDeliveryAddress || "",
       kitchenName: kitchenName || "",
+      // Only set storeLocation if coordinates are provided
+      ...(storeLocation?.coordinates?.length === 2 && {
+        storeLocation: {
+          type: "Point",
+          coordinates: storeLocation.coordinates,
+          address: storeLocation.address || "",
+        },
+      }),
     });
+
     await newUser.save();
     const userResponse = newUser.toObject();
     delete userResponse.password;
-    res
-      .status(201)
-      .json({ message: "User created successfully", user: userResponse });
+    res.status(201).json({ message: "User created successfully", user: userResponse });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Internal Server Error", error: error.message });
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 }
 
@@ -67,8 +66,9 @@ async function loginHandleController(req, res) {
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.AUTH_SECRET_KEY,
-      { expiresIn: "1h" },
+      { expiresIn: "1h" }
     );
+
     res.status(200).json({
       message: "Login successful",
       accessToken: token,
@@ -76,9 +76,7 @@ async function loginHandleController(req, res) {
       userId: user._id,
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Internal Server Error", error: error.message });
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 }
 
@@ -88,39 +86,44 @@ async function getProfileController(req, res) {
     if (!user) return res.status(404).json({ message: "User not found" });
     res.status(200).json({ user });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Internal Server Error", error: error.message });
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 }
 
 async function updateProfileController(req, res) {
   try {
     const allowedFields = [
-      "name",
-      "phone",
-      "city",
-      "defaultDeliveryAddress",
-      "kitchenName",
-      "kitchenDescription",
-      "cuisineTypes",
-      "openingHours",
-      "isAvailable",
+      "name", "phone", "city", "defaultDeliveryAddress",
+      "kitchenName", "kitchenDescription", "cuisineTypes",
+      "openingHours", "isAvailable", "storeLocation",
     ];
     const updates = {};
     for (const field of allowedFields) {
       if (req.body[field] !== undefined) updates[field] = req.body[field];
     }
+
+    // Validate storeLocation if provided
+    if (updates.storeLocation) {
+      const loc = updates.storeLocation;
+      if (!loc.coordinates || loc.coordinates.length !== 2) {
+        delete updates.storeLocation;
+      } else {
+        updates.storeLocation = {
+          type: "Point",
+          coordinates: loc.coordinates,
+          address: loc.address || "",
+        };
+      }
+    }
+
     const user = await User.findByIdAndUpdate(
       req.user.id,
       { $set: updates },
-      { new: true },
+      { new: true }
     );
     res.status(200).json({ message: "Profile updated", user });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Internal Server Error", error: error.message });
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 }
 
@@ -133,30 +136,23 @@ async function updateProfilePhotoController(req, res) {
     const user = await User.findByIdAndUpdate(
       req.user.id,
       { $set: { profilePhoto: photoPath } },
-      { new: true },
+      { new: true }
     );
-    res
-      .status(200)
-      .json({ message: "Photo updated", profilePhoto: user.profilePhoto });
+    res.status(200).json({ message: "Photo updated", profilePhoto: user.profilePhoto });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Internal Server Error", error: error.message });
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 }
 
 async function getPublicProfileController(req, res) {
   try {
     const user = await User.findById(req.params.id).select(
-      "name role city profilePhoto kitchenName kitchenDescription cuisineTypes openingHours isAvailable isVerifiedSeller verificationStatus createdAt",
+      "name role city profilePhoto kitchenName kitchenDescription cuisineTypes openingHours isAvailable isVerifiedSeller verificationStatus storeLocation createdAt"
     );
     if (!user) return res.status(404).json({ message: "User not found" });
 
     if (user.role === "seller") {
-      const products = await Product.find({
-        seller: user._id,
-        availability: true,
-      })
+      const products = await Product.find({ seller: user._id, availability: true })
         .select("name photos price category ratings preparationTime")
         .sort({ createdAt: -1 });
 
@@ -169,20 +165,12 @@ async function getPublicProfileController(req, res) {
         .limit(10);
 
       const avgRating = reviews.length
-        ? (
-            reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
-          ).toFixed(1)
+        ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
         : null;
 
       return res.status(200).json({
-        user,
-        products,
-        reviews,
-        stats: {
-          totalProducts: products.length,
-          totalReviews: reviews.length,
-          avgRating,
-        },
+        user, products, reviews,
+        stats: { totalProducts: products.length, totalReviews: reviews.length, avgRating },
       });
     }
 
@@ -194,9 +182,7 @@ async function getPublicProfileController(req, res) {
 
     res.status(200).json({ user });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Internal Server Error", error: error.message });
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 }
 
@@ -205,15 +191,11 @@ async function submitVerificationController(req, res) {
     const user = await User.findById(req.user.id).populate("subscription");
     if (!user) return res.status(404).json({ message: "User not found" });
     if (user.role !== "seller")
-      return res
-        .status(403)
-        .json({ message: "Only sellers can submit verification" });
+      return res.status(403).json({ message: "Only sellers can submit verification" });
 
-    // ── Require active subscription ──────────────────────
     if (user.subscriptionStatus !== "active")
       return res.status(403).json({
-        message:
-          "You must have an active subscription to apply for verification.",
+        message: "You must have an active subscription to apply for verification.",
       });
 
     if (user.verificationStatus === "approved")
@@ -221,13 +203,9 @@ async function submitVerificationController(req, res) {
     if (user.verificationStatus === "pending")
       return res.status(400).json({ message: "Verification already pending" });
     if (!req.files || req.files.length === 0)
-      return res
-        .status(400)
-        .json({ message: "Please upload at least one document" });
+      return res.status(400).json({ message: "Please upload at least one document" });
 
-    const docPaths = req.files.map(
-      (f) => `/uploads/verification/${f.filename}`,
-    );
+    const docPaths = req.files.map((f) => `/uploads/verification/${f.filename}`);
 
     await User.findByIdAndUpdate(req.user.id, {
       $set: {
@@ -237,13 +215,9 @@ async function submitVerificationController(req, res) {
       },
     });
 
-    res
-      .status(200)
-      .json({ message: "Verification documents submitted successfully" });
+    res.status(200).json({ message: "Verification documents submitted successfully" });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Internal Server Error", error: error.message });
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 }
 

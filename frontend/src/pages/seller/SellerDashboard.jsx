@@ -4,9 +4,8 @@ import {
   createProduct,
   updateProduct,
   deleteProduct,
-} from "../api/productApi";
-import "../css/SellerDashboard.css";
-import SellerChatRequests from "../components/SellerChatRequests";
+} from "../../api/productApi";
+import "../../css/SellerDashboard.css";
 
 const CATEGORIES = [
   "breakfast",

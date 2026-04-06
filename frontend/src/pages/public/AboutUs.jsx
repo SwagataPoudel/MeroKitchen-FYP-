@@ -1,11 +1,11 @@
-import "../css/AboutUs.css";
-import img1 from "../assets/img1.jpg";
-import ingredient from "../assets/ingredients.jpg";
-import hero1 from "../assets/hero1.jpg";
-import about2 from "../assets/about2.jpg";
-import swagataImg from "../assets/swagata.jpeg";
-import sampadaImg from "../assets/sampada.jpeg";
-import shristikaImg from "../assets/shristika.jpeg";
+import "../../css/AboutUs.css";
+import img1 from "../../assets/img1.jpg";
+import ingredient from "../../assets/ingredients.jpg";
+import hero1 from "../../assets/hero1.jpg";
+import about2 from "../../assets/about2.jpg";
+import swagataImg from "../../assets/swagata.jpeg";
+import sampadaImg from "../../assets/sampada.jpeg";
+import shristikaImg from "../../assets/shristika.jpeg";
 
 const values = [
   {
@@ -53,17 +53,25 @@ const team = [
 ];
 
 const milestones = [
-  { year: "2019", event: "Mero Kitchen founded from a small home in Baneshwor" },
-  { year: "2020", event: "First 50 loyal families during lockdown — cooked through it all" },
+  {
+    year: "2019",
+    event: "Mero Kitchen founded from a small home in Baneshwor",
+  },
+  {
+    year: "2020",
+    event: "First 50 loyal families during lockdown — cooked through it all",
+  },
   { year: "2022", event: "Expanded to 200+ daily orders across Kathmandu" },
-  { year: "2024", event: "Launched online ordering & WhatsApp delivery tracking" },
+  {
+    year: "2024",
+    event: "Launched online ordering & WhatsApp delivery tracking",
+  },
   { year: "2025", event: "500+ happy families and growing every day" },
 ];
 
 const AboutUs = () => {
   return (
     <main className="about-page">
-
       {/* HERO */}
       <section className="au-hero">
         <div className="au-hero-image">
@@ -74,16 +82,18 @@ const AboutUs = () => {
 
         <div className="au-hero-text">
           <div className="au-label">Who We Are</div>
-          <h1>A Kitchen Full of <em>Stories</em></h1>
+          <h1>
+            A Kitchen Full of <em>Stories</em>
+          </h1>
 
           <p>
-            Mero Kitchen was born from a simple belief — that the best food
-            is made with love, patience, and ingredients you can trust.
+            Mero Kitchen was born from a simple belief — that the best food is
+            made with love, patience, and ingredients you can trust.
           </p>
 
           <p>
-            We don't have a restaurant. We have a home. And in that home,
-            every meal is prepared as if it's going to our own family.
+            We don't have a restaurant. We have a home. And in that home, every
+            meal is prepared as if it's going to our own family.
           </p>
 
           <div className="au-hero-stats">
@@ -113,11 +123,13 @@ const AboutUs = () => {
       <section className="au-story">
         <div className="au-story-text">
           <div className="au-label">Our Story</div>
-          <h2>How it all <em>began</em></h2>
+          <h2>
+            How it all <em>began</em>
+          </h2>
 
           <p>
-            In 2019, Maya Devi Shrestha began sending tiffin boxes to neighbours.
-            Word spread quickly and soon demand grew rapidly.
+            In 2019, Maya Devi Shrestha began sending tiffin boxes to
+            neighbours. Word spread quickly and soon demand grew rapidly.
           </p>
 
           <div className="au-timeline">
@@ -141,7 +153,9 @@ const AboutUs = () => {
         <div className="au-label" style={{ textAlign: "center" }}>
           What We Stand For
         </div>
-        <h2 className="au-section-title">Our <em>Values</em></h2>
+        <h2 className="au-section-title">
+          Our <em>Values</em>
+        </h2>
 
         <div className="au-values-grid">
           {values.map((v) => (
@@ -158,13 +172,14 @@ const AboutUs = () => {
       <section className="au-team">
         <div className="au-team-header">
           <div className="au-label">The People Behind the Food</div>
-          <h2 className="au-section-title">Meet the <em>Team</em></h2>
+          <h2 className="au-section-title">
+            Meet the <em>Team</em>
+          </h2>
         </div>
 
         <div className="au-team-grid">
           {team.map((t) => (
             <div key={t.name} className="au-team-card">
-
               {/* ✅ IMAGE INSTEAD OF INITIAL */}
               <div className="au-team-avatar">
                 <img src={t.image} alt={t.name} />
@@ -186,17 +201,16 @@ const AboutUs = () => {
         </div>
 
         <div className="au-cta-text">
-          <h2>Come eat with <em>us</em></h2>
-          <p>
-            Join hundreds of families who trust us with their daily meals.
-          </p>
+          <h2>
+            Come eat with <em>us</em>
+          </h2>
+          <p>Join hundreds of families who trust us with their daily meals.</p>
 
           <div className="au-cta-btns">
             <button className="au-btn-primary">Order Today </button>
           </div>
         </div>
       </section>
-
     </main>
   );
 };

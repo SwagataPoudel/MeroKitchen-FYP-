@@ -1,10 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "../css/Auth.css";
-import "../css/Profile.css";
-import "../css/Subscription.css";
-import logoImg from "../assets/logo.png";
+import "../../css/Auth.css";
+import "../../css/Profile.css";
+import "../../css/Subscription.css";
+import logoImg from "../../assets/logo.png";
 
 const PLANS = [
   {

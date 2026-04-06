@@ -1,23 +1,23 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import Auth from "./pages/Auth";
+import Auth from "./pages/public/Auth";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Landing from "./pages/landing";
-import BrowseProducts from "./pages/BrowseProducts";
-import ProductDetail from "./pages/ProductDetail";
-import SellerDashboard from "./pages/SellerDashboard";
-import Cart from "./pages/Cart";
-import MyOrders from "./pages/MyOrders";
-import SellerOrders from "./pages/SellerOrders";
+import Landing from "./pages/public/landing";
+import BrowseProducts from "./pages/customer/BrowseProducts";
+import ProductDetail from "./pages/customer/ProductDetail";
+import SellerDashboard from "./pages/seller/SellerDashboard";
+import Cart from "./pages/customer/Cart";
+import MyOrders from "./pages/customer/MyOrders";
+import SellerOrders from "./pages/seller/SellerOrders";
 import ScrollToTop from "./components/ScrollToTop";
 import AdminDashboard from "./pages/admin/AdminDashboard";
-import Profile from "./pages/Profile";
-import PublicProfile from "./pages/PublicProfile";
-import AboutUs from "./pages/AboutUs";
-import SellerLanding from "./pages/SellerLanding";
-import PaymentVerify from "./pages/PaymentVerify";
-import SubscriptionPage from "./pages/SubscriptionPage";
-import SubscriptionVerify from "./pages/SubscriptionVerify";
+import Profile from "./pages/public/Profile";
+import PublicProfile from "./pages/public/PublicProfile";
+import AboutUs from "./pages/public/AboutUs";
+import SellerLanding from "./pages/seller/SellerLanding";
+import PaymentVerify from "./pages/payment/PaymentVerify";
+import SubscriptionPage from "./pages/payment/SubscriptionPage";
+import SubscriptionVerify from "./pages/payment/SubscriptionVerify";
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const token = localStorage.getItem("token");
@@ -96,7 +96,6 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
-
                 <Route
                   path="/subscription"
                   element={

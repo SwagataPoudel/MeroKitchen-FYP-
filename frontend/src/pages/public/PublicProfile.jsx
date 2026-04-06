@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../css/PublicProfile.css";
+import "../../css/PublicProfile.css";
 
 export default function PublicProfile() {
   const { id } = useParams();

@@ -11,6 +11,9 @@ API.interceptors.request.use((req) => {
 export const getAllProducts = (filters = {}) =>
   API.get("/products", { params: filters });
 
+export const getNearbyProducts = (params = {}) =>
+  API.get("/products/nearby", { params });
+
 export const getProductById = (id) => API.get(`/products/${id}`);
 
 export const getMyProducts = () => API.get("/products/my");

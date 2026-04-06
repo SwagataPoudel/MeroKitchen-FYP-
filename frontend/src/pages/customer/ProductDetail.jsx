@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getProductById } from "../api/productApi";
-import { addToCart } from "../api/cartApi";
-import { getProductReviews } from "../api/reviewApi";
-import "../css/ProductDetail.css";
-import ChatRequestButton from "../components/ChatRequestButton";
+import { getProductById } from "../../api/productApi";
+import { addToCart } from "../../api/cartApi";
+import { getProductReviews } from "../../api/reviewApi";
+import "../../css/ProductDetail.css";
+import ChatRequestButton from "../../components/ChatRequestButton";
 
 const REVIEWS_PER_PAGE = 3;
 

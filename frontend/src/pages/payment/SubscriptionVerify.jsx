@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import "../css/Auth.css";
-import logoImg from "../assets/logo.png";
+import "../../css/Auth.css";
+import logoImg from "../../assets/logo.png";
 
 export default function SubscriptionVerify() {
   const navigate = useNavigate();

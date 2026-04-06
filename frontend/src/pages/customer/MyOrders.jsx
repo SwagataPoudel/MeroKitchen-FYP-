@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { getMyOrders, markDelivered } from "../api/orderApi";
-import { submitReview } from "../api/reviewApi";
+import { getMyOrders, markDelivered } from "../../api/orderApi";
+import { submitReview } from "../../api/reviewApi";
 import { useNavigate } from "react-router-dom";
-import "../css/MyOrders.css";
-import ChatBox from "../components/ChatBox";
+import "../../css/MyOrders.css";
+import ChatBox from "../../components/ChatBox";
 
 const STATUS_COLORS = {
   pending: { bg: "#fef9c3", color: "#854d0e" },

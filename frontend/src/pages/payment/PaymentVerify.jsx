@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { verifyKhaltiPayment } from "../api/orderApi";
+import { verifyKhaltiPayment } from "../../api/paymentApi";
 
 export default function PaymentVerify() {
   const [searchParams] = useSearchParams();
