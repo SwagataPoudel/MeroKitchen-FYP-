@@ -8,6 +8,8 @@ API.interceptors.request.use((req) => {
 });
 
 export const placeOrder = (data) => API.post("/orders", data);
+export const verifyKhaltiPayment = (pidx) =>
+  API.post("/orders/verify-payment", { pidx });
 export const getMyOrders = () => API.get("/orders/my");
 export const getSellerOrders = () => API.get("/orders/seller");
 export const updateOrderStatus = (id, status) =>

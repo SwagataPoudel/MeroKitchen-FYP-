@@ -11,16 +11,13 @@ import MyOrders from "./pages/MyOrders";
 import SellerOrders from "./pages/SellerOrders";
 import ScrollToTop from "./components/ScrollToTop";
 import AdminDashboard from "./pages/admin/AdminDashboard";
-import ManageUsers from "./pages/admin/ManageUsers";
-import ManageOrders from "./pages/admin/ManageOrders";
-import ManageProducts from "./pages/admin/ManageProducts";
-import ManageReviews from "./pages/admin/ManageReviews";
-import AdminHome from "./pages/admin/AdminHome";
 import Profile from "./pages/Profile";
 import PublicProfile from "./pages/PublicProfile";
-import VerificationRequests from "./pages/admin/VerificationRequests";
 import AboutUs from "./pages/AboutUs";
 import SellerLanding from "./pages/SellerLanding";
+import PaymentVerify from "./pages/PaymentVerify";
+import SubscriptionPage from "./pages/SubscriptionPage";
+import SubscriptionVerify from "./pages/SubscriptionVerify";
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const token = localStorage.getItem("token");
@@ -45,14 +42,7 @@ function App() {
               <AdminDashboard />
             </ProtectedRoute>
           }
-        >
-          <Route index element={<AdminHome />} />
-          <Route path="users" element={<ManageUsers />} />
-          <Route path="orders" element={<ManageOrders />} />
-          <Route path="products" element={<ManageProducts />} />
-          <Route path="reviews" element={<ManageReviews />} />
-          <Route path="verifications" element={<VerificationRequests />} />
-        </Route>
+        />
 
         <Route
           path="*"
@@ -95,6 +85,31 @@ function App() {
                   element={
                     <ProtectedRoute allowedRoles={["customer"]}>
                       <MyOrders />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/payment/verify"
+                  element={
+                    <ProtectedRoute allowedRoles={["customer"]}>
+                      <PaymentVerify />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route
+                  path="/subscription"
+                  element={
+                    <ProtectedRoute allowedRoles={["seller"]}>
+                      <SubscriptionPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/subscription/verify"
+                  element={
+                    <ProtectedRoute allowedRoles={["seller"]}>
+                      <SubscriptionVerify />
                     </ProtectedRoute>
                   }
                 />

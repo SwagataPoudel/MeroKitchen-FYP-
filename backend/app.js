@@ -11,7 +11,9 @@ var cartRouter = require("./routes/cart");
 var ordersRouter = require("./routes/orders");
 var reviewsRouter = require("./routes/reviews");
 var chatRouter = require("./routes/Chat");
-var adminRouter = require("./routes/admin"); // ← added
+var adminRouter = require("./routes/admin");
+const subscriptionRouter = require("./routes/subscription");
+
 require("dotenv").config();
 
 var app = express();
@@ -30,7 +32,8 @@ app.use("/products", productsRouter);
 app.use("/cart", cartRouter);
 app.use("/orders", ordersRouter);
 app.use("/reviews", reviewsRouter);
-app.use("/admin", adminRouter); // ← added
+app.use("/admin", adminRouter); 
+app.use("/subscription", subscriptionRouter); 
 
 const mongoose = require("mongoose");
 

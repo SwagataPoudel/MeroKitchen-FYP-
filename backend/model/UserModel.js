@@ -37,8 +37,21 @@ const userSchema = new mongoose.Schema(
     verificationDocuments: [{ type: String }], // file paths
     verificationNote: { type: String, default: "" }, // admin rejection note
     isVerifiedSeller: { type: Boolean, default: false },
+
+    // ── Subscription ────────────────────────────────
+    subscription: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Subscription",
+      default: null,
+    },
+    subscriptionStatus: {
+      type: String,
+      enum: ["none", "active", "expired"],
+      default: "none",
+    },
   },
-  { timestamps: true }
+
+  { timestamps: true },
 );
 
 const User = mongoose.model("User", userSchema);

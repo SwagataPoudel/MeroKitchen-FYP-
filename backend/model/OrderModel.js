@@ -38,9 +38,17 @@ const orderSchema = new mongoose.Schema(
     },
     specialRequest: { type: String, default: "" },
     deliveryAddress: { type: String, required: true },
+
+    // 👇 ADD THESE
+    paymentMethod: { type: String, enum: ["cod", "khalti"], default: "cod" },
+    paymentStatus: {
+      type: String,
+      enum: ["unpaid", "paid"],
+      default: "unpaid",
+    },
+    khaltiPidx: { type: String, default: "" },
   },
   { timestamps: true },
 );
-
 const Order = mongoose.model("Order", orderSchema);
 module.exports = Order;

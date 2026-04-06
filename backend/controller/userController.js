@@ -200,15 +200,22 @@ async function getPublicProfileController(req, res) {
   }
 }
 
-// ── NEW: Seller submits verification documents ──────────────
 async function submitVerificationController(req, res) {
   try {
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user.id).populate("subscription");
     if (!user) return res.status(404).json({ message: "User not found" });
     if (user.role !== "seller")
       return res
         .status(403)
         .json({ message: "Only sellers can submit verification" });
+
+    // ── Require active subscription ──────────────────────
+    if (user.subscriptionStatus !== "active")
+      return res.status(403).json({
+        message:
+          "You must have an active subscription to apply for verification.",
+      });
+
     if (user.verificationStatus === "approved")
       return res.status(400).json({ message: "Already verified" });
     if (user.verificationStatus === "pending")

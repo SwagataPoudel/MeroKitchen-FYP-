@@ -29,7 +29,10 @@ const Auth = () => {
     setLoading(true);
     const endpoint = isLogin ? "/users/login" : "/users/create";
     try {
-      const res = await axios.post(`http://localhost:3000${endpoint}`, formData);
+      const res = await axios.post(
+        `http://localhost:3000${endpoint}`,
+        formData,
+      );
       if (isLogin) {
         localStorage.setItem("token", res.data.accessToken);
         localStorage.setItem("accessToken", res.data.accessToken);
@@ -38,6 +41,7 @@ const Auth = () => {
         setMessage({ text: "Welcome back! Redirecting...", type: "success" });
         setTimeout(() => {
           if (res.data.role === "admin") navigate("/admin");
+          else if (res.data.role === "seller") navigate("/sell-with-us");
           else navigate("/");
         }, 1000);
       } else {
@@ -57,7 +61,6 @@ const Auth = () => {
   return (
     <div className="auth-page">
       <div className="auth-card">
-
         {/* LEFT: image panel */}
         <div
           className="auth-card-image"
@@ -66,21 +69,33 @@ const Auth = () => {
           }}
         >
           <div className="auth-card-image-text">
-            Real Food,<br />Made with <em>Love</em>
+            Real Food,
+            <br />
+            Made with <em>Love</em>
           </div>
         </div>
 
         {/* RIGHT: form panel */}
         <div className="auth-card-form">
           <div className="auth-logo" onClick={() => navigate("/")}>
-  <div className="auth-logo-icon">
-    <img src={logoImg} alt="Mero Kitchen" />
-  </div>
-  <div className="auth-logo-text">Mero <span>Kitchen</span></div>
-</div>
+            <div className="auth-logo-icon">
+              <img src={logoImg} alt="Mero Kitchen" />
+            </div>
+            <div className="auth-logo-text">
+              Mero <span>Kitchen</span>
+            </div>
+          </div>
 
           <h2 className="auth-heading">
-            {isLogin ? <>Welcome <em>back</em></> : <>Join <em>us</em> today</>}
+            {isLogin ? (
+              <>
+                Welcome <em>back</em>
+              </>
+            ) : (
+              <>
+                Join <em>us</em> today
+              </>
+            )}
           </h2>
           <p className="auth-subheading">
             {isLogin
@@ -89,7 +104,9 @@ const Auth = () => {
           </p>
 
           {message.text && (
-            <div className={`msg-banner ${message.type === "success" ? "msg-success" : "msg-error"}`}>
+            <div
+              className={`msg-banner ${message.type === "success" ? "msg-success" : "msg-error"}`}
+            >
               {message.text}
             </div>
           )}
@@ -101,11 +118,23 @@ const Auth = () => {
                 <div className="form-row">
                   <div className="form-group">
                     <label className="form-label">Full Name</label>
-                    <input className="form-input" name="name" placeholder="e.g. Sita Sharma" onChange={handleChange} required />
+                    <input
+                      className="form-input"
+                      name="name"
+                      placeholder="e.g. Sita Sharma"
+                      onChange={handleChange}
+                      required
+                    />
                   </div>
                   <div className="form-group">
                     <label className="form-label">Phone Number</label>
-                    <input className="form-input" name="phone" type="tel" placeholder="e.g. 98XXXXXXXX" onChange={handleChange} />
+                    <input
+                      className="form-input"
+                      name="phone"
+                      type="tel"
+                      placeholder="e.g. 98XXXXXXXX"
+                      onChange={handleChange}
+                    />
                   </div>
                 </div>
 
@@ -113,18 +142,37 @@ const Auth = () => {
                 <div className="form-row">
                   <div className="form-group">
                     <label className="form-label">City</label>
-                    <input className="form-input" name="city" placeholder="e.g. Kathmandu" onChange={handleChange} />
+                    <input
+                      className="form-input"
+                      name="city"
+                      placeholder="e.g. Kathmandu"
+                      onChange={handleChange}
+                    />
                   </div>
                   <div className="form-group">
                     <label className="form-label">Email Address</label>
-                    <input className="form-input" name="email" type="email" placeholder="you@example.com" onChange={handleChange} required />
+                    <input
+                      className="form-input"
+                      name="email"
+                      type="email"
+                      placeholder="you@example.com"
+                      onChange={handleChange}
+                      required
+                    />
                   </div>
                 </div>
 
                 {/* Password full width */}
                 <div className="form-group">
                   <label className="form-label">Password</label>
-                  <input className="form-input" name="password" type="password" placeholder="••••••••" onChange={handleChange} required />
+                  <input
+                    className="form-input"
+                    name="password"
+                    type="password"
+                    placeholder="••••••••"
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
 
                 {/* Role */}
@@ -132,27 +180,54 @@ const Auth = () => {
                   <label className="form-label">I want to</label>
                   <div className="role-grid">
                     <label className="role-option">
-                      <input type="radio" name="role" value="customer" defaultChecked onChange={handleChange} />
-                      <div className="role-label"><span className="role-emoji">🛒</span>Order Food</div>
+                      <input
+                        type="radio"
+                        name="role"
+                        value="customer"
+                        defaultChecked
+                        onChange={handleChange}
+                      />
+                      <div className="role-label">
+                        <span className="role-emoji">🛒</span>Order Food
+                      </div>
                     </label>
                     <label className="role-option">
-                      <input type="radio" name="role" value="seller" onChange={handleChange} />
-                      <div className="role-label"><span className="role-emoji">🍳</span>Sell Food</div>
+                      <input
+                        type="radio"
+                        name="role"
+                        value="seller"
+                        onChange={handleChange}
+                      />
+                      <div className="role-label">
+                        <span className="role-emoji">🍳</span>Sell Food
+                      </div>
                     </label>
                   </div>
                 </div>
 
                 {formData.role === "customer" && (
                   <div className="form-group">
-                    <label className="form-label">Default Delivery Address</label>
-                    <input className="form-input" name="defaultDeliveryAddress" placeholder="e.g. Baneshwor, Kathmandu" onChange={handleChange} />
+                    <label className="form-label">
+                      Default Delivery Address
+                    </label>
+                    <input
+                      className="form-input"
+                      name="defaultDeliveryAddress"
+                      placeholder="e.g. Baneshwor, Kathmandu"
+                      onChange={handleChange}
+                    />
                   </div>
                 )}
 
                 {formData.role === "seller" && (
                   <div className="form-group">
                     <label className="form-label">Kitchen Name</label>
-                    <input className="form-input" name="kitchenName" placeholder="e.g. Sita's Kitchen" onChange={handleChange} />
+                    <input
+                      className="form-input"
+                      name="kitchenName"
+                      placeholder="e.g. Sita's Kitchen"
+                      onChange={handleChange}
+                    />
                   </div>
                 )}
               </>
@@ -163,28 +238,50 @@ const Auth = () => {
               <>
                 <div className="form-group">
                   <label className="form-label">Email Address</label>
-                  <input className="form-input" name="email" type="email" placeholder="you@example.com" onChange={handleChange} required />
+                  <input
+                    className="form-input"
+                    name="email"
+                    type="email"
+                    placeholder="you@example.com"
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
                 <div className="form-group">
                   <label className="form-label">Password</label>
-                  <input className="form-input" name="password" type="password" placeholder="••••••••" onChange={handleChange} required />
+                  <input
+                    className="form-input"
+                    name="password"
+                    type="password"
+                    placeholder="••••••••"
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
               </>
             )}
 
             <button className="submit-btn" type="submit" disabled={loading}>
-              {loading ? "Please wait..." : isLogin ? "Sign In 🍽️" : "Create Account 🍽️"}
+              {loading
+                ? "Please wait..."
+                : isLogin
+                  ? "Sign In 🍽️"
+                  : "Create Account 🍽️"}
             </button>
           </form>
 
           <div className="auth-switch">
             {isLogin ? "Don't have an account? " : "Already have an account? "}
-            <button onClick={() => { setIsLogin(!isLogin); setMessage({ text: "", type: "" }); }}>
+            <button
+              onClick={() => {
+                setIsLogin(!isLogin);
+                setMessage({ text: "", type: "" });
+              }}
+            >
               {isLogin ? "Register here" : "Login here"}
             </button>
           </div>
         </div>
-
       </div>
     </div>
   );

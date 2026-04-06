@@ -39,17 +39,28 @@ export default function Cart() {
     fetchCart();
   };
 
-  const handlePlaceOrder = async () => {
+  const handlePlaceOrder = async (paymentMethod) => {
     if (!address.trim())
       return setMessage({
         text: "Please enter a delivery address.",
         type: "error",
       });
+
     setPlacing(true);
     try {
-      await placeOrder({ deliveryAddress: address, specialRequest });
-      setMessage({ text: "Order placed successfully! 🎉", type: "success" });
-      setTimeout(() => navigate("/orders"), 1500);
+      const res = await placeOrder({
+        deliveryAddress: address,
+        specialRequest,
+        paymentMethod,
+      });
+
+      if (paymentMethod === "khalti" && res.data.payment_url) {
+        // Redirect to Khalti payment page
+        window.location.href = res.data.payment_url;
+      } else {
+        setMessage({ text: "Order placed successfully! 🎉", type: "success" });
+        setTimeout(() => navigate("/orders"), 1500);
+      }
     } catch (err) {
       setMessage({
         text: err.response?.data?.message || "Failed to place order",
@@ -190,10 +201,19 @@ export default function Cart() {
 
                 <button
                   className="place-order-btn"
-                  onClick={handlePlaceOrder}
+                  onClick={() => handlePlaceOrder("cod")}
                   disabled={placing}
                 >
-                  {placing ? "Placing Order..." : "Place Order 🍽️"}
+                  {placing ? "Placing Order..." : "Cash on Delivery 🍽️"}
+                </button>
+
+                <button
+                  className="place-order-btn"
+                  onClick={() => handlePlaceOrder("khalti")}
+                  disabled={placing}
+                  style={{ background: "#5C2D8A", marginTop: "0.5rem" }}
+                >
+                  {placing ? "Redirecting..." : "Pay with Khalti 💜"}
                 </button>
               </div>
             </>

@@ -44,6 +44,8 @@ export default function Profile() {
   const [verifyDocs, setVerifyDocs] = useState([]);
   const [verifySubmitting, setVerifySubmitting] = useState(false);
   const [verifyMessage, setVerifyMessage] = useState({ text: "", type: "" });
+  const [subscriptionStatus, setSubscriptionStatus] = useState("none");
+  const [subscription, setSubscription] = useState(null);
 
   useEffect(() => {
     if (!token) return navigate("/auth");
@@ -69,6 +71,7 @@ export default function Profile() {
         // load verification info
         setVerificationStatus(u.verificationStatus || "none");
         setVerificationNote(u.verificationNote || "");
+        setSubscriptionStatus(u.subscriptionStatus || "none"); // ✅ moved inside .then()
       })
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -163,6 +166,28 @@ export default function Profile() {
 
   // ── Verification UI helper ──────────────────────────────
   const renderVerificationSection = () => {
+    // Step 1: Must have active subscription
+    if (subscriptionStatus !== "active") {
+      return (
+        <div className="verify-upload-box">
+          <div className="verify-title">Subscription Required 🔒</div>
+          <div className="verify-desc">
+            You need an active subscription to apply for the{" "}
+            <strong>Verified Homemade</strong> badge. Subscribe to unlock
+            verification and other seller benefits.
+          </div>
+          <button
+            className="submit-btn verify-submit-btn"
+            style={{ marginTop: 14 }}
+            onClick={() => navigate("/subscription")}
+          >
+            View Subscription Plans 🏅
+          </button>
+        </div>
+      );
+    }
+
+    // Step 2: Already verified
     if (verificationStatus === "approved") {
       return (
         <div className="verify-status-box verify-approved">
@@ -211,15 +236,14 @@ export default function Profile() {
       );
     }
 
-    // status === "none" — show upload form
+    // status === "none" — subscribed but not yet submitted
     return (
       <div className="verify-upload-box">
         <div className="verify-title">Get Verified 🏅</div>
         <div className="verify-desc">
           Upload documents (e.g. your ID, kitchen photos, food license) to apply
-          for the
-          <strong> Verified Homemade</strong> badge. Accepted formats: JPG, PNG,
-          PDF.
+          for the <strong>Verified Homemade</strong> badge. Accepted formats:
+          JPG, PNG, PDF.
         </div>
         {renderUploadForm()}
       </div>
