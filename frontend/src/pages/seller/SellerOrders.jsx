@@ -76,7 +76,7 @@ export default function SellerOrders() {
             </p>
           ) : orders.length === 0 ? (
             <div className="empty-state">
-              <div style={{ fontSize: "4rem" }}>📋</div>
+              
               <p>No orders yet.</p>
             </div>
           ) : (
@@ -111,11 +111,11 @@ export default function SellerOrders() {
                     {order.customer?.email}
                   </div>
                   <div className="order-address">
-                    📍 {order.deliveryAddress}
+                     {order.deliveryAddress}
                   </div>
                   {order.specialRequest && (
                     <div className="order-address">
-                      💬 {order.specialRequest}
+                       {order.specialRequest}
                     </div>
                   )}
 
@@ -129,7 +129,7 @@ export default function SellerOrders() {
                             className="order-item-img"
                           />
                         ) : (
-                          <div className="order-item-placeholder">🍲</div>
+                          <div className="order-item-placeholder"></div>
                         )}
                         <span className="order-item-name">
                           {item.product?.name}
@@ -196,7 +196,7 @@ export default function SellerOrders() {
                           cursor: "pointer",
                         }}
                       >
-                        💬{" "}
+                        {" "}
                         {openOrderChat === order._id
                           ? "Close Chat"
                           : "Chat with Customer"}

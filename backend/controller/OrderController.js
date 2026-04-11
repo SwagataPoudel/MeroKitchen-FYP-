@@ -2,6 +2,7 @@ const Order = require("../model/OrderModel");
 const Cart = require("../model/CartModel");
 const Product = require("../model/ProductModel");
 const ChatRequest = require("../model/ChatRequest");
+const Review = require("../model/ReviewModel");
 const axios = require("axios");
 
 async function placeOrderController(req, res) {
@@ -61,17 +62,15 @@ async function placeOrderController(req, res) {
 
     await Cart.findOneAndDelete({ customer: req.user.id });
 
-    // If COD, done
     if (paymentMethod === "cod") {
       return res
         .status(201)
         .json({ message: "Order placed successfully!", orders });
     }
 
-    // If Khalti, initiate payment for first order (single-seller assumed)
-    // For multi-seller, you'd loop — but typically one checkout at a time
+    
     const order = orders[0];
-    const totalInPaisa = order.totalAmount * 100; // Khalti uses paisa
+    const totalInPaisa = order.totalAmount * 100; 
 
     const khaltiRes = await axios.post(
       "https://dev.khalti.com/api/v2/epayment/initiate/",
@@ -93,8 +92,7 @@ async function placeOrderController(req, res) {
         },
       },
     );
-
-    // Save pidx to order
+    
     order.khaltiPidx = khaltiRes.data.pidx;
     await order.save();
 
@@ -205,10 +203,111 @@ async function getOrderByIdController(req, res) {
   }
 }
 
+async function getSellerStatsController(req, res) {
+  try {
+    const sellerId = req.user.id;
+
+    const orders = await Order.find({ seller: sellerId })
+      .populate("customer", "name")
+      .populate("items.product", "name")
+      .sort({ createdAt: -1 });
+
+    // ── Basic counts ──
+    const totalOrders = orders.length;
+    const uniqueCustomerIds = new Set(orders.map((o) => o.customer?._id?.toString()));
+    const totalCustomers = uniqueCustomerIds.size;
+
+    // ── Revenue ──
+    const completedStatuses = ["completed", "delivered"];
+    const activeStatuses = ["pending", "accepted", "preparing"];
+
+    const totalRevenue = orders
+      .filter((o) => completedStatuses.includes(o.status))
+      .reduce((sum, o) => sum + o.totalAmount, 0);
+
+    const pendingRevenue = orders
+      .filter((o) => activeStatuses.includes(o.status))
+      .reduce((sum, o) => sum + o.totalAmount, 0);
+
+    // ── Status breakdown ──
+    const statusBreakdown = {
+      pending: 0, accepted: 0, preparing: 0,
+      completed: 0, delivered: 0, declined: 0,
+    };
+    for (const o of orders) {
+      if (statusBreakdown.hasOwnProperty(o.status)) {
+        statusBreakdown[o.status]++;
+      }
+    }
+
+    // ── Monthly revenue — last 6 months ──
+    const now = new Date();
+    const monthlyRevenue = [];
+    for (let i = 5; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const label = d.toLocaleString("en-NP", { month: "short", year: "2-digit" });
+      const monthOrders = orders.filter((o) => {
+        const c = new Date(o.createdAt);
+        return (
+          c.getFullYear() === d.getFullYear() &&
+          c.getMonth() === d.getMonth() &&
+          completedStatuses.includes(o.status)
+        );
+      });
+      monthlyRevenue.push({
+        label,
+        revenue: monthOrders.reduce((s, o) => s + o.totalAmount, 0),
+        orders: monthOrders.length,
+      });
+    }
+
+    // ── Recent orders (last 10) ──
+    const recentOrders = orders.slice(0, 10).map((o) => ({
+      _id: o._id,
+      customerName: o.customer?.name || "Customer",
+      createdAt: o.createdAt,
+      itemCount: o.items.reduce((s, i) => s + i.quantity, 0),
+      totalAmount: o.totalAmount,
+      paymentStatus: o.paymentStatus,
+      status: o.status,
+    }));
+
+    // ── Reviews ──
+    const reviews = await Review.find({ seller: sellerId })
+      .populate("customer", "name")
+      .populate("product", "name")
+      .sort({ createdAt: -1 });
+
+    const totalReviews = reviews.length;
+    const avgRating =
+      totalReviews > 0
+        ? Math.round((reviews.reduce((s, r) => s + r.rating, 0) / totalReviews) * 10) / 10
+        : 0;
+
+    res.status(200).json({
+      totalOrders,
+      totalCustomers,
+      totalRevenue,
+      pendingRevenue,
+      statusBreakdown,
+      monthlyRevenue,
+      recentOrders,
+      avgRating,
+      totalReviews,
+      reviews,
+    });
+  } catch (error) {
+    console.error("Seller stats error:", error.message);
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
+  }
+}
+
+
 module.exports = {
   placeOrderController,
   getMyOrdersController,
   getSellerOrdersController,
   updateOrderStatusController,
   getOrderByIdController,
+  getSellerStatsController,
 };

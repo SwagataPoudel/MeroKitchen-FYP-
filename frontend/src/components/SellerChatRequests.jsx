@@ -67,7 +67,7 @@ export default function SellerChatRequests() {
                   backgroundColor: "#4F46E5", color: "#fff", border: "none",
                   borderRadius: "6px", padding: "0.4rem 1rem", cursor: "pointer",
                 }}>
-                  💬 {isOpen ? "Close Chat" : "Open Chat"}
+                   {isOpen ? "Close Chat" : "Open Chat"}
                 </button>
                 {isOpen && (
                   <div style={{ marginTop: "1rem" }}>

@@ -42,19 +42,19 @@ console.log({ currentUserId, role, productId, sellerId });
           border: "2px solid #4F46E5", borderRadius: "8px",
           padding: "0.5rem 1.2rem", cursor: "pointer", fontWeight: "600",
         }}>
-          💬 Chat with Seller
+          Chat with Seller
         </button>
       )}
 
       {request?.status === "pending" && (
         <p style={{ color: "#854d0e", background: "#fef9c3", padding: "0.5rem 1rem", borderRadius: "8px" }}>
-          ⏳ Chat request sent — waiting for seller to accept
+           Chat request sent — waiting for seller to accept
         </p>
       )}
 
       {request?.status === "declined" && (
         <p style={{ color: "#991b1b", background: "#fee2e2", padding: "0.5rem 1rem", borderRadius: "8px" }}>
-          ✗ Seller declined the chat request
+          Seller declined the chat request
         </p>
       )}
 
@@ -64,7 +64,7 @@ console.log({ currentUserId, role, productId, sellerId });
             backgroundColor: "#4F46E5", color: "#fff", border: "none",
             borderRadius: "8px", padding: "0.5rem 1.2rem", cursor: "pointer", fontWeight: "600",
           }}>
-            💬 {open ? "Close Chat" : "Open Chat"}
+             {open ? "Close Chat" : "Open Chat"}
           </button>
           {open && (
             <div style={{ marginTop: "1rem" }}>

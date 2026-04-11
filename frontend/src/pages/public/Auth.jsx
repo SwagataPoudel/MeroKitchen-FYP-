@@ -167,7 +167,7 @@ const Auth = () => {
                     <input
                       className="form-input"
                       name="name"
-                      placeholder="e.g. Sita Sharma"
+                      placeholder="e.g. Your name"
                       onChange={handleChange}
                       required
                     />
@@ -178,7 +178,7 @@ const Auth = () => {
                       className="form-input"
                       name="phone"
                       type="tel"
-                      placeholder="e.g. 98XXXXXXXX"
+                      placeholder="e.g. 9XXXXXXXX"
                       onChange={handleChange}
                     />
                   </div>
@@ -233,7 +233,7 @@ const Auth = () => {
                         onChange={handleChange}
                       />
                       <div className="role-label">
-                        <span className="role-emoji">🛒</span>Order Food
+                        <span className="role-emoji"></span>Order Food
                       </div>
                     </label>
                     <label className="role-option">
@@ -244,7 +244,7 @@ const Auth = () => {
                         onChange={handleChange}
                       />
                       <div className="role-label">
-                        <span className="role-emoji">🍳</span>Sell Food
+                        <span className="role-emoji"></span>Sell Food
                       </div>
                     </label>
                   </div>
@@ -279,7 +279,7 @@ const Auth = () => {
                     {/* Map Location Picker */}
                     <div className="form-group">
                       <label className="form-label">
-                        📍 Store Location{" "}
+                        Store Location{" "}
                         <span
                           style={{
                             fontWeight: 400,
@@ -305,7 +305,7 @@ const Auth = () => {
                           }}
                           onClick={() => setMapReady(true)}
                         >
-                          🗺️ Open Map Picker
+                           Open Map Picker
                         </button>
                       ) : (
                         <>
@@ -344,7 +344,7 @@ const Auth = () => {
                               );
                             }}
                           >
-                            📍 Use My Current Location
+                             Use My Current Location
                           </button>
 
                           <MapContainer
@@ -429,8 +429,8 @@ const Auth = () => {
               {loading
                 ? "Please wait..."
                 : isLogin
-                  ? "Sign In 🍽️"
-                  : "Create Account 🍽️"}
+                  ? "Sign In "
+                  : "Create Account "}
             </button>
           </form>
 

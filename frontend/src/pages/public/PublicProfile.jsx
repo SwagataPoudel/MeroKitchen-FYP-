@@ -17,7 +17,7 @@ export default function PublicProfile() {
       .finally(() => setLoading(false));
   }, [id]);
 
-  if (loading) return <div className="pub-loading">✨ Loading profile...</div>;
+  if (loading) return <div className="pub-loading"> Loading profile...</div>;
   if (!data) return <div className="pub-loading">User not found.</div>;
 
   const { user, products, reviews, stats } = data;
@@ -41,7 +41,7 @@ export default function PublicProfile() {
         </div>
         <div className="pub-hero-info">
           <div className="pub-role-badge">
-            {isSeller ? "🍳 Seller" : "🛒 Customer"}
+            {isSeller ? "Seller" : " Customer"}
           </div>
 
           <div className="pub-name-row">
@@ -59,15 +59,15 @@ export default function PublicProfile() {
           {isSeller && user.kitchenName && (
             <p className="pub-subname">by {user.name}</p>
           )}
-          {user.city && <p className="pub-city">📍 {user.city}</p>}
+          {user.city && <p className="pub-city"> {user.city}</p>}
           {isSeller && user.openingHours && (
-            <p className="pub-hours">🕐 {user.openingHours}</p>
+            <p className="pub-hours">{user.openingHours}</p>
           )}
           {isSeller && (
             <span
               className={`pub-avail ${user.isAvailable ? "open" : "closed"}`}
             >
-              {user.isAvailable ? "✅ Accepting Orders" : "🔴 Closed"}
+              {user.isAvailable ? " Accepting Orders" : " Closed"}
             </span>
           )}
         </div>
@@ -87,14 +87,14 @@ export default function PublicProfile() {
             </div>
             <div className="pub-stat">
               <div className="pub-stat-value">
-                {stats.avgRating ? `⭐ ${stats.avgRating}` : "New"}
+                {stats.avgRating ? ` ${stats.avgRating}` : "New"}
               </div>
               <div className="pub-stat-label">Avg Rating</div>
             </div>
             {/* ── Verified stat pill ── */}
             {user.isVerifiedSeller && (
               <div className="pub-stat">
-                <div className="pub-stat-value">🏅</div>
+               
                 <div className="pub-stat-label">Verified</div>
               </div>
             )}
@@ -189,7 +189,7 @@ export default function PublicProfile() {
                     <span className="pub-product-price">Rs. {p.price}</span>
                     {p.ratings?.count > 0 && (
                       <span className="pub-product-rating">
-                        ⭐ {p.ratings.average.toFixed(1)} ({p.ratings.count})
+                         {p.ratings.average.toFixed(1)} ({p.ratings.count})
                       </span>
                     )}
                   </div>
@@ -240,7 +240,7 @@ export default function PublicProfile() {
                         key={s}
                         className={s <= r.rating ? "star filled" : "star"}
                       >
-                        ★
+                        
                       </span>
                     ))}
                   </div>

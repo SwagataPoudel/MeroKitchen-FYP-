@@ -3,9 +3,11 @@ import Auth from "./pages/public/Auth";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Landing from "./pages/public/landing";
+import CustomerHome from "./pages/customer/CustomerHome";
 import BrowseProducts from "./pages/customer/BrowseProducts";
 import ProductDetail from "./pages/customer/ProductDetail";
 import SellerDashboard from "./pages/seller/SellerDashboard";
+import SellerAnalytics from "./pages/seller/SellerAnalytics";
 import Cart from "./pages/customer/Cart";
 import MyOrders from "./pages/customer/MyOrders";
 import SellerOrders from "./pages/seller/SellerOrders";
@@ -26,6 +28,14 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   if (allowedRoles && !allowedRoles.includes(role))
     return <Navigate to="/" replace />;
   return children;
+};
+
+// Smart home: redirect logged-in customers to /home
+const SmartHome = () => {
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
+  if (token && role === "customer") return <Navigate to="/home" replace />;
+  return <Landing />;
 };
 
 function App() {
@@ -50,7 +60,19 @@ function App() {
             <>
               <Header />
               <Routes>
-                <Route path="/" element={<Landing />} />
+                {/* Landing for guests, CustomerHome for logged-in customers */}
+                <Route path="/" element={<SmartHome />} />
+
+                {/* Dedicated customer home page */}
+                <Route
+                  path="/home"
+                  element={
+                    <ProtectedRoute allowedRoles={["customer"]}>
+                      <CustomerHome />
+                    </ProtectedRoute>
+                  }
+                />
+
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/products" element={<BrowseProducts />} />
                 <Route path="/products/:id" element={<ProductDetail />} />
@@ -60,6 +82,14 @@ function App() {
                   element={
                     <ProtectedRoute allowedRoles={["seller"]}>
                       <SellerDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/seller/analytics"
+                  element={
+                    <ProtectedRoute allowedRoles={["seller"]}>
+                      <SellerAnalytics />
                     </ProtectedRoute>
                   }
                 />

@@ -15,26 +15,9 @@ const PLANS = [
     duration: "30 days",
     features: ["List up to 10 products", "Standard support", "Verified badge eligibility"],
     color: "#7a8fa6",
-  },
-  {
-    key: "standard",
-    label: "Standard",
-    price: "Rs. 999",
-    amount: 99900,
-    duration: "30 days",
-    features: ["List up to 30 products", "Priority support", "Verified badge eligibility", "Featured in search"],
-    color: "#c8753a",
     popular: true,
   },
-  {
-    key: "premium",
-    label: "Premium",
-    price: "Rs. 1,999",
-    amount: 199900,
-    duration: "30 days",
-    features: ["Unlimited products", "Dedicated support", "Verified badge eligibility", "Top placement", "Analytics dashboard"],
-    color: "#2d7a4f",
-  },
+ 
 ];
 
 export default function SubscriptionPage() {

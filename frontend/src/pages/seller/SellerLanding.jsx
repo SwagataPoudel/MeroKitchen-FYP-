@@ -7,28 +7,28 @@ import banner4 from "../../assets/sellerbanner4.jpg";
 
 const steps = [
   {
-    n: "01",
+    
     emoji: "📝",
     title: "Create Your Account",
     desc: "Sign up as a seller in minutes. Fill in your kitchen name, cuisine types, and a short description.",
   },
   {
-    n: "02",
-    emoji: "🏅",
-    title: "Get Verified",
-    desc: "Submit your documents for our quick verification process and earn the Verified Homemade badge.",
-  },
-  {
-    n: "03",
+  
     emoji: "🍱",
     title: "List Your Dishes",
     desc: "Add your menu items with photos, prices, and prep times. Your kitchen goes live instantly.",
   },
   {
-    n: "04",
+    
     emoji: "💰",
     title: "Start Earning",
     desc: "Customers across Kathmandu discover your food, place orders, and you earn on every meal.",
+  },
+   {
+   
+    emoji: "🏅",
+    title: "Get Verified",
+    desc: "Submit your documents for our quick verification process and earn the Verified Homemade badge.",
   },
 ];
 
@@ -65,30 +65,6 @@ const perks = [
   },
 ];
 
-const testimonials = [
-  {
-    name: "Anita Maharjan",
-    kitchen: "Anita's Newari Kitchen",
-    loc: "Patan",
-    text: "I started with just 3 dishes. Within a month I had 50+ regular customers. Mero Kitchen changed my life.",
-    initial: "A",
-  },
-  {
-    name: "Ramesh Tamang",
-    kitchen: "Tamang Thali House",
-    loc: "Baneshwor",
-    text: "I cook traditional Tamang meals from my home. The platform is so easy to use — even my aamai uses it!",
-    initial: "R",
-  },
-  {
-    name: "Sunita Shrestha",
-    kitchen: "Sunita's Sel Roti Corner",
-    loc: "Bhaktapur",
-    text: "My sel roti and chia pudding became viral on the platform. Now I earn more than my office job!",
-    initial: "S",
-  },
-];
-
 const stats = [
   { num: "500+", label: "Active Customers" },
   { num: "50+", label: "Home Sellers" },
@@ -115,7 +91,6 @@ const SellerLanding = () => {
         <div className="sl-hero-overlay" />
 
         <div className="sl-hero-content">
-          <div className="sl-hero-badge">🍳 For Home Cooks & Kitchen Entrepreneurs</div>
           <h1>
             Turn Your <em>Home Kitchen</em><br />Into a Business
           </h1>
@@ -130,15 +105,6 @@ const SellerLanding = () => {
             <button className="sl-btn-ghost" onClick={() => document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" })}>
               See How It Works
             </button>
-          </div>
-
-          <div className="sl-hero-stats">
-            {stats.map((s) => (
-              <div className="sl-stat" key={s.label}>
-                <div className="sl-stat-num">{s.num}</div>
-                <div className="sl-stat-label">{s.label}</div>
-              </div>
-            ))}
           </div>
         </div>
 
@@ -172,7 +138,7 @@ const SellerLanding = () => {
             <div className="sl-step-card" key={s.n}>
               <div className="sl-step-icon">
                 {s.emoji}
-                <div className="sl-step-num">{s.n}</div>
+                
               </div>
               {i < steps.length - 1 && <div className="sl-step-arrow">→</div>}
               <h3>{s.title}</h3>
@@ -182,27 +148,45 @@ const SellerLanding = () => {
         </div>
       </section>
 
-      {/* ── TESTIMONIALS ─────────────────────── */}
-      <section className="sl-testimonials-section">
-        <div className="sl-section-label">Seller Stories</div>
-        <h2 className="sl-section-title" style={{ color: '#ce742a' }}>Hear from our <em style={{ color: '#ce742a' }}> sellers</em></h2>
-        <p className="sl-section-sub" style={{ color: '#ce742a' }}>Real home cooks, real success stories from across Kathmandu.</p>
-        <div className="sl-testimonials-grid">
-          {testimonials.map((t) => (
-            <div className="sl-testimonial-card" key={t.name}>
-              <div className="sl-stars">★★★★★</div>
-              <p>"{t.text}"</p>
-              <div className="sl-reviewer">
-                <div className="sl-reviewer-avatar">{t.initial}</div>
-                <div>
-                  <div className="sl-reviewer-name">{t.name}</div>
-                  <div className="sl-reviewer-kitchen">🍳 {t.kitchen} · 📍 {t.loc}</div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* ── COMMUNITY ─────────────────────── */}
+<section className="sl-testimonials-section">
+  <div className="sl-section-label">Our Community</div>
+  <h2 className="sl-section-title" style={{ color: '#ce742a' }}>
+    Growing every <em style={{ color: '#ce742a' }}>day</em>
+  </h2>
+  <p className="sl-section-sub" style={{ color: '#7a5c40' }}>
+    Home cooks across Kathmandu are already earning on Mero Kitchen. Here's what we've built together.
+  </p>
+
+  <div className="sl-testimonials-grid">
+    <div className="sl-testimonial-card" style={{ textAlign: "center" }}>
+      
+      <div style={{ fontFamily: "Playfair Display, serif", fontSize: "2.2rem", color: "#c8753a", fontWeight: 700 }}>50+</div>
+      <div style={{ fontWeight: 700, fontSize: "1rem", color: "#2d1a0e", margin: "8px 0 6px" }}>Active Home Sellers</div>
+      <div style={{ fontSize: "0.85rem", color: "#7a5c40", lineHeight: 1.6 }}>
+        Real home cooks from Baneshwor, Bhaktapur, Gatthaghar and more — all cooking from their own kitchens.
+      </div>
+    </div>
+
+    <div className="sl-testimonial-card" style={{ textAlign: "center" }}>
+    
+      <div style={{ fontFamily: "Playfair Display, serif", fontSize: "2.2rem", color: "#c8753a", fontWeight: 700 }}>500+</div>
+      <div style={{ fontWeight: 700, fontSize: "1rem", color: "#2d1a0e", margin: "8px 0 6px" }}>Hungry Customers</div>
+      <div style={{ fontSize: "0.85rem", color: "#7a5c40", lineHeight: 1.6 }}>
+        Customers across Kathmandu ordering homemade food daily — dal bhat, momos, sel roti and more.
+      </div>
+    </div>
+
+    <div className="sl-testimonial-card" style={{ textAlign: "center" }}>
+      
+      <div style={{ fontFamily: "Playfair Display, serif", fontSize: "2.2rem", color: "#c8753a", fontWeight: 700 }}>4.8 / 5</div>
+      <div style={{ fontWeight: 700, fontSize: "1rem", color: "#2d1a0e", margin: "8px 0 6px" }}>Average Seller Rating</div>
+      <div style={{ fontSize: "0.85rem", color: "#7a5c40", lineHeight: 1.6 }}>
+        Customers love homemade food. High ratings mean more visibility and more orders for you.
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* ── CTA ──────────────────────────────── */}
       <section className="sl-cta-section">
@@ -215,9 +199,6 @@ const SellerLanding = () => {
             Join 50+ home sellers already earning on Mero Kitchen. It's free to join — no commission surprises.
           </p>
           <div className="sl-cta-btns">
-            <button className="sl-btn-accent" onClick={() => navigate("/auth")}>
-              Join as a Seller 🍽️
-            </button>
             <button className="sl-btn-outline-light" onClick={() => navigate("/about")}>
               Learn More About Us
             </button>

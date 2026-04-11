@@ -71,7 +71,7 @@ export default function Profile() {
         // load verification info
         setVerificationStatus(u.verificationStatus || "none");
         setVerificationNote(u.verificationNote || "");
-        setSubscriptionStatus(u.subscriptionStatus || "none"); // ✅ moved inside .then()
+        setSubscriptionStatus(u.subscriptionStatus || "none"); 
       })
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -170,7 +170,7 @@ export default function Profile() {
     if (subscriptionStatus !== "active") {
       return (
         <div className="verify-upload-box">
-          <div className="verify-title">Subscription Required 🔒</div>
+          <div className="verify-title">Subscription Required </div>
           <div className="verify-desc">
             You need an active subscription to apply for the{" "}
             <strong>Verified Homemade</strong> badge. Subscribe to unlock
@@ -181,7 +181,7 @@ export default function Profile() {
             style={{ marginTop: 14 }}
             onClick={() => navigate("/subscription")}
           >
-            View Subscription Plans 🏅
+            View Subscription Plans 
           </button>
         </div>
       );
@@ -191,7 +191,7 @@ export default function Profile() {
     if (verificationStatus === "approved") {
       return (
         <div className="verify-status-box verify-approved">
-          <span className="verify-icon">✅</span>
+          
           <div>
             <div className="verify-title">Verified Homemade Seller</div>
             <div className="verify-desc">
@@ -206,7 +206,7 @@ export default function Profile() {
     if (verificationStatus === "pending") {
       return (
         <div className="verify-status-box verify-pending">
-          <span className="verify-icon">⏳</span>
+        
           <div>
             <div className="verify-title">Verification Pending</div>
             <div className="verify-desc">
@@ -239,7 +239,7 @@ export default function Profile() {
     // status === "none" — subscribed but not yet submitted
     return (
       <div className="verify-upload-box">
-        <div className="verify-title">Get Verified 🏅</div>
+       
         <div className="verify-desc">
           Upload documents (e.g. your ID, kitchen photos, food license) to apply
           for the <strong>Verified Homemade</strong> badge. Accepted formats:
@@ -266,7 +266,7 @@ export default function Profile() {
       {verifyDocs.length > 0 && (
         <ul className="verify-file-list">
           {verifyDocs.map((f, i) => (
-            <li key={i}>📄 {f.name}</li>
+            <li key={i}> {f.name}</li>
           ))}
         </ul>
       )}
@@ -333,7 +333,7 @@ export default function Profile() {
             )}
           </div>
           <label className="photo-upload-btn">
-            📷 Change Photo
+             Change Photo
             <input
               type="file"
               accept="image/*"
@@ -344,8 +344,7 @@ export default function Profile() {
         </div>
 
         <form onSubmit={handleSubmit}>
-          {/* ── Shared Fields ── */}
-          <div className="profile-section-label">Basic Info</div>
+          
 
           <div className="form-group">
             <label className="form-label">Full Name</label>
@@ -366,7 +365,7 @@ export default function Profile() {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              placeholder="98XXXXXXXX"
+              placeholder="XXXXXXXXXX"
             />
           </div>
 
@@ -458,8 +457,8 @@ export default function Profile() {
                 <div className="toggle-row">
                   <span className="toggle-desc">
                     {formData.isAvailable
-                      ? "✅ Currently accepting orders"
-                      : "🔴 Not accepting orders"}
+                      ? " Currently accepting orders"
+                      : " Not accepting orders"}
                   </span>
                   <label className="toggle-switch">
                     <input
@@ -480,7 +479,7 @@ export default function Profile() {
           )}
 
           <button className="submit-btn" type="submit" disabled={saving}>
-            {saving ? "Saving..." : "Save Changes 🍽️"}
+            {saving ? "Saving..." : "Save Changes "}
           </button>
         </form>
 

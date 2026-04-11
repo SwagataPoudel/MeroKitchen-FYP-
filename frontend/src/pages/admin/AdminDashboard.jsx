@@ -174,7 +174,9 @@ export default function AdminDashboard() {
       {/* ── Sidebar ── */}
       <aside className="adm-sidebar">
         <div className="adm-brand">
-          <div className="adm-brand-name">Mero<span>Kitchen</span></div>
+          <div className="logo-text">
+          Mero <span>Kitchen</span>
+        </div>
           <div className="adm-brand-sub">Admin Panel</div>
         </div>
         <nav className="adm-nav">
@@ -185,19 +187,19 @@ export default function AdminDashboard() {
               onClick={() => setActiveTab(tab)}
             >
               <span className="adm-nav-icon">
-                {tab === "Dashboard" && "📊"}
-                {tab === "Users" && "👥"}
-                {tab === "Orders" && "🧾"}
-                {tab === "Products" && "🍱"}
-                {tab === "Reviews" && "⭐"}
-                {tab === "Verifications" && "✅"}
+                {tab === "Dashboard" }
+                {tab === "Users" }
+                {tab === "Orders" }
+                {tab === "Products" }
+                {tab === "Reviews" }
+                {tab === "Verifications" }
               </span>
               <span className="adm-nav-label">{tab}</span>
             </button>
           ))}
         </nav>
         <button className="adm-logout" onClick={handleLogout}>
-          <span>🚪</span><span>Logout</span>
+          <span></span><span>Logout</span>
         </button>
       </aside>
 
@@ -220,11 +222,11 @@ export default function AdminDashboard() {
               <div>
                 <div className="adm-stats-grid">
                   {[
-                    { icon: "👤", label: "Users",    value: stats.totalUsers },
-                    { icon: "📦", label: "Orders",   value: stats.totalOrders },
-                    { icon: "🍱", label: "Products", value: stats.totalProducts },
-                    { icon: "⭐", label: "Reviews",  value: stats.totalReviews },
-                    { icon: "💰", label: "Revenue",  value: `Rs. ${stats.totalRevenue?.toLocaleString()}`, accent: true },
+                    { icon: "", label: "Users",    value: stats.totalUsers },
+                    { icon: "", label: "Orders",   value: stats.totalOrders },
+                    { icon: "", label: "Products", value: stats.totalProducts },
+                    { icon: "", label: "Reviews",  value: stats.totalReviews },
+                    { icon: "", label: "Revenue",  value: `Rs. ${stats.totalRevenue?.toLocaleString()}`, accent: true },
                   ].map((s) => (
                     <div className="adm-stat" key={s.label}>
                       <div className="adm-stat-icon">{s.icon}</div>
@@ -238,7 +240,7 @@ export default function AdminDashboard() {
                 <div className="adm-status-grid">
                   {ordersByStatus.map((s) => (
                     <div className="adm-status-pill" key={s._id}>
-                      <span className="adm-status-count" style={{ color: STATUS_COLORS[s._id] || "#333" }}>
+                      <span className="adm-status-count" style={{ color:  "white" }}>
                         {s.count}
                       </span>
                       <span className="adm-status-name">{s._id}</span>
@@ -445,7 +447,7 @@ export default function AdminDashboard() {
                             ? v.verificationDocuments.map((doc, i) => (
                                 <a key={doc} href={`http://localhost:3000${doc}`}
                                   target="_blank" rel="noreferrer" className="adm-doc-link">
-                                  📄 Doc {i + 1}
+                                  Doc {i + 1}
                                 </a>
                               ))
                             : <span className="adm-muted adm-small">None uploaded.</span>

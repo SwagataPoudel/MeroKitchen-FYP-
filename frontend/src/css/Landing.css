@@ -525,24 +525,11 @@ section {
 
 .steps-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 32px;
   position: relative;
 }
 
-.steps-grid::before {
-  content: "";
-  position: absolute;
-  top: 52px;
-  left: calc(12.5% + 28px);
-  right: calc(12.5% + 28px);
-  height: 2px;
-  background: repeating-linear-gradient(
-    90deg,
-    var(--spice) 0 10px,
-    transparent 10px 20px
-  );
-}
 
 .step-card {
   text-align: center;

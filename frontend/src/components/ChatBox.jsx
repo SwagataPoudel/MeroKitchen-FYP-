@@ -33,7 +33,7 @@ export default function ChatBox({ currentUserId, currentUserRole, otherUserId, r
 
   const sendMessage = () => {
     if (!input.trim()) return;
-    const msgData = { roomId, text: input };  // removed senderId/senderRole — server gets from JWT
+    const msgData = { roomId, text: input };  
     socket.emit("send_message", msgData);
     setInput("");
   };

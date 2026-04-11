@@ -1,0 +1,513 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap");
+
+:root {
+  --cream: #fffaf0;
+  --warm-dark: #2d1a0e;
+  --spice: #c8753a;
+  --gold: #e8a055;
+  --muted: #7a5c40;
+  --section-bg: #fdf5e4;
+}
+
+.ch-page {
+  background: var(--cream);
+  font-family: "Lato", sans-serif;
+  min-height: 100vh;
+}
+
+/* ── HERO ─────────────────────────────── */
+.ch-hero {
+  min-height: 100vh;
+  padding: 140px 80px 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Slider */
+.ch-slider {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.ch-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  animation: chSliderFade 20s infinite;
+  image-rendering: auto;
+}
+
+/* Per-slide position tuning to show the best part of each image */
+.ch-slide:nth-child(1) {
+  animation-delay: 0s;
+  background-position: center top;    /* top-down food shot — keep top */
+}
+.ch-slide:nth-child(2) {
+  animation-delay: 5s;
+  background-position: center center; /* dal bhat thali — centered */
+}
+.ch-slide:nth-child(3) {
+  animation-delay: 10s;
+  background-size: contain;           /* momo image is smaller — contain avoids stretch blur */
+  background-color: #111;             /* fill letterbox gaps with dark bg */
+  background-position: center center;
+}
+.ch-slide:nth-child(4) {
+  animation-delay: 15s;
+  background-size: contain;           /* naan image is smaller — contain avoids stretch blur */
+  background-color: #1a1a1a;
+  background-position: center center;
+}
+
+@keyframes chSliderFade {
+  0%   { opacity: 0; }
+  5%   { opacity: 1; }
+  25%  { opacity: 1; }
+  30%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.ch-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.52);
+  z-index: 1;
+}
+
+.ch-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+}
+
+.ch-greeting-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.12);
+  color: #f5d9b8;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 50px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.ch-hero-title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+  color: #fff8ef;
+  line-height: 1.2;
+  margin-bottom: 18px;
+}
+
+.ch-hero-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.ch-hero-sub {
+  color: rgba(255, 248, 239, 0.78);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  margin-bottom: 32px;
+  max-width: 560px;
+}
+
+.ch-hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.ch-btn-primary {
+  background: black;
+  color: #fff;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 50px;
+  font-family: "Lato", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: background 0.25s, transform 0.15s;
+}
+.ch-btn-primary:hover {
+  background: #a8602e;
+  transform: translateY(-2px);
+}
+
+.ch-btn-ghost {
+  background: transparent;
+  color: #fff8ef;
+  border: 1.5px solid rgba(255, 248, 239, 0.45);
+  padding: 13px 28px;
+  border-radius: 50px;
+  font-family: "Lato", sans-serif;
+  font-size: 0.95rem;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: border-color 0.25s, background 0.25s;
+}
+.ch-btn-ghost:hover {
+  border-color: rgba(255, 248, 239, 0.85);
+  background: rgba(255, 248, 239, 0.08);
+}
+
+.ch-hero-stats {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 16px;
+  padding: 20px 32px;
+  width: fit-content;
+  margin-top: 40px;
+}
+
+.ch-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 28px;
+}
+.ch-stat-num {
+  font-family: "Playfair Display", serif;
+  font-size: 1.8rem;
+  color: #fff8ef;
+  font-weight: 700;
+}
+.ch-stat-label {
+  font-size: 0.75rem;
+  color: rgba(255, 248, 239, 0.6);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.ch-stat-divider {
+  width: 1px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* ── SECTIONS ─────────────────────────── */
+.ch-section {
+  padding: 72px 0;
+}
+.ch-section-alt {
+  background: #ce742a;
+}
+.ch-section-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 80px;
+}
+
+.ch-section-header {
+  margin-bottom: 40px;
+}
+.ch-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--spice);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.ch-section-title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  color: white;
+}
+.ch-section-title em {
+  font-style: italic;
+  color: white;
+}
+
+/* ── CATEGORIES ───────────────────────── */
+.ch-categories {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+}
+
+.ch-cat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  border: 1.5px solid rgba(45, 26, 14, 0.08);
+  border-radius: 20px;
+  padding: 24px 12px;
+  cursor: pointer;
+  transition: all 0.25s;
+  font-family: "Lato", sans-serif;
+}
+.ch-cat-card:hover {
+  border-color: var(--spice);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(200, 117, 58, 0.12);
+}
+.ch-cat-emoji {
+  font-size: 2rem;
+  line-height: 1;
+}
+.ch-cat-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--warm-dark);
+  letter-spacing: 0.04em;
+  text-transform: capitalize;
+}
+
+/* ── PRODUCTS GRID ────────────────────── */
+.ch-products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.ch-product-card {
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(45, 26, 14, 0.07);
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.ch-product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 40px rgba(200, 117, 58, 0.13);
+}
+
+.ch-product-img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+}
+.ch-product-img-placeholder {
+  width: 100%;
+  height: 190px;
+  background: linear-gradient(135deg, #fef3e0, #fde9c5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5rem;
+}
+
+.ch-product-body {
+  padding: 18px 20px 20px;
+}
+.ch-product-cat {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--spice);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.ch-product-name {
+  font-family: "Playfair Display", serif;
+  font-size: 1.15rem;
+  color: var(--warm-dark);
+  margin-bottom: 4px;
+}
+.ch-product-seller {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 14px;
+  cursor: pointer;
+}
+.ch-seller-link {
+  color: var(--spice);
+  text-decoration: underline;
+}
+.ch-product-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ch-price {
+  font-family: "Playfair Display", serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--spice);
+}
+.ch-prep {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.ch-rating {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-top: 8px;
+}
+.ch-star {
+  font-size: 0.82rem;
+  color: #d6c4a8;
+}
+.ch-star.filled {
+  color: var(--gold);
+}
+.ch-rating-text {
+  font-size: 0.76rem;
+  color: var(--muted);
+  margin-left: 4px;
+}
+
+.ch-see-all {
+  text-align: center;
+  margin-top: 48px;
+}
+
+.ch-loading {
+  text-align: center;
+  padding: 60px 20px;
+  font-family: "Playfair Display", serif;
+  font-size: 1.1rem;
+  color: var(--muted);
+}
+
+/* ── QUICK ACTIONS ────────────────────── */
+.ch-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.ch-action-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #fff;
+  border: 1.5px solid rgba(45, 26, 14, 0.08);
+  border-radius: 16px;
+  padding: 22px 20px;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.ch-action-card:hover {
+  border-color: var(--spice);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(200, 117, 58, 0.1);
+}
+.ch-action-icon {
+  font-size: 1.8rem;
+  width: 52px;
+  height: 52px;
+  background: var(--section-bg);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.ch-action-body {
+  flex: 1;
+}
+.ch-action-body h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 1rem;
+  color: var(--warm-dark);
+  margin-bottom: 3px;
+}
+.ch-action-body p {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.ch-action-arrow {
+  font-size: 1.2rem;
+  color: var(--spice);
+  font-weight: 700;
+}
+
+/* ── TRUST STRIP ──────────────────────── */
+.ch-trust-strip {
+  background: #ce742a;
+  padding: 28px 80px;
+}
+.ch-trust-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: wrap;
+}
+.ch-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 248, 239, 0.85);
+  font-size: 0.88rem;
+  letter-spacing: 0.04em;
+  padding: 0 32px;
+}
+.ch-trust-icon {
+  font-size: 1.2rem;
+}
+.ch-trust-divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(255, 248, 239, 0.18);
+}
+
+/* ── RESPONSIVE ───────────────────────── */
+@media (max-width: 1024px) {
+  .ch-hero {
+    padding: 100px 48px 56px;
+  }
+  .ch-section-inner {
+    padding: 0 48px;
+  }
+  .ch-categories {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .ch-hero {
+    padding: 100px 24px 48px;
+    min-height: 90vh;
+  }
+  .ch-section-inner {
+    padding: 0 24px;
+  }
+  .ch-categories {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .ch-hero-stats {
+    padding: 16px 20px;
+  }
+  .ch-stat {
+    padding: 0 16px;
+  }
+  .ch-trust-strip {
+    padding: 24px;
+  }
+  .ch-trust-inner {
+    gap: 16px;
+  }
+  .ch-trust-divider {
+    display: none;
+  }
+}

@@ -15,7 +15,7 @@ const STATUS_COLORS = {
 };
 
 const STATUS_LABELS = {
-  completed: "Ready for Delivery 🛵",
+  completed: "Ready for Delivery ",
   delivered: "Delivered ✓",
 };
 
@@ -112,7 +112,7 @@ export default function MyOrders() {
             </p>
           ) : orders.length === 0 ? (
             <div className="empty-state">
-              <div style={{ fontSize: "4rem" }}>📦</div>
+              <div style={{ fontSize: "4rem" }}></div>
               <p>No orders yet.</p>
               <button
                 className="browse-btn"
@@ -162,7 +162,7 @@ export default function MyOrders() {
                             className="order-item-img"
                           />
                         ) : (
-                          <div className="order-item-placeholder">🍲</div>
+                          <div className="order-item-placeholder"></div>
                         )}
                         <span className="order-item-name">
                           {item.product?.name}
@@ -180,7 +180,7 @@ export default function MyOrders() {
                   <div className="order-footer">
                     <div>
                       <div className="order-address">
-                        📍 {order.deliveryAddress}
+                        {order.deliveryAddress}
                       </div>
                       {order.status === "completed" && (
                         <button
@@ -211,7 +211,7 @@ export default function MyOrders() {
                               >
                                 {alreadyReviewed
                                   ? `✓ Reviewed ${item.product?.name}`
-                                  : `⭐ Review ${item.product?.name}`}
+                                  : ` Review ${item.product?.name}`}
                               </button>
                             );
                           })}
@@ -236,7 +236,7 @@ export default function MyOrders() {
                         cursor: "pointer",
                       }}
                     >
-                      💬{" "}
+                      {" "}
                       {openOrderChat === order._id
                         ? "Close Chat"
                         : "Chat with Seller"}
@@ -278,7 +278,7 @@ export default function MyOrders() {
                   onMouseLeave={() => setHoverRating(0)}
                   onClick={() => setRating(star)}
                 >
-                  ★
+                  
                 </button>
               ))}
             </div>

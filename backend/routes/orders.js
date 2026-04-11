@@ -8,6 +8,7 @@ const {
   getSellerOrdersController,
   updateOrderStatusController,
   getOrderByIdController,
+  getSellerStatsController,
 } = require("../controller/OrderController");
 const { validateTokenMiddleware } = require("../middleware/AuthMiddleware");
 const {
@@ -78,6 +79,8 @@ router.get(
   sellerOnlyMiddleware,
   getSellerOrdersController,
 );
+// Add this — must be BEFORE any /:id routes to avoid "stats" being treated as an id
+router.get("/seller/stats", validateTokenMiddleware, sellerOnlyMiddleware, getSellerStatsController);
 router.put("/:id/status", validateTokenMiddleware, updateOrderStatusController);
 router.get("/:id", validateTokenMiddleware, getOrderByIdController);
 

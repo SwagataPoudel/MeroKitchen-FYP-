@@ -63,6 +63,7 @@ const Header = () => {
         <button className="nav-link" onClick={() => navigate("/about")}>
           About Us
         </button>
+
         {token && role === "customer" && (
           <>
             <button className="nav-link" onClick={() => navigate("/products")}>
@@ -72,7 +73,7 @@ const Header = () => {
               My Orders
             </button>
             <button className="nav-link" onClick={() => navigate("/cart")}>
-              Cart 
+              Cart
             </button>
             <button className="nav-link" onClick={() => navigate("/profile")}>
               Profile
@@ -96,6 +97,12 @@ const Header = () => {
             </button>
             <button className="nav-link" onClick={() => navigate("/profile")}>
               Profile
+            </button>
+             <button
+              className="nav-link"
+              onClick={() => navigate("/seller/analytics")}
+            >
+              Dashboard
             </button>
           </>
         )}
