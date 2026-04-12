@@ -16,7 +16,7 @@ export default function PaymentVerify() {
 
     verifyKhaltiPayment(pidx)
       .then(() => {
-        setStatus("✅ Payment successful! Redirecting to your orders...");
+        setStatus(" Payment successful! Redirecting to your orders...");
         setTimeout(() => navigate("/orders"), 2000);
       })
       .catch((err) => {

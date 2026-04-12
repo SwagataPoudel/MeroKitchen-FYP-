@@ -6,16 +6,16 @@ import "../../css/MyOrders.css";
 import ChatBox from "../../components/ChatBox";
 
 const STATUS_COLORS = {
-  pending: { bg: "#fef9c3", color: "#854d0e" },
-  accepted: { bg: "#dbeafe", color: "#1e40af" },
+  pending:   { bg: "#fef9c3", color: "#854d0e" },
+  accepted:  { bg: "#dbeafe", color: "#1e40af" },
   preparing: { bg: "#ffedd5", color: "#9a3412" },
   completed: { bg: "#fef08a", color: "#713f12" },
   delivered: { bg: "#dcfce7", color: "#166534" },
-  declined: { bg: "#fee2e2", color: "#991b1b" },
+  declined:  { bg: "#fee2e2", color: "#991b1b" },
 };
 
 const STATUS_LABELS = {
-  completed: "Ready for Delivery ",
+  completed: "Ready for Delivery",
   delivered: "Delivered ✓",
 };
 
@@ -23,15 +23,14 @@ export default function MyOrders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [reviewModal, setReviewModal] = useState(null);
-  // reviewModal = { orderId, productId, productName }
   const [reviewedSet, setReviewedSet] = useState(new Set());
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [comment, setComment] = useState("");
   const [reviewMsg, setReviewMsg] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const navigate = useNavigate();
   const [openOrderChat, setOpenOrderChat] = useState(null);
+  const navigate = useNavigate();
 
   const fetchOrders = () => {
     getMyOrders()
@@ -77,7 +76,7 @@ export default function MyOrders() {
         comment,
       });
       setReviewedSet((prev) =>
-        new Set(prev).add(`${reviewModal.orderId}_${reviewModal.productId}`),
+        new Set(prev).add(`${reviewModal.orderId}_${reviewModal.productId}`)
       );
       setReviewMsg("Review submitted! ✓");
       setTimeout(closeModal, 1200);
@@ -91,6 +90,7 @@ export default function MyOrders() {
   return (
     <>
       <div>
+        {/* ── Hero ── */}
         <div className="orders-hero">
           <div className="orders-hero-inner">
             <div className="section-label">Order History</div>
@@ -100,24 +100,17 @@ export default function MyOrders() {
           </div>
         </div>
 
+        {/* ── Body ── */}
         <div className="orders-body">
           {loading ? (
-            <p
-              style={{
-                fontFamily: "Playfair Display, serif",
-                color: "var(--muted)",
-              }}
-            >
+            <p style={{ fontFamily: "DM Serif Display, serif", color: "var(--muted)" }}>
               Loading orders...
             </p>
           ) : orders.length === 0 ? (
             <div className="empty-state">
-              <div style={{ fontSize: "4rem" }}></div>
+              <div style={{ fontSize: "4rem" }}>🛍️</div>
               <p>No orders yet.</p>
-              <button
-                className="browse-btn"
-                onClick={() => navigate("/products")}
-              >
+              <button className="browse-btn" onClick={() => navigate("/products")}>
                 Browse Menu
               </button>
             </div>
@@ -127,6 +120,8 @@ export default function MyOrders() {
               const label = STATUS_LABELS[order.status] || order.status;
               return (
                 <div key={order._id} className="order-card">
+
+                  {/* Header */}
                   <div className="order-header">
                     <div>
                       <div className="order-id">
@@ -148,10 +143,12 @@ export default function MyOrders() {
                     </span>
                   </div>
 
+                  {/* Seller */}
                   <div className="order-seller">
                     From <strong>{order.seller?.name}</strong>
                   </div>
 
+                  {/* Items */}
                   <div className="order-items">
                     {order.items.map((item, i) => (
                       <div key={i} className="order-item">
@@ -162,14 +159,10 @@ export default function MyOrders() {
                             className="order-item-img"
                           />
                         ) : (
-                          <div className="order-item-placeholder"></div>
+                          <div className="order-item-placeholder">🍲</div>
                         )}
-                        <span className="order-item-name">
-                          {item.product?.name}
-                        </span>
-                        <span className="order-item-qty">
-                          × {item.quantity}
-                        </span>
+                        <span className="order-item-name">{item.product?.name}</span>
+                        <span className="order-item-qty">× {item.quantity}</span>
                         <span className="order-item-price">
                           Rs. {item.price * item.quantity}
                         </span>
@@ -177,11 +170,11 @@ export default function MyOrders() {
                     ))}
                   </div>
 
+                  {/* Footer */}
                   <div className="order-footer">
                     <div>
-                      <div className="order-address">
-                        {order.deliveryAddress}
-                      </div>
+                      <div className="order-address">{order.deliveryAddress}</div>
+
                       {order.status === "completed" && (
                         <button
                           className="delivered-btn"
@@ -190,6 +183,7 @@ export default function MyOrders() {
                           Mark as Delivered
                         </button>
                       )}
+
                       {order.status === "delivered" && (
                         <div className="review-items">
                           {order.items.map((item, i) => {
@@ -205,42 +199,36 @@ export default function MyOrders() {
                                   openReviewModal(
                                     order._id,
                                     item.product._id,
-                                    item.product.name,
+                                    item.product.name
                                   )
                                 }
                               >
                                 {alreadyReviewed
                                   ? `✓ Reviewed ${item.product?.name}`
-                                  : ` Review ${item.product?.name}`}
+                                  : `⭐ Review ${item.product?.name}`}
                               </button>
                             );
                           })}
                         </div>
                       )}
                     </div>
+
                     <div className="order-total">Rs. {order.totalAmount}</div>
                   </div>
-                  <div style={{ marginTop: "0.75rem" }}>
+
+                  {/* Chat with Seller */}
+                  <div style={{ marginTop: "16px" }}>
                     <button
+                      className="chat-seller-btn"
                       onClick={() =>
                         setOpenOrderChat(
-                          openOrderChat === order._id ? null : order._id,
+                          openOrderChat === order._id ? null : order._id
                         )
                       }
-                      style={{
-                        backgroundColor: "#4F46E5",
-                        color: "#fff",
-                        border: "none",
-                        borderRadius: "8px",
-                        padding: "0.4rem 1rem",
-                        cursor: "pointer",
-                      }}
                     >
-                      {" "}
-                      {openOrderChat === order._id
-                        ? "Close Chat"
-                        : "Chat with Seller"}
+                      {openOrderChat === order._id ? "Close Chat" : "Chat with Seller"}
                     </button>
+
                     {openOrderChat === order._id && (
                       <div style={{ marginTop: "1rem" }}>
                         <ChatBox
@@ -252,6 +240,7 @@ export default function MyOrders() {
                       </div>
                     )}
                   </div>
+
                 </div>
               );
             })
@@ -259,13 +248,12 @@ export default function MyOrders() {
         </div>
       </div>
 
-      {/* Review Modal */}
+      {/* ── Review Modal ── */}
       {reviewModal && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={closeModal}>
-              ×
-            </button>
+            <button className="modal-close" onClick={closeModal}>×</button>
+
             <div className="modal-label">Rate your experience</div>
             <h2 className="modal-title">{reviewModal.productName}</h2>
 
@@ -278,14 +266,15 @@ export default function MyOrders() {
                   onMouseLeave={() => setHoverRating(0)}
                   onClick={() => setRating(star)}
                 >
-                  
+                  ★
                 </button>
               ))}
             </div>
+
             <div className="star-label">
               {["", "Poor", "Fair", "Good", "Great", "Excellent"][
                 hoverRating || rating
-              ] || "Tap a star"}
+              ] || "Tap a star to rate"}
             </div>
 
             <textarea
@@ -297,9 +286,7 @@ export default function MyOrders() {
             />
 
             {reviewMsg && (
-              <p
-                className={`review-msg ${reviewMsg.includes("✓") ? "success" : "error"}`}
-              >
+              <p className={`review-msg ${reviewMsg.includes("✓") ? "success" : "error"}`}>
                 {reviewMsg}
               </p>
             )}

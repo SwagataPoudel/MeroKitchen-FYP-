@@ -272,56 +272,29 @@ body {
   color: #b8956a;
 }
 
+/* ── Listing Actions ── */
 .listing-actions {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
+  align-items: stretch;
+  gap: 8px;
+  min-width: 110px;
 }
+
 .avail-badge {
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.06em;
-  padding: 4px 12px;
-  border-radius: 50px;
-  color: #fff;
-}
-.delete-btn {
-  padding: 7px 16px;
-  background: #fef2f2;
-  color: #dc2626;
-  border: 1.5px solid #fecaca;
-  border-radius: 50px;
-  font-family: "Lato", sans-serif;
-  font-size: 0.78rem;
-  letter-spacing: 0.08em;
   text-transform: uppercase;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.delete-btn:hover {
-  background: #dc2626;
+  padding: 7px 16px;
+  border-radius: 50px;
   color: #fff;
-  border-color: #dc2626;
+  text-align: center;
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
 }
 
-@media (max-width: 768px) {
-  .dash-hero {
-    padding: 100px 24px 40px;
-  }
-  .dash-body {
-    padding: 32px 20px 60px;
-  }
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-  .listing-card {
-    flex-wrap: wrap;
-  }
-}
-
-/* Edit button */
 .edit-btn {
   padding: 7px 16px;
   background: #eff6ff;
@@ -329,12 +302,14 @@ body {
   border: 1.5px solid #bfdbfe;
   border-radius: 50px;
   font-family: "Lato", sans-serif;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s;
+  width: 100%;
+  text-align: center;
 }
 .edit-btn:hover {
   background: #1d4ed8;
@@ -342,7 +317,29 @@ body {
   border-color: #1d4ed8;
 }
 
-/* Cuisine chips in form */
+.delete-btn {
+  padding: 7px 16px;
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1.5px solid #fecaca;
+  border-radius: 50px;
+  font-family: "Lato", sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+  text-align: center;
+}
+.delete-btn:hover {
+  background: #dc2626;
+  color: #fff;
+  border-color: #dc2626;
+}
+
+/* ── Cuisine chips in form ── */
 .cuisine-chips {
   display: flex;
   flex-wrap: wrap;
@@ -371,7 +368,7 @@ body {
   color: #fff;
 }
 
-/* Cuisine tags on listing card */
+/* ── Cuisine tags on listing card ── */
 .listing-cuisines {
   display: flex;
   flex-wrap: wrap;
@@ -386,4 +383,23 @@ body {
   background: rgba(200, 117, 58, 0.08);
   color: var(--spice);
   border: 1px solid rgba(200, 117, 58, 0.2);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .dash-hero {
+    padding: 100px 24px 40px;
+  }
+  .dash-body {
+    padding: 32px 20px 60px;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .listing-card {
+    flex-wrap: wrap;
+  }
+  .listing-actions {
+    width: 100%;
+  }
 }

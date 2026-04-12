@@ -188,8 +188,8 @@ export default function BrowseProducts() {
               {locationLoading
                 ? "📡 Locating..."
                 : nearbyMode
-                  ? "✅ Near Me ON"
-                  : "📍 Near Me"}
+                  ? " Near Me ON"
+                  : "Near Me"}
             </button>
 
             {nearbyMode && (
@@ -214,7 +214,7 @@ export default function BrowseProducts() {
                   onClick={() => setShowMap((v) => !v)}
                   style={{ fontSize: "0.8rem" }}
                 >
-                  {showMap ? "🗺️ Hide Map" : "🗺️ Show Map"}
+                  {showMap ? " Hide Map" : "Show Map"}
                 </button>
               </>
             )}
@@ -239,7 +239,7 @@ export default function BrowseProducts() {
 
                 {/* Customer marker */}
                 <Marker position={[userCoords.lat, userCoords.lng]}>
-                  <Popup>📍 You are here</Popup>
+                  <Popup> You are here</Popup>
                 </Marker>
 
                 {/* Radius circle */}
@@ -265,7 +265,7 @@ export default function BrowseProducts() {
                         <br />
                         {p.name} — Rs. {p.price}
                         <br />
-                        📍 {formatDistance(p.distanceMeters)} away
+                         {formatDistance(p.distanceMeters)} away
                       </Popup>
                     </Marker>
                   ) : null,
@@ -287,7 +287,7 @@ export default function BrowseProducts() {
                 color: "#a05c2e",
               }}
             >
-              📍 Showing kitchens within{" "}
+               Showing kitchens within{" "}
               <strong>{formatDistance(maxDistance)}</strong> of your location —
               sorted by nearest first.
             </div>
@@ -295,10 +295,10 @@ export default function BrowseProducts() {
 
           {/* Grid */}
           {loading ? (
-            <p className="loading-text">✨ Loading delicious food...</p>
+            <p className="loading-text"> Loading delicious food...</p>
           ) : products.length === 0 ? (
             <div className="empty-state">
-              <div style={{ fontSize: "4rem" }}>🍽️</div>
+              <div style={{ fontSize: "4rem" }}></div>
               <p>
                 {nearbyMode
                   ? "No kitchens found nearby. Try increasing the distance."
@@ -351,7 +351,7 @@ export default function BrowseProducts() {
                       <span
                         className="avail-badge"
                         style={{
-                          background: p.availability ? "#4a9c5d" : "#c0392b",
+                          background: p.availability ? "#e07b39" : "#c0392b",
                         }}
                       >
                         {p.availability ? "Available" : "Unavailable"}
@@ -368,12 +368,12 @@ export default function BrowseProducts() {
                             fontWeight: 600,
                           }}
                         >
-                          📍 {formatDistance(p.distanceMeters)}
+                           {formatDistance(p.distanceMeters)}
                         </span>
                       )}
                     </div>
                     <div className="prep-time">
-                      ⏱ {p.preparationTime} mins prep
+                      {p.preparationTime} mins prep
                     </div>
                     {p.ratings?.count > 0 && (
                       <div className="product-rating">

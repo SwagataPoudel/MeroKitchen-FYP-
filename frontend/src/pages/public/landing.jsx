@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import "../../css/Landing.css";
-import heroBg from "../../assets/landingbanner.jpg";
+import heroBg from "../../assets/banner.jpg";
 import hero1 from "../../assets/hero1.jpg";
 import img1 from "../../assets/img1.jpg";
 import ingredient from "../../assets/ingredients.jpg";
@@ -62,7 +62,6 @@ const Landing = () => {
           style={{ backgroundImage: `url(${heroBg})` }}
         >
           <div className="hero-content">
-            <div className="hero-badge">🏠 Home-Cooked · Delivered Fresh</div>
             <h1>
               Real Food,
               <br />
@@ -89,9 +88,7 @@ const Landing = () => {
           </div>
 
           <div className="hero-visual">
-            <div className="hero-plate">
-              <img src={hero1} alt="Hero dish" />
-            </div>
+           
           </div>
         </section>
 
@@ -129,12 +126,12 @@ const Landing = () => {
               <li>Hygiene-certified home kitchen</li>
             </ul>
             <button
-              className="btn-primary"
-              style={{ marginTop: "28px" }}
-              onClick={() => navigate("/about")}
-            >
-              Read Our Full Story →
-            </button>
+  className="btn-primary"
+  style={{ marginTop: "28px", backgroundColor: "black", color: "#fff8ef" }}
+  onClick={() => navigate("/about")}
+>
+  Read Our Full Story →
+</button>
           </div>
         </section>
 

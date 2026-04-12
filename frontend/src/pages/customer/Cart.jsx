@@ -204,7 +204,7 @@ export default function Cart() {
                   onClick={() => handlePlaceOrder("cod")}
                   disabled={placing}
                 >
-                  {placing ? "Placing Order..." : "Cash on Delivery 🍽️"}
+                  {placing ? "Placing Order..." : "Cash on Delivery "}
                 </button>
 
                 <button
@@ -213,7 +213,7 @@ export default function Cart() {
                   disabled={placing}
                   style={{ background: "#5C2D8A", marginTop: "0.5rem" }}
                 >
-                  {placing ? "Redirecting..." : "Pay with Khalti 💜"}
+                  {placing ? "Redirecting..." : "Pay with Khalti "}
                 </button>
               </div>
             </>

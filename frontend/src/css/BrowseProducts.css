@@ -89,8 +89,8 @@ body {
   color: var(--spice);
 }
 .filter-tab.active {
-  background: var(--warm-dark);
-  border-color: var(--warm-dark);
+  background: #c8753a;
+  border-color: #c8753a;
   color: #fff8ef;
 }
 
@@ -214,6 +214,7 @@ body {
   padding: 4px 12px;
   border-radius: 50px;
   color: #fff;
+  background-color: #c8753a;
 }
 .prep-time {
   font-size: 0.8rem;

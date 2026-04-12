@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { getSellerChatRequests, updateChatRequest } from "../api/chatApi";
 import ChatBox from "./ChatBox";
+import "../css/SellerChatRequests.css";
 
 export default function SellerChatRequests() {
   const currentUserId = localStorage.getItem("userId");
   const [requests, setRequests] = useState([]);
-  const [openChat, setOpenChat] = useState(null); // requestId
+  const [openChat, setOpenChat] = useState(null);
 
   useEffect(() => {
     getSellerChatRequests().then(setRequests).catch(console.error);
@@ -14,7 +15,9 @@ export default function SellerChatRequests() {
   const handleRespond = async (requestId, status) => {
     try {
       const updated = await updateChatRequest(requestId, status);
-      setRequests((prev) => prev.map((r) => (r._id === requestId ? { ...r, status: updated.status } : r)));
+      setRequests((prev) =>
+        prev.map((r) => (r._id === requestId ? { ...r, status: updated.status } : r))
+      );
     } catch (err) {
       console.error(err);
     }
@@ -23,54 +26,51 @@ export default function SellerChatRequests() {
   if (requests.length === 0) return null;
 
   return (
-    <div style={{ marginBottom: "2rem" }}>
-      <h3 style={{ fontFamily: "Playfair Display, serif", marginBottom: "1rem" }}>
-        💬 Chat Requests
-      </h3>
+    <div className="chat-requests-wrapper">
+      <h3 className="chat-requests-title">Chat Requests</h3>
+
       {requests.map((req) => {
         const roomId = `product_${req.productId?._id}_${[currentUserId, req.customerId?._id].sort().join("_")}`;
         const isOpen = openChat === req._id;
+
         return (
-          <div key={req._id} style={{
-            border: "1px solid #e5e7eb", borderRadius: "10px",
-            padding: "1rem", marginBottom: "1rem", backgroundColor: "#fff",
-          }}>
-            <div style={{ marginBottom: "0.5rem" }}>
+          <div key={req._id} className="chat-request-card">
+            <div className="chat-request-info">
               <strong>{req.customerId?.name}</strong> wants to chat about{" "}
               <strong>{req.productId?.name}</strong>
             </div>
 
             {req.status === "pending" && (
-              <div style={{ display: "flex", gap: "0.5rem" }}>
-                <button onClick={() => handleRespond(req._id, "accepted")} style={{
-                  backgroundColor: "#4F46E5", color: "#fff", border: "none",
-                  borderRadius: "6px", padding: "0.4rem 1rem", cursor: "pointer",
-                }}>
+              <div className="chat-request-actions">
+                <button
+                  className="chat-req-accept-btn"
+                  onClick={() => handleRespond(req._id, "accepted")}
+                >
                   Accept
                 </button>
-                <button onClick={() => handleRespond(req._id, "declined")} style={{
-                  backgroundColor: "#fee2e2", color: "#991b1b", border: "none",
-                  borderRadius: "6px", padding: "0.4rem 1rem", cursor: "pointer",
-                }}>
+                <button
+                  className="chat-req-decline-btn"
+                  onClick={() => handleRespond(req._id, "declined")}
+                >
                   Decline
                 </button>
               </div>
             )}
 
             {req.status === "declined" && (
-              <span style={{ color: "#991b1b", fontSize: "0.85rem" }}>✗ Declined</span>
+              <span className="chat-req-declined-label">Declined</span>
             )}
 
             {req.status === "accepted" && (
               <>
-                <button onClick={() => setOpenChat(isOpen ? null : req._id)} style={{
-                  backgroundColor: "#4F46E5", color: "#fff", border: "none",
-                  borderRadius: "6px", padding: "0.4rem 1rem", cursor: "pointer",
-                }}>
-                   {isOpen ? "Close Chat" : "Open Chat"}
+                <button
+                  className="chat-req-open-btn"
+                  onClick={() => setOpenChat(isOpen ? null : req._id)}
+                >
+                  {isOpen ? "Close Chat" : "Open Chat"}
                 </button>
                 {isOpen && (
-                  <div style={{ marginTop: "1rem" }}>
+                  <div className="chat-req-chatbox">
                     <ChatBox
                       currentUserId={currentUserId}
                       currentUserRole="seller"

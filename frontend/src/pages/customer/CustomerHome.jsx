@@ -57,7 +57,7 @@ export default function CustomerHome() {
         <div className="ch-hero-overlay" />
 
         <div className="ch-hero-content">
-          <div className="ch-greeting-badge">{greeting} 👋</div>
+          <div className="ch-greeting-badge">{greeting} 🙏</div>
           <h1 className="ch-hero-title">
             What are you <em>craving</em> today?
           </h1>
@@ -81,23 +81,7 @@ export default function CustomerHome() {
             </button>
           </div>
 
-          <div className="ch-hero-stats">
-            <div className="ch-stat">
-              <span className="ch-stat-num">50+</span>
-              <span className="ch-stat-label">Home Cooks</span>
-            </div>
-            <div className="ch-stat-divider" />
-            <div className="ch-stat">
-              <span className="ch-stat-num">200+</span>
-              <span className="ch-stat-label">Dishes Daily</span>
-            </div>
-            <div className="ch-stat-divider" />
-            <div className="ch-stat">
-              <span className="ch-stat-num">4.8★</span>
-              <span className="ch-stat-label">Avg Rating</span>
-            </div>
           </div>
-        </div>
       </section>
 
       {/* ── QUICK CATEGORY SHORTCUTS ── */}

@@ -151,52 +151,50 @@ async function getAllReviewsController(req, res) {
 async function getVerificationRequestsController(req, res) {
   try {
     const requests = await User.find({ verificationStatus: "pending" }).select(
-      "name email kitchenName city verificationDocuments verificationStatus createdAt",
+      "name email kitchenName city verificationDocuments verificationStatus subscriptionStatus createdAt"
     );
     res.status(200).json({ requests });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Internal Server Error", error: error.message });
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 }
 
-// ── NEW: Approve or reject a verification request ──────────
 async function updateVerificationStatusController(req, res) {
   try {
     const { status, note } = req.body;
     if (!["approved", "rejected"].includes(status))
-      return res
-        .status(400)
-        .json({ message: "Status must be approved or rejected" });
+      return res.status(400).json({ message: "Status must be approved or rejected" });
 
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
     if (user.verificationStatus !== "pending")
-      return res
-        .status(400)
-        .json({ message: "No pending verification for this user" });
+      return res.status(400).json({ message: "No pending verification for this user" });
+
+    // Badge only granted if BOTH docs approved AND subscription is active
+    const isFullyVerified = status === "approved" && user.subscriptionStatus === "active";
 
     const updates = {
       verificationStatus: status,
-      isVerifiedSeller: status === "approved",
+      isVerifiedSeller: isFullyVerified,
       verificationNote: note || "",
     };
 
     const updated = await User.findByIdAndUpdate(
       req.params.id,
       { $set: updates },
-      { new: true },
+      { new: true }
     ).select("-password");
 
     res.status(200).json({
-      message: `Verification ${status}`,
+      message: isFullyVerified
+        ? "Approved. Seller is now fully verified with badge."
+        : status === "approved"
+        ? "Documents approved, but seller has no active subscription. Badge withheld."
+        : `Verification ${status}`,
       user: updated,
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Internal Server Error", error: error.message });
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 }
 

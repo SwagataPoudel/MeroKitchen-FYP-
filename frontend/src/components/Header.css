@@ -27,6 +27,9 @@ body {
   box-shadow: 0 2px 16px rgba(45, 26, 14, 0.08);
   color: black;
 }
+.header.scrolled .logo-mero {
+  color: #c8753a;
+}
 
 .header.scrolled:hover {
   box-shadow:  8px 32px rgba(45, 26, 14, 0.2);
@@ -44,6 +47,17 @@ body {
 .header-logo:hover {
   transform: scale(1.08);
 }
+
+.logo-mero {
+  color: #c8753a;
+  font-style: normal;
+  transition: color 0.3s;
+}
+
+.header-logo:hover .logo-mero {
+  color: #c8753a;
+}
+
 .logo-icon {
   width: 40px;
   height: 40px;

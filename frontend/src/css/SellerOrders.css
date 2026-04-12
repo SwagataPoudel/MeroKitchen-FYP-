@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap");
+
 :root {
   --cream: #fffaf0;
   --warm-dark: #2d1a0e;
@@ -6,24 +7,16 @@
   --gold: #e8a055;
   --muted: #7a5c40;
 }
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-body {
-  background: var(--cream);
-  font-family: "Lato", sans-serif;
-}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--cream); font-family: "Lato", sans-serif; }
 
 .seller-orders-hero {
   background: linear-gradient(160deg, #1e1008 0%, #2d1a0e 100%);
   padding: 120px 80px 56px;
 }
-.seller-orders-hero-inner {
-  max-width: 900px;
-  margin: 0 auto;
-}
+.seller-orders-hero-inner { max-width: 900px; margin: 0 auto; }
+
 .section-label {
   font-size: 0.75rem;
   letter-spacing: 0.2em;
@@ -32,15 +25,13 @@ body {
   font-weight: 700;
   margin-bottom: 12px;
 }
+
 .orders-title {
   font-family: "Playfair Display", serif;
   font-size: clamp(2rem, 3vw, 2.8rem);
   color: #fff8ef;
 }
-.orders-title em {
-  font-style: italic;
-  color: var(--gold);
-}
+.orders-title em { font-style: italic; color: var(--gold); }
 
 .orders-body {
   max-width: 900px;
@@ -56,6 +47,7 @@ body {
   box-shadow: 0 4px 16px rgba(45, 26, 14, 0.05);
   border: 1px solid rgba(45, 26, 14, 0.06);
 }
+
 .order-header {
   display: flex;
   justify-content: space-between;
@@ -64,18 +56,13 @@ body {
   flex-wrap: wrap;
   gap: 12px;
 }
-.order-id {
-  font-size: 0.78rem;
-  color: var(--muted);
-}
-.order-date {
-  font-size: 0.82rem;
-  color: var(--muted);
-}
+.order-id { font-size: 0.78rem; color: var(--muted); }
+.order-date { font-size: 0.82rem; color: var(--muted); }
+
 .status-badge {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   padding: 5px 14px;
   border-radius: 50px;
@@ -84,11 +71,10 @@ body {
 .order-customer {
   font-size: 0.88rem;
   color: var(--muted);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
-.order-customer strong {
-  color: var(--warm-dark);
-}
+.order-customer strong { color: var(--warm-dark); }
+
 .order-address {
   font-size: 0.82rem;
   color: var(--muted);
@@ -101,11 +87,7 @@ body {
   gap: 10px;
   margin-bottom: 20px;
 }
-.order-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+.order-item { display: flex; align-items: center; gap: 12px; }
 .order-item-img {
   width: 52px;
   height: 52px;
@@ -116,37 +98,29 @@ body {
 .order-item-placeholder {
   width: 52px;
   height: 52px;
-  background: linear-gradient(135deg, #fef3e0, #fde9c5);
+  background: #fef3e0;
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.4rem;
 }
-.order-item-name {
-  font-size: 0.92rem;
-  color: var(--warm-dark);
-  flex: 1;
-}
-.order-item-qty {
-  font-size: 0.82rem;
-  color: var(--muted);
-}
-.order-item-price {
-  font-size: 0.92rem;
-  font-weight: 700;
-  color: var(--spice);
-}
+.order-item-name { font-size: 0.92rem; color: var(--warm-dark); flex: 1; }
+.order-item-qty { font-size: 0.82rem; color: var(--muted); }
+.order-item-price { font-size: 0.92rem; font-weight: 700; color: var(--spice); }
 
 .order-footer {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   padding-top: 16px;
   border-top: 1px solid rgba(45, 26, 14, 0.08);
+  gap: 14px;
+}
+
+.order-footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
   gap: 12px;
 }
+
 .order-total {
   font-family: "Playfair Display", serif;
   font-size: 1.1rem;
@@ -154,11 +128,8 @@ body {
   color: var(--warm-dark);
 }
 
-.action-btns {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
+.action-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+
 .action-btn {
   padding: 7px 18px;
   border-radius: 50px;
@@ -171,55 +142,57 @@ body {
   cursor: pointer;
   transition: all 0.2s;
 }
-.action-btn.accept {
-  background: #dbeafe;
-  color: #1e40af;
-}
-.action-btn.accept:hover {
-  background: #1e40af;
-  color: #fff;
-}
-.action-btn.prepare {
-  background: #ffedd5;
-  color: #9a3412;
-}
-.action-btn.prepare:hover {
-  background: #9a3412;
-  color: #fff;
-}
-.action-btn.complete {
-  background: #dcfce7;
-  color: #166534;
-}
-.action-btn.complete:hover {
-  background: #166534;
-  color: #fff;
-}
-.action-btn.decline {
-  background: #fee2e2;
-  color: #991b1b;
-}
-.action-btn.decline:hover {
-  background: #991b1b;
-  color: #fff;
+.action-btn.accept { background: #dbeafe; color: #c8753a;}
+.action-btn.accept:hover { background: #c8753a; color: #fff; }
+.action-btn.prepare { background: #ffedd5; color: #9a3412; }
+.action-btn.prepare:hover { background: #9a3412; color: #fff; }
+.action-btn.complete { background: #dcfce7; color: #166534; }
+.action-btn.complete:hover { background: #166534; color: #fff; }
+.action-btn.decline { background: #fee2e2; color: #991b1b; }
+.action-btn.decline:hover { background: #991b1b; color: #fff; }
+
+/* Chat */
+.order-chat-wrapper {
+  width: 100%;
+  padding-top: 14px;
+  border-top: 1px solid rgba(45, 26, 14, 0.06);
 }
 
-.empty-state {
-  text-align: center;
-  padding: 80px 20px;
+.chat-toggle-btn {
+  font-family: "Lato", sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  background: transparent;
+  color: var(--spice);
+  border: 2px solid var(--spice);
+  padding: 8px 22px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s;
 }
+.chat-toggle-btn:hover {
+  background: var(--spice);
+  color: #fff8ef;
+}
+
+.order-chatbox {
+  margin-top: 16px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(45, 26, 14, 0.08);
+}
+
+/* Empty state */
+.empty-state { text-align: center; padding: 80px 20px; }
 .empty-state p {
   font-family: "Playfair Display", serif;
   font-size: 1.4rem;
   color: var(--muted);
-  margin-top: 16px;
 }
 
 @media (max-width: 768px) {
-  .seller-orders-hero {
-    padding: 100px 24px 40px;
-  }
-  .orders-body {
-    padding: 32px 20px 60px;
-  }
+  .seller-orders-hero { padding: 100px 24px 40px; }
+  .orders-body { padding: 32px 20px 60px; }
 }

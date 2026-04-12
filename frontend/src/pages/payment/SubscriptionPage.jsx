@@ -96,7 +96,7 @@ export default function SubscriptionPage() {
         </button>
 
         <p className="sub-note">
-          🔒 Secure payment via Khalti. Your subscription activates immediately after payment.
+          Secure payment via Khalti. Your subscription activates immediately after payment.
         </p>
       </div>
     </div>

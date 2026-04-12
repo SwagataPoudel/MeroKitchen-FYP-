@@ -71,7 +71,7 @@ export default function Profile() {
         // load verification info
         setVerificationStatus(u.verificationStatus || "none");
         setVerificationNote(u.verificationNote || "");
-        setSubscriptionStatus(u.subscriptionStatus || "none"); 
+        setSubscriptionStatus(u.subscriptionStatus || "none");
       })
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -166,86 +166,113 @@ export default function Profile() {
 
   // ── Verification UI helper ──────────────────────────────
   const renderVerificationSection = () => {
-    // Step 1: Must have active subscription
-    if (subscriptionStatus !== "active") {
-      return (
-        <div className="verify-upload-box">
-          <div className="verify-title">Subscription Required </div>
-          <div className="verify-desc">
-            You need an active subscription to apply for the{" "}
-            <strong>Verified Homemade</strong> badge. Subscribe to unlock
-            verification and other seller benefits.
+    const hasSubscription = subscriptionStatus === "active";
+    const docStatus = verificationStatus;
+
+    const statusIcon = (ok) => (ok ? "✅" : "⬜");
+
+    return (
+      <div className="verify-upload-box">
+        {/* Dual checklist */}
+        <div className="verify-checklist">
+          <div className="verify-check-item">
+            {statusIcon(hasSubscription)}{" "}
+            <span>
+              Active Subscription{" "}
+              {!hasSubscription && (
+                <button
+                  className="verify-inline-link"
+                  onClick={() => navigate("/subscription")}
+                >
+                  Subscribe →
+                </button>
+              )}
+            </span>
           </div>
-          <button
-            className="submit-btn verify-submit-btn"
+          <div className="verify-check-item">
+            {statusIcon(docStatus === "approved")}{" "}
+            <span>
+              Verification Documents{" "}
+              {docStatus === "pending" && (
+                <span className="verify-badge-pending">Under Review</span>
+              )}
+              {docStatus === "rejected" && (
+                <span className="verify-badge-rejected">Rejected</span>
+              )}
+            </span>
+          </div>
+        </div>
+
+        {/* Both complete */}
+        {hasSubscription && docStatus === "approved" && (
+          <div
+            className="verify-status-box verify-approved"
             style={{ marginTop: 14 }}
-            onClick={() => navigate("/subscription")}
           >
-            View Subscription Plans 
-          </button>
-        </div>
-      );
-    }
-
-    // Step 2: Already verified
-    if (verificationStatus === "approved") {
-      return (
-        <div className="verify-status-box verify-approved">
-          
-          <div>
-            <div className="verify-title">Verified Homemade Seller</div>
+            <div className="verify-title">✅ Verified Homemade Seller</div>
             <div className="verify-desc">
-              Your kitchen has been verified by Mero Kitchen. A badge is shown
-              on your public profile.
+              Your kitchen is fully verified. A badge is shown on your public
+              profile.
             </div>
           </div>
-        </div>
-      );
-    }
+        )}
 
-    if (verificationStatus === "pending") {
-      return (
-        <div className="verify-status-box verify-pending">
-        
-          <div>
-            <div className="verify-title">Verification Pending</div>
+        {/* Docs approved but no subscription */}
+        {!hasSubscription && docStatus === "approved" && (
+          <div
+            className="verify-status-box verify-pending"
+            style={{ marginTop: 14 }}
+          >
+            <div className="verify-title">
+              ⚠️ Documents Approved — Subscription Needed
+            </div>
             <div className="verify-desc">
-              Your documents have been submitted and are under review. We'll
-              update you soon.
+              Your documents were approved! Subscribe to receive your verified
+              badge.
+            </div>
+            <button
+              className="submit-btn verify-submit-btn"
+              style={{ marginTop: 10 }}
+              onClick={() => navigate("/subscription")}
+            >
+              View Subscription Plans
+            </button>
+          </div>
+        )}
+
+        {/* Subscribed but docs pending */}
+        {hasSubscription && docStatus === "pending" && (
+          <div
+            className="verify-status-box verify-pending"
+            style={{ marginTop: 14 }}
+          >
+            <div className="verify-title">🕐 Documents Under Review</div>
+            <div className="verify-desc">
+              Your subscription is active. We're reviewing your documents —
+              we'll notify you soon.
             </div>
           </div>
-        </div>
-      );
-    }
+        )}
 
-    if (verificationStatus === "rejected") {
-      return (
-        <div className="verify-status-box verify-rejected">
-          <span className="verify-icon">❌</span>
-          <div>
-            <div className="verify-title">Verification Rejected</div>
+        {/* Rejection note */}
+        {docStatus === "rejected" && (
+          <div
+            className="verify-status-box verify-rejected"
+            style={{ marginTop: 14 }}
+          >
+            <div className="verify-title">Documents Rejected</div>
             {verificationNote && (
               <div className="verify-desc">Reason: {verificationNote}</div>
             )}
-            <div className="verify-desc" style={{ marginTop: "8px" }}>
-              You can resubmit new documents below.
+            <div className="verify-desc" style={{ marginTop: 8 }}>
+              Please resubmit corrected documents below.
             </div>
           </div>
-          {renderUploadForm()}
-        </div>
-      );
-    }
+        )}
 
-    // status === "none" — subscribed but not yet submitted
-    return (
-      <div className="verify-upload-box">
-       
-        <div className="verify-desc">
-          Upload documents (e.g. your ID, kitchen photos, food license) to apply
-          for the <strong>Verified Homemade</strong> badge. Accepted formats:
-          JPG, PNG, PDF.
-        </div>
-        {renderUploadForm()}
+        {/* Upload form — show if not yet submitted or rejected */}
+        {(docStatus === "none" || docStatus === "rejected") &&
+          renderUploadForm()}
       </div>
     );
   };
@@ -253,7 +280,7 @@ export default function Profile() {
   const renderUploadForm = () => (
     <div className="verify-form">
       <label className="verify-upload-label">
-        📎 Choose Documents (up to 5)
+         Choose Documents (up to 5)
         <input
           type="file"
           accept="image/*,.pdf"
@@ -284,7 +311,7 @@ export default function Profile() {
         onClick={handleVerifySubmit}
         disabled={verifySubmitting}
       >
-        {verifySubmitting ? "Submitting..." : "Submit for Verification 🚀"}
+        {verifySubmitting ? "Submitting..." : "Submit for Verification"}
       </button>
     </div>
   );
@@ -333,7 +360,7 @@ export default function Profile() {
             )}
           </div>
           <label className="photo-upload-btn">
-             Change Photo
+            Change Photo
             <input
               type="file"
               accept="image/*"
@@ -344,8 +371,6 @@ export default function Profile() {
         </div>
 
         <form onSubmit={handleSubmit}>
-          
-
           <div className="form-group">
             <label className="form-label">Full Name</label>
             <input
@@ -478,9 +503,29 @@ export default function Profile() {
             </>
           )}
 
-          <button className="submit-btn" type="submit" disabled={saving}>
-            {saving ? "Saving..." : "Save Changes "}
-          </button>
+          <button
+  type="submit"
+  disabled={saving}
+  style={{
+    width: "100%",
+    padding: "14px",
+    background: saving ? "#c8753a" : "#c8753a",
+    color: "#fff",
+    border: "none",
+    borderRadius: "12px",
+    fontSize: "0.95rem",
+    fontWeight: "700",
+    fontFamily: "'Lato', sans-serif",
+    letterSpacing: "0.05em",
+    cursor: saving ? "not-allowed" : "pointer",
+    opacity: saving ? 0.7 : 1,
+    transition: "all 0.2s",
+    marginTop: "24px",
+    boxShadow: saving ? "none" : "0 4px 16px rgba(200, 117, 58, 0.35)",
+  }}
+>
+  {saving ? "Saving..." : "Save Changes"}
+</button>
         </form>
 
         {/* ── Verification Section (sellers only) ── */}

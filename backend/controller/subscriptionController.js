@@ -93,7 +93,6 @@ async function verifySubscriptionPaymentController(req, res) {
     const { pidx } = req.body;
     if (!pidx) return res.status(400).json({ message: "pidx is required" });
 
-    // Lookup payment from Khalti
     const khaltiRes = await axios.post(
       "https://dev.khalti.com/api/v2/epayment/lookup/",
       { pidx },
@@ -102,26 +101,19 @@ async function verifySubscriptionPaymentController(req, res) {
           Authorization: `Key ${process.env.KHALTI_SECRET_KEY}`,
           "Content-Type": "application/json",
         },
-      },
+      }
     );
 
     const { status } = khaltiRes.data;
-
-    if (status !== "Completed") {
+    if (status !== "Completed")
       return res.status(400).json({ message: "Payment not completed", status });
-    }
 
-    // Find subscription by pidx
     const subscription = await Subscription.findOne({ khaltiPidx: pidx });
     if (!subscription)
       return res.status(404).json({ message: "Subscription not found" });
-
     if (subscription.paymentStatus === "paid")
-      return res
-        .status(400)
-        .json({ message: "Subscription already activated" });
+      return res.status(400).json({ message: "Subscription already activated" });
 
-    // Activate subscription
     const plan = PLANS[subscription.plan];
     const startDate = new Date();
     const endDate = new Date();
@@ -133,26 +125,26 @@ async function verifySubscriptionPaymentController(req, res) {
     subscription.endDate = endDate;
     await subscription.save();
 
-    // Update user
+    // Fetch user to check if docs are already approved
+    const user = await User.findById(subscription.seller);
+    const isFullyVerified = user?.verificationStatus === "approved";
+
+    // DO NOT touch verificationStatus here — only update subscription fields + badge if earned
     await User.findByIdAndUpdate(subscription.seller, {
       subscription: subscription._id,
       subscriptionStatus: "active",
-      // Also update verificationStatus to pending so they can now submit docs
-      verificationStatus: "pending",
+      ...(isFullyVerified && { isVerifiedSeller: true }),
     });
 
     return res.status(200).json({
-      message: "Subscription activated successfully!",
+      message: isFullyVerified
+        ? "Subscription activated and verified badge granted!"
+        : "Subscription activated! Submit verification documents to earn your badge.",
       subscription,
     });
   } catch (error) {
-    console.error(
-      "Verify subscription error:",
-      error.response?.data || error.message,
-    );
-    res
-      .status(500)
-      .json({ message: "Verification failed", error: error.message });
+    console.error("Verify subscription error:", error.response?.data || error.message);
+    res.status(500).json({ message: "Verification failed", error: error.message });
   }
 }
 

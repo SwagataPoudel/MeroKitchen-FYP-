@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import "../../css/Auth.css";
+import "../../css/SubscriptionVerify.css";
 import logoImg from "../../assets/logo.png";
 
 export default function SubscriptionVerify() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [status, setStatus] = useState("verifying"); // verifying | success | failed
+  const [status, setStatus] = useState("verifying");
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -31,52 +32,44 @@ export default function SubscriptionVerify() {
   }, []);
 
   return (
-    <div className="auth-page" style={{ background: "black" }}>
-      <div className="auth-card" style={{ maxWidth: 480, margin: "auto", padding: 48, borderRadius: 28, textAlign: "center" }}>
-        <div className="auth-logo" onClick={() => navigate("/")}>
-          <div className="auth-logo-icon">
+    <div className="sv-page">
+      <div className="sv-card">
+        <div className="sv-logo" onClick={() => navigate("/")}>
+          <div className="sv-logo-icon">
             <img src={logoImg} alt="Mero Kitchen" />
           </div>
-          <div className="auth-logo-text">Mero <span>Kitchen</span></div>
+          <div className="sv-logo-text">Mero <span>Kitchen</span></div>
         </div>
 
         {status === "verifying" && (
-          <>
-            <div style={{ fontSize: "3rem", margin: "24px 0" }}>⏳</div>
-            <h2 className="auth-heading">Verifying Payment...</h2>
-            <p className="auth-subheading">Please wait while we confirm your payment with Khalti.</p>
-          </>
+          <div className="sv-body">
+            <div className="sv-emoji">⏳</div>
+            <h2 className="sv-title">Verifying Payment...</h2>
+            <p className="sv-desc">Please wait while we confirm your payment with Khalti.</p>
+          </div>
         )}
 
         {status === "success" && (
-          <>
-            <div style={{ fontSize: "3rem", margin: "24px 0" }}>🎉</div>
-            <h2 className="auth-heading" style={{ color: "#2d7a4f" }}>Subscription Active!</h2>
-            <p className="auth-subheading">{message}</p>
-            <p className="auth-subheading">You can now submit your verification documents.</p>
-            <button
-              className="submit-btn"
-              style={{ marginTop: 24 }}
-              onClick={() => navigate("/profile")}
-            >
-              Go to Profile 🍽️
+          <div className="sv-body">
+            <div className="sv-emoji">🎉</div>
+            <h2 className="sv-title sv-title--success">Subscription Active!</h2>
+            <p className="sv-desc">{message}</p>
+            <p className="sv-desc">Submit your verification documents to earn your badge.</p>
+            <button className="sv-btn sv-btn--primary" onClick={() => navigate("/profile")}>
+              Go to Profile →
             </button>
-          </>
+          </div>
         )}
 
         {status === "failed" && (
-          <>
-            <div style={{ fontSize: "3rem", margin: "24px 0" }}>❌</div>
-            <h2 className="auth-heading" style={{ color: "#c0392b" }}>Payment Failed</h2>
-            <p className="auth-subheading">{message}</p>
-            <button
-              className="submit-btn"
-              style={{ marginTop: 24 }}
-              onClick={() => navigate("/subscription")}
-            >
+          <div className="sv-body">
+            <div className="sv-emoji">❌</div>
+            <h2 className="sv-title sv-title--error">Payment Failed</h2>
+            <p className="sv-desc">{message}</p>
+            <button className="sv-btn sv-btn--danger" onClick={() => navigate("/subscription")}>
               Try Again
             </button>
-          </>
+          </div>
         )}
       </div>
     </div>

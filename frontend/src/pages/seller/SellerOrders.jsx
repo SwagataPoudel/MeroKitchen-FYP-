@@ -8,14 +8,14 @@ const STATUS_COLORS = {
   pending: { bg: "#fef9c3", color: "#854d0e" },
   accepted: { bg: "#dbeafe", color: "#1e40af" },
   preparing: { bg: "#ffedd5", color: "#9a3412" },
-  completed: { bg: "#fef08a", color: "#713f12" }, // changed
-  delivered: { bg: "#dcfce7", color: "#166534" }, // new
+  completed: { bg: "#fef08a", color: "#713f12" },
+  delivered: { bg: "#dcfce7", color: "#166534" },
   declined: { bg: "#fee2e2", color: "#991b1b" },
 };
 
 const STATUS_LABELS = {
-  completed: "Ready for Delivery 🛵",
-  delivered: "Delivered ✓",
+  completed: "Ready for Delivery",
+  delivered: "Delivered",
 };
 
 const NEXT_ACTIONS = {
@@ -66,17 +66,11 @@ export default function SellerOrders() {
         <div className="orders-body">
           <SellerChatRequests />
           {loading ? (
-            <p
-              style={{
-                fontFamily: "Playfair Display, serif",
-                color: "var(--muted)",
-              }}
-            >
+            <p style={{ fontFamily: "Playfair Display, serif", color: "var(--muted)" }}>
               Loading orders...
             </p>
           ) : orders.length === 0 ? (
             <div className="empty-state">
-              
               <p>No orders yet.</p>
             </div>
           ) : (
@@ -110,13 +104,9 @@ export default function SellerOrders() {
                     From <strong>{order.customer?.name}</strong> ·{" "}
                     {order.customer?.email}
                   </div>
-                  <div className="order-address">
-                     {order.deliveryAddress}
-                  </div>
+                  <div className="order-address">{order.deliveryAddress}</div>
                   {order.specialRequest && (
-                    <div className="order-address">
-                       {order.specialRequest}
-                    </div>
+                    <div className="order-address">{order.specialRequest}</div>
                   )}
 
                   <div className="order-items">
@@ -131,15 +121,9 @@ export default function SellerOrders() {
                         ) : (
                           <div className="order-item-placeholder"></div>
                         )}
-                        <span className="order-item-name">
-                          {item.product?.name}
-                        </span>
-                        <span className="order-item-qty">
-                          × {item.quantity}
-                        </span>
-                        <span className="order-item-price">
-                          Rs. {item.price * item.quantity}
-                        </span>
+                        <span className="order-item-name">{item.product?.name}</span>
+                        <span className="order-item-qty">× {item.quantity}</span>
+                        <span className="order-item-price">Rs. {item.price * item.quantity}</span>
                       </div>
                     ))}
                   </div>
@@ -180,29 +164,20 @@ export default function SellerOrders() {
                         </button>
                       )}
                     </div>
-                    <div style={{ marginTop: "0.75rem" }}>
+
+                    <div className="order-chat-wrapper">
                       <button
+                        className="chat-toggle-btn"
                         onClick={() =>
                           setOpenOrderChat(
-                            openOrderChat === order._id ? null : order._id,
+                            openOrderChat === order._id ? null : order._id
                           )
                         }
-                        style={{
-                          backgroundColor: "#4F46E5",
-                          color: "#fff",
-                          border: "none",
-                          borderRadius: "8px",
-                          padding: "0.4rem 1rem",
-                          cursor: "pointer",
-                        }}
                       >
-                        {" "}
-                        {openOrderChat === order._id
-                          ? "Close Chat"
-                          : "Chat with Customer"}
+                        {openOrderChat === order._id ? "Close Chat" : "Chat with Customer"}
                       </button>
                       {openOrderChat === order._id && (
-                        <div style={{ marginTop: "1rem" }}>
+                        <div className="order-chatbox">
                           <ChatBox
                             currentUserId={localStorage.getItem("userId")}
                             currentUserRole="seller"

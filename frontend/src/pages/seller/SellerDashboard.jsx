@@ -322,8 +322,8 @@ export default function SellerDashboard() {
               {loading
                 ? "Saving..."
                 : editingId
-                  ? "Update Listing 🍽️"
-                  : "Publish Listing 🍽️"}
+                  ? "Update Listing "
+                  : "Publish Listing "}
             </button>
           </div>
         )}

@@ -3,124 +3,174 @@
 }
 
 .sub-card {
-  max-width: 860px !important;
+  max-width: 600px !important;
 }
 
-/* Plans grid */
+/* ── Plans grid ── */
 .sub-plans-grid {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: 1fr;
   gap: 16px;
-  margin: 28px 0 24px;
+  margin: 32px 0 28px;
 }
 
-@media (max-width: 680px) {
-  .sub-plans-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
+/* ── Plan card ── */
 .sub-plan-card {
   position: relative;
   border: 2px solid rgba(45, 26, 14, 0.12);
-  border-radius: 16px;
-  padding: 24px 18px;
+  border-radius: 20px;
+  padding: 32px 28px 24px;
   cursor: pointer;
-  transition: all 0.22s;
-  background: #fafaf9;
+  transition: all 0.22s ease;
+  background: #fdfaf6;
   text-align: center;
 }
 
 .sub-plan-card:hover {
-  border-color: var(--plan-color);
-  box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+  border-color: #c8753a;
+  box-shadow: 0 8px 28px rgba(200, 117, 58, 0.12);
   transform: translateY(-2px);
 }
 
 .sub-plan-card.selected {
-  border-color: var(--plan-color);
+  border-color: #c8753a;
   background: #fff;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-  transform: translateY(-4px);
+  box-shadow: 0 10px 36px rgba(200, 117, 58, 0.18);
+  transform: translateY(-3px);
 }
 
 .sub-plan-card.popular {
   border-color: #c8753a;
 }
 
+/* ── Popular badge ── */
 .sub-popular-badge {
   position: absolute;
-  top: -12px;
+  top: -13px;
   left: 50%;
   transform: translateX(-50%);
-  background: #c8753a;
+  background: linear-gradient(135deg, #c8753a, #e8a055);
   color: #fff;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  padding: 3px 12px;
+  font-family: "Lato", sans-serif;
+  padding: 4px 16px;
   border-radius: 50px;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(200, 117, 58, 0.3);
 }
 
+/* ── Plan name ── */
 .sub-plan-name {
   font-family: "Playfair Display", serif;
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: 700;
-  color: var(--plan-color);
-  margin-bottom: 8px;
+  color: #c8753a;
+  margin-bottom: 12px;
 }
 
+/* ── Price ── */
 .sub-plan-price {
-  font-size: 1.6rem;
+  font-size: 2rem;
   font-weight: 800;
   color: #1a1a1a;
   font-family: "Lato", sans-serif;
+  line-height: 1.1;
 }
 
+/* ── Duration ── */
 .sub-plan-duration {
   font-size: 0.78rem;
-  color: #888;
-  margin-bottom: 16px;
+  color: #999;
+  font-family: "Lato", sans-serif;
+  margin-top: 4px;
+  margin-bottom: 20px;
+  letter-spacing: 0.03em;
 }
 
+/* ── Features list ── */
 .sub-plan-features {
   list-style: none;
   padding: 0;
-  margin: 0 0 16px;
+  margin: 0 0 20px;
   text-align: left;
+  border-top: 1.5px solid rgba(45, 26, 14, 0.07);
+  padding-top: 16px;
 }
 
 .sub-plan-features li {
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   color: #444;
-  padding: 4px 0;
-  border-bottom: 1px solid #f0ede8;
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(45, 26, 14, 0.06);
   font-family: "Lato", sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .sub-plan-features li:last-child {
   border-bottom: none;
 }
 
+/* ── Select indicator ── */
 .sub-plan-select-indicator {
   font-size: 0.82rem;
   font-weight: 700;
-  color: var(--plan-color);
-  margin-top: 8px;
+  color: #c8753a;
   font-family: "Lato", sans-serif;
+  padding: 6px 0;
+  border-top: 1.5px solid rgba(45, 26, 14, 0.07);
+  margin-top: 4px;
+  letter-spacing: 0.04em;
 }
 
+/* ── Pay button ── */
 .sub-pay-btn {
   width: 100%;
   margin-top: 8px;
-  font-size: 1rem;
+  padding: 15px;
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  border-radius: 14px !important;
+  background: #2d1a0e !important;
+  box-shadow: 0 8px 24px rgba(45, 26, 14, 0.25) !important;
 }
 
+.sub-pay-btn:hover:not(:disabled) {
+  background: #c8753a !important;
+  box-shadow: 0 8px 28px rgba(200, 117, 58, 0.35) !important;
+}
+
+.sub-pay-btn:disabled {
+  background: #9e8878 !important;
+  box-shadow: none !important;
+  cursor: not-allowed;
+}
+
+/* ── Security note ── */
 .sub-note {
   text-align: center;
-  font-size: 0.8rem;
-  color: #888;
-  margin-top: 12px;
+  font-size: 0.78rem;
+  color: #aaa;
+  margin-top: 14px;
   font-family: "Lato", sans-serif;
+  line-height: 1.6;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .sub-card {
+    padding: 32px 20px !important;
+  }
+
+  .sub-plan-card {
+    padding: 28px 20px 20px;
+  }
+
+  .sub-plan-price {
+    font-size: 1.7rem;
+  }
 }
