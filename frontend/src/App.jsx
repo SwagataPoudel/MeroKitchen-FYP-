@@ -10,6 +10,7 @@ import SellerDashboard from "./pages/seller/SellerDashboard";
 import SellerAnalytics from "./pages/seller/SellerAnalytics";
 import Cart from "./pages/customer/Cart";
 import MyOrders from "./pages/customer/MyOrders";
+import OrderHistory from "./pages/customer/OrderHistory";
 import SellerOrders from "./pages/seller/SellerOrders";
 import ScrollToTop from "./components/ScrollToTop";
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -30,11 +31,13 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   return children;
 };
 
-// Smart home: redirect logged-in customers to /home
 const SmartHome = () => {
   const token = localStorage.getItem("token");
   const role = localStorage.getItem("role");
-  if (token && role === "customer") return <Navigate to="/home" replace />;
+  const location = useLocation();
+  // Only redirect on the exact root path, not other customer pages
+  if (token && role === "customer" && location.pathname === "/")
+    return <Navigate to="/home" replace />;
   return <Landing />;
 };
 
@@ -60,10 +63,8 @@ function App() {
             <>
               <Header />
               <Routes>
-                {/* Landing for guests, CustomerHome for logged-in customers */}
                 <Route path="/" element={<SmartHome />} />
 
-                {/* Dedicated customer home page */}
                 <Route
                   path="/home"
                   element={
@@ -77,6 +78,7 @@ function App() {
                 <Route path="/products" element={<BrowseProducts />} />
                 <Route path="/products/:id" element={<ProductDetail />} />
                 <Route path="/about" element={<AboutUs />} />
+
                 <Route
                   path="/seller/dashboard"
                   element={
@@ -115,6 +117,15 @@ function App() {
                   element={
                     <ProtectedRoute allowedRoles={["customer"]}>
                       <MyOrders />
+                    </ProtectedRoute>
+                  }
+                />
+                {/* ── NEW: Order History (delivered only) ── */}
+                <Route
+                  path="/order-history"
+                  element={
+                    <ProtectedRoute allowedRoles={["customer"]}>
+                      <OrderHistory />
                     </ProtectedRoute>
                   }
                 />

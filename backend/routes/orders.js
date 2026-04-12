@@ -5,6 +5,7 @@ const Order = require("../model/OrderModel");
 const {
   placeOrderController,
   getMyOrdersController,
+  getOrderHistoryController,
   getSellerOrdersController,
   updateOrderStatusController,
   getOrderByIdController,
@@ -16,7 +17,6 @@ const {
   sellerOnlyMiddleware,
 } = require("../middleware/RoleMiddleware");
 
-// ✅ MUST be before /:id and no auth middleware
 router.post("/verify-payment", async (req, res) => {
   console.log("🔍 verify-payment hit, body:", req.body);
   try {
@@ -35,17 +35,13 @@ router.post("/verify-payment", async (req, res) => {
     );
 
     console.log("🔍 Khalti response:", khaltiRes.data);
-
-    const { status, purchase_order_id } = khaltiRes.data;
+    const { status } = khaltiRes.data;
 
     if (status === "Completed") {
-      // Find by khaltiPidx since purchase_order_id is not in lookup response
       const order = await Order.findOne({ khaltiPidx: pidx });
       if (!order) return res.status(404).json({ message: "Order not found" });
-
       order.paymentStatus = "paid";
       await order.save();
-
       return res.status(200).json({ message: "Payment verified", order });
     } else {
       return res.status(400).json({ message: "Payment not completed", status });
@@ -74,13 +70,23 @@ router.get(
   getMyOrdersController,
 );
 router.get(
+  "/my/history",
+  validateTokenMiddleware,
+  customerOnlyMiddleware,
+  getOrderHistoryController,
+);
+router.get(
   "/seller",
   validateTokenMiddleware,
   sellerOnlyMiddleware,
   getSellerOrdersController,
 );
-// Add this — must be BEFORE any /:id routes to avoid "stats" being treated as an id
-router.get("/seller/stats", validateTokenMiddleware, sellerOnlyMiddleware, getSellerStatsController);
+router.get(
+  "/seller/stats",
+  validateTokenMiddleware,
+  sellerOnlyMiddleware,
+  getSellerStatsController,
+);
 router.put("/:id/status", validateTokenMiddleware, updateOrderStatusController);
 router.get("/:id", validateTokenMiddleware, getOrderByIdController);
 

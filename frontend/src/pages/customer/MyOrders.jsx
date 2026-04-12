@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
-import { getMyOrders, markDelivered } from "../../api/orderApi";
+import { getMyOrders, markDelivered, cancelOrder } from "../../api/orderApi";
 import { submitReview } from "../../api/reviewApi";
 import { useNavigate } from "react-router-dom";
 import "../../css/MyOrders.css";
 import ChatBox from "../../components/ChatBox";
 
 const STATUS_COLORS = {
-  pending:   { bg: "#fef9c3", color: "#854d0e" },
-  accepted:  { bg: "#dbeafe", color: "#1e40af" },
+  pending: { bg: "#fef9c3", color: "#854d0e" },
+  accepted: { bg: "#dbeafe", color: "#1e40af" },
   preparing: { bg: "#ffedd5", color: "#9a3412" },
   completed: { bg: "#fef08a", color: "#713f12" },
   delivered: { bg: "#dcfce7", color: "#166534" },
-  declined:  { bg: "#fee2e2", color: "#991b1b" },
+  declined: { bg: "#fee2e2", color: "#991b1b" },
+  cancelled: { bg: "#f3f4f6", color: "#6b7280" },
 };
 
 const STATUS_LABELS = {
   completed: "Ready for Delivery",
   delivered: "Delivered ✓",
+  cancelled: "Cancelled",
 };
 
 export default function MyOrders() {
@@ -30,14 +32,21 @@ export default function MyOrders() {
   const [reviewMsg, setReviewMsg] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [openOrderChat, setOpenOrderChat] = useState(null);
+  const [cancellingId, setCancellingId] = useState(null);
   const navigate = useNavigate();
 
-  const fetchOrders = () => {
-    getMyOrders()
-      .then((res) => setOrders(res.data.orders))
-      .catch(console.error)
-      .finally(() => setLoading(false));
-  };
+const fetchOrders = () => {
+  getMyOrders()
+    .then((res) =>
+      setOrders(
+        res.data.orders.filter((o) =>
+          ["pending", "accepted", "preparing"].includes(o.status),
+        ),
+      ),
+    )
+    .catch(console.error)
+    .finally(() => setLoading(false));
+};
 
   useEffect(() => {
     fetchOrders();
@@ -49,6 +58,19 @@ export default function MyOrders() {
       fetchOrders();
     } catch (err) {
       console.error(err);
+    }
+  };
+
+  const handleCancelOrder = async (orderId) => {
+    if (!window.confirm("Are you sure you want to cancel this order?")) return;
+    setCancellingId(orderId);
+    try {
+      await cancelOrder(orderId);
+      fetchOrders();
+    } catch (err) {
+      alert(err.response?.data?.message || "Failed to cancel order.");
+    } finally {
+      setCancellingId(null);
     }
   };
 
@@ -76,7 +98,7 @@ export default function MyOrders() {
         comment,
       });
       setReviewedSet((prev) =>
-        new Set(prev).add(`${reviewModal.orderId}_${reviewModal.productId}`)
+        new Set(prev).add(`${reviewModal.orderId}_${reviewModal.productId}`),
       );
       setReviewMsg("Review submitted! ✓");
       setTimeout(closeModal, 1200);
@@ -93,7 +115,7 @@ export default function MyOrders() {
         {/* ── Hero ── */}
         <div className="orders-hero">
           <div className="orders-hero-inner">
-            <div className="section-label">Order History</div>
+            <div className="section-label">Active Orders</div>
             <h1 className="orders-title">
               My <em>Orders</em>
             </h1>
@@ -102,15 +124,58 @@ export default function MyOrders() {
 
         {/* ── Body ── */}
         <div className="orders-body">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginBottom: "20px",
+            }}
+          >
+            <button
+              onClick={() => navigate("/order-history")}
+              style={{
+                background: "none",
+                border: "1px solid rgba(30,18,8,0.14)",
+                borderRadius: "50px",
+                padding: "8px 20px",
+                fontFamily: "DM Sans, sans-serif",
+                fontSize: "0.75rem",
+                fontWeight: "600",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "#6b5240",
+                cursor: "pointer",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = "#ce742a";
+                e.currentTarget.style.color = "#ce742a";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "rgba(30,18,8,0.14)";
+                e.currentTarget.style.color = "#6b5240";
+              }}
+            >
+              View Order History →
+            </button>
+          </div>
+
           {loading ? (
-            <p style={{ fontFamily: "DM Serif Display, serif", color: "var(--muted)" }}>
+            <p
+              style={{
+                fontFamily: "DM Serif Display, serif",
+                color: "var(--muted)",
+              }}
+            >
               Loading orders...
             </p>
           ) : orders.length === 0 ? (
             <div className="empty-state">
               <div style={{ fontSize: "4rem" }}>🛍️</div>
               <p>No orders yet.</p>
-              <button className="browse-btn" onClick={() => navigate("/products")}>
+              <button
+                className="browse-btn"
+                onClick={() => navigate("/products")}
+              >
                 Browse Menu
               </button>
             </div>
@@ -120,7 +185,6 @@ export default function MyOrders() {
               const label = STATUS_LABELS[order.status] || order.status;
               return (
                 <div key={order._id} className="order-card">
-
                   {/* Header */}
                   <div className="order-header">
                     <div>
@@ -161,8 +225,12 @@ export default function MyOrders() {
                         ) : (
                           <div className="order-item-placeholder">🍲</div>
                         )}
-                        <span className="order-item-name">{item.product?.name}</span>
-                        <span className="order-item-qty">× {item.quantity}</span>
+                        <span className="order-item-name">
+                          {item.product?.name}
+                        </span>
+                        <span className="order-item-qty">
+                          × {item.quantity}
+                        </span>
                         <span className="order-item-price">
                           Rs. {item.price * item.quantity}
                         </span>
@@ -173,7 +241,9 @@ export default function MyOrders() {
                   {/* Footer */}
                   <div className="order-footer">
                     <div>
-                      <div className="order-address">{order.deliveryAddress}</div>
+                      <div className="order-address">
+                        {order.deliveryAddress}
+                      </div>
 
                       {order.status === "completed" && (
                         <button
@@ -199,7 +269,7 @@ export default function MyOrders() {
                                   openReviewModal(
                                     order._id,
                                     item.product._id,
-                                    item.product.name
+                                    item.product.name,
                                   )
                                 }
                               >
@@ -209,6 +279,23 @@ export default function MyOrders() {
                               </button>
                             );
                           })}
+                        </div>
+                      )}
+
+                      {/* ── Cancel Action ── */}
+                      {["pending", "accepted", "preparing"].includes(
+                        order.status,
+                      ) && (
+                        <div style={{ marginTop: "12px" }}>
+                          <button
+                            className="cancel-order-btn"
+                            disabled={cancellingId === order._id}
+                            onClick={() => handleCancelOrder(order._id)}
+                          >
+                            {cancellingId === order._id
+                              ? "Cancelling..."
+                              : "✕ Cancel Order"}
+                          </button>
                         </div>
                       )}
                     </div>
@@ -222,11 +309,13 @@ export default function MyOrders() {
                       className="chat-seller-btn"
                       onClick={() =>
                         setOpenOrderChat(
-                          openOrderChat === order._id ? null : order._id
+                          openOrderChat === order._id ? null : order._id,
                         )
                       }
                     >
-                      {openOrderChat === order._id ? "Close Chat" : "Chat with Seller"}
+                      {openOrderChat === order._id
+                        ? "Close Chat"
+                        : "Chat with Seller"}
                     </button>
 
                     {openOrderChat === order._id && (
@@ -240,7 +329,6 @@ export default function MyOrders() {
                       </div>
                     )}
                   </div>
-
                 </div>
               );
             })
@@ -252,8 +340,9 @@ export default function MyOrders() {
       {reviewModal && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={closeModal}>×</button>
-
+            <button className="modal-close" onClick={closeModal}>
+              ×
+            </button>
             <div className="modal-label">Rate your experience</div>
             <h2 className="modal-title">{reviewModal.productName}</h2>
 
@@ -286,7 +375,9 @@ export default function MyOrders() {
             />
 
             {reviewMsg && (
-              <p className={`review-msg ${reviewMsg.includes("✓") ? "success" : "error"}`}>
+              <p
+                className={`review-msg ${reviewMsg.includes("✓") ? "success" : "error"}`}
+              >
                 {reviewMsg}
               </p>
             )}

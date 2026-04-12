@@ -68,9 +68,8 @@ async function placeOrderController(req, res) {
         .json({ message: "Order placed successfully!", orders });
     }
 
-    
     const order = orders[0];
-    const totalInPaisa = order.totalAmount * 100; 
+    const totalInPaisa = order.totalAmount * 100;
 
     const khaltiRes = await axios.post(
       "https://dev.khalti.com/api/v2/epayment/initiate/",
@@ -92,7 +91,7 @@ async function placeOrderController(req, res) {
         },
       },
     );
-    
+
     order.khaltiPidx = khaltiRes.data.pidx;
     await order.save();
 
@@ -109,12 +108,26 @@ async function placeOrderController(req, res) {
   }
 }
 
-// NEW: Verify Khalti payment after redirect
-
-
 async function getMyOrdersController(req, res) {
   try {
     const orders = await Order.find({ customer: req.user.id })
+      .populate("items.product", "name photos price")
+      .populate("seller", "name email")
+      .sort({ createdAt: -1 });
+    res.status(200).json({ orders });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Internal Server Error", error: error.message });
+  }
+}
+
+async function getOrderHistoryController(req, res) {
+  try {
+    const orders = await Order.find({
+      customer: req.user.id,
+      status: { $in: ["delivered", "completed", "declined", "cancelled"] },
+    })
       .populate("items.product", "name photos price")
       .populate("seller", "name email")
       .sort({ createdAt: -1 });
@@ -144,30 +157,33 @@ async function updateOrderStatusController(req, res) {
   try {
     const { status } = req.body;
     const validStatuses = [
-      "pending",
-      "accepted",
-      "preparing",
-      "completed",
-      "declined",
-      "delivered",
+      "pending", "accepted", "preparing",
+      "completed", "declined", "delivered", "cancelled",
     ];
     if (!validStatuses.includes(status))
       return res.status(400).json({ message: "Invalid status" });
 
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id)
+      .populate("customer", "_id")
+      .populate("seller", "_id");
+
     if (!order) return res.status(404).json({ message: "Order not found" });
 
+    const customerId = order.customer?._id?.toString() ?? order.customer?.toString();
+    const sellerId = order.seller?._id?.toString() ?? order.seller?.toString();
+
     if (status === "delivered") {
-      if (order.customer.toString() !== req.user.id)
-        return res
-          .status(403)
-          .json({ message: "Only the customer can mark as delivered" });
+      if (customerId !== req.user.id)
+        return res.status(403).json({ message: "Only the customer can mark as delivered" });
       if (order.status !== "completed")
-        return res.status(400).json({
-          message: "Order must be completed before marking delivered",
-        });
+        return res.status(400).json({ message: "Order must be completed before marking delivered" });
+    } else if (status === "cancelled") {
+      if (customerId !== req.user.id)
+        return res.status(403).json({ message: "Only the customer can cancel" });
+      if (!["pending", "accepted", "preparing"].includes(order.status))
+        return res.status(400).json({ message: "Order cannot be cancelled at this stage" });
     } else {
-      if (order.seller.toString() !== req.user.id)
+      if (sellerId !== req.user.id)
         return res.status(403).json({ message: "Not your order" });
     }
 
@@ -175,9 +191,8 @@ async function updateOrderStatusController(req, res) {
     await order.save();
     res.status(200).json({ message: "Order status updated", order });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Internal Server Error", error: error.message });
+    console.error("updateOrderStatus error:", error.message); // ← will show exact cause
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 }
 
@@ -212,12 +227,12 @@ async function getSellerStatsController(req, res) {
       .populate("items.product", "name")
       .sort({ createdAt: -1 });
 
-    // ── Basic counts ──
     const totalOrders = orders.length;
-    const uniqueCustomerIds = new Set(orders.map((o) => o.customer?._id?.toString()));
+    const uniqueCustomerIds = new Set(
+      orders.map((o) => o.customer?._id?.toString()),
+    );
     const totalCustomers = uniqueCustomerIds.size;
 
-    // ── Revenue ──
     const completedStatuses = ["completed", "delivered"];
     const activeStatuses = ["pending", "accepted", "preparing"];
 
@@ -229,23 +244,27 @@ async function getSellerStatsController(req, res) {
       .filter((o) => activeStatuses.includes(o.status))
       .reduce((sum, o) => sum + o.totalAmount, 0);
 
-    // ── Status breakdown ──
     const statusBreakdown = {
-      pending: 0, accepted: 0, preparing: 0,
-      completed: 0, delivered: 0, declined: 0,
+      pending: 0,
+      accepted: 0,
+      preparing: 0,
+      completed: 0,
+      delivered: 0,
+      declined: 0,
+      cancelled: 0,
     };
     for (const o of orders) {
-      if (statusBreakdown.hasOwnProperty(o.status)) {
-        statusBreakdown[o.status]++;
-      }
+      if (statusBreakdown.hasOwnProperty(o.status)) statusBreakdown[o.status]++;
     }
 
-    // ── Monthly revenue — last 6 months ──
     const now = new Date();
     const monthlyRevenue = [];
     for (let i = 5; i >= 0; i--) {
       const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-      const label = d.toLocaleString("en-NP", { month: "short", year: "2-digit" });
+      const label = d.toLocaleString("en-NP", {
+        month: "short",
+        year: "2-digit",
+      });
       const monthOrders = orders.filter((o) => {
         const c = new Date(o.createdAt);
         return (
@@ -261,7 +280,6 @@ async function getSellerStatsController(req, res) {
       });
     }
 
-    // ── Recent orders (last 10) ──
     const recentOrders = orders.slice(0, 10).map((o) => ({
       _id: o._id,
       customerName: o.customer?.name || "Customer",
@@ -272,7 +290,6 @@ async function getSellerStatsController(req, res) {
       status: o.status,
     }));
 
-    // ── Reviews ──
     const reviews = await Review.find({ seller: sellerId })
       .populate("customer", "name")
       .populate("product", "name")
@@ -281,7 +298,9 @@ async function getSellerStatsController(req, res) {
     const totalReviews = reviews.length;
     const avgRating =
       totalReviews > 0
-        ? Math.round((reviews.reduce((s, r) => s + r.rating, 0) / totalReviews) * 10) / 10
+        ? Math.round(
+            (reviews.reduce((s, r) => s + r.rating, 0) / totalReviews) * 10,
+          ) / 10
         : 0;
 
     res.status(200).json({
@@ -298,14 +317,16 @@ async function getSellerStatsController(req, res) {
     });
   } catch (error) {
     console.error("Seller stats error:", error.message);
-    res.status(500).json({ message: "Internal Server Error", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Internal Server Error", error: error.message });
   }
 }
-
 
 module.exports = {
   placeOrderController,
   getMyOrdersController,
+  getOrderHistoryController,
   getSellerOrdersController,
   updateOrderStatusController,
   getOrderByIdController,

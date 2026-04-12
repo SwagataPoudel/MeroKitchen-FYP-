@@ -9,7 +9,6 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isHome = location.pathname === "/";
   const role = localStorage.getItem("role");
   const token = localStorage.getItem("token");
 
@@ -72,6 +71,9 @@ const Header = () => {
             <button className="nav-link" onClick={() => navigate("/orders")}>
               My Orders
             </button>
+            <button className="nav-link" onClick={() => navigate("/order-history")}>
+              History
+            </button>
             <button className="nav-link" onClick={() => navigate("/cart")}>
               Cart
             </button>
@@ -98,7 +100,7 @@ const Header = () => {
             <button className="nav-link" onClick={() => navigate("/profile")}>
               Profile
             </button>
-             <button
+            <button
               className="nav-link"
               onClick={() => navigate("/seller/analytics")}
             >
