@@ -33,7 +33,7 @@ export default function CustomerHome() {
         const res = await getAllProducts({ availability: true });
         const all = res.data.products || [];
         // Show top 6 available products
-        setFeaturedProducts(all.slice(0, 6));
+        setFeaturedProducts(all.slice(0, 3));
       } catch (err) {
         console.error(err);
       } finally {

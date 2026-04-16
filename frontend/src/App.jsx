@@ -35,9 +35,13 @@ const SmartHome = () => {
   const token = localStorage.getItem("token");
   const role = localStorage.getItem("role");
   const location = useLocation();
-  // Only redirect on the exact root path, not other customer pages
-  if (token && role === "customer" && location.pathname === "/")
-    return <Navigate to="/home" replace />;
+
+  if (token && location.pathname === "/") {
+    if (role === "customer") return <Navigate to="/home" replace />;
+    if (role === "seller") return <Navigate to="/seller_with_us" replace />; 
+    if (role === "admin") return <Navigate to="/admin" replace />;
+  }
+
   return <Landing />;
 };
 
@@ -120,7 +124,7 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
-                {/* ── NEW: Order History (delivered only) ── */}
+                
                 <Route
                   path="/order-history"
                   element={

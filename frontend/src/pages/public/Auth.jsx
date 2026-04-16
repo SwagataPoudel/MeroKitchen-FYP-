@@ -107,7 +107,7 @@ const Auth = () => {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        {/* LEFT: image panel */}
+        
         <div
           className="auth-card-image"
           style={{
@@ -121,7 +121,7 @@ const Auth = () => {
           </div>
         </div>
 
-        {/* RIGHT: form panel */}
+      
         <div className="auth-card-form">
           <div className="auth-logo" onClick={() => navigate("/")}>
             <div className="auth-logo-icon">
@@ -160,7 +160,7 @@ const Auth = () => {
           <form onSubmit={handleSubmit}>
             {!isLogin && (
               <>
-                {/* Row 1: Name + Phone */}
+                
                 <div className="form-row">
                   <div className="form-group">
                     <label className="form-label">Full Name</label>
@@ -184,7 +184,7 @@ const Auth = () => {
                   </div>
                 </div>
 
-                {/* Row 2: City + Email */}
+                
                 <div className="form-row">
                   <div className="form-group">
                     <label className="form-label">City</label>
@@ -220,7 +220,7 @@ const Auth = () => {
                   />
                 </div>
 
-                {/* Role */}
+                
                 <div className="form-group">
                   <label className="form-label">I want to</label>
                   <div className="role-grid">
@@ -276,7 +276,7 @@ const Auth = () => {
                       />
                     </div>
 
-                    {/* Map Location Picker */}
+                    
                     <div className="form-group">
                       <label className="form-label">
                         Store Location{" "}
@@ -309,7 +309,7 @@ const Auth = () => {
                         </button>
                       ) : (
                         <>
-                          {/* Use Current Location Button */}
+                        
                           <button
                             type="button"
                             className="form-input"

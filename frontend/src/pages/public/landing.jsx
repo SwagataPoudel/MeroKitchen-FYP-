@@ -30,23 +30,47 @@ const menuItems = [
 
 const reviews = [
   {
-    id: 1, name: "Sita Tamang", loc: "Baneshwor", stars: 5,
+    id: 1,
+    name: "Sita Tamang",
+    loc: "Baneshwor",
+    stars: 5,
     text: "Dal Bhat tastes just like what my aamai used to cook. I order every single day now!",
   },
   {
-    id: 2, name: "Rohan Shrestha", loc: "Patan", stars: 5,
+    id: 2,
+    name: "Rohan Shrestha",
+    loc: "Patan",
+    stars: 5,
     text: "Momos are unbelievably good — soft, packed with flavour. Delivery was super fast too.",
   },
   {
-    id: 3, name: "Priya Adhikari", loc: "Balaju", stars: 5,
+    id: 3,
+    name: "Priya Adhikari",
+    loc: "Balaju",
+    stars: 5,
     text: "Finally a food service that cares about ingredients. The thukpa warmed my soul on a rainy day.",
   },
 ];
 
 const steps = [
-  { n: "01", title: "Browse the Menu", desc: "Check out our daily freshly prepared dishes made with seasonal ingredients.", img: browseimg },
-  { n: "02", title: "Place Your Order", desc: "Order online or via WhatsApp — no fuss, just simple steps.", img: placeorder },
-  { n: "03", title: "We Cook Fresh", desc: "Every meal is prepared to order in our home kitchen by Mero aunties.", img: cook },
+  {
+    n: "01",
+    title: "Browse the Menu",
+    desc: "Check out our daily freshly prepared dishes made with seasonal ingredients.",
+    img: browseimg,
+  },
+  {
+    n: "02",
+    title: "Place Your Order",
+    desc: "Order online or via WhatsApp — no fuss, just simple steps.",
+    img: placeorder,
+  },
+  {
+    n: "03",
+    title: "We Cook Fresh",
+    desc: "Every meal is prepared to order in our home kitchen by Mero aunties.",
+    img: cook,
+  },
 ];
 
 const Landing = () => {
@@ -55,12 +79,8 @@ const Landing = () => {
   return (
     <>
       <main>
-
         {/* ── HERO ─────────────────────────────── */}
-        <section
-          className="hero"
-          style={{ backgroundImage: `url(${heroBg})` }}
-        >
+        <section className="hero" style={{ backgroundImage: `url(${heroBg})` }}>
           <div className="hero-content">
             <h1>
               Real Food,
@@ -76,7 +96,9 @@ const Landing = () => {
               <button
                 className="btn-primary"
                 onClick={() =>
-                  document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" })
+                  document
+                    .getElementById("menu")
+                    ?.scrollIntoView({ behavior: "smooth" })
                 }
               >
                 Explore Today's Menu
@@ -87,9 +109,7 @@ const Landing = () => {
             </div>
           </div>
 
-          <div className="hero-visual">
-           
-          </div>
+          <div className="hero-visual"></div>
         </section>
 
         {/* ── ABOUT ────────────────────────────── */}
@@ -100,14 +120,18 @@ const Landing = () => {
                 <img src={ingredient} alt="Local Ingredients" />
               </div>
               <h3>Local Ingredients</h3>
-              <p>Sourced from trusted local farmers and markets every morning.</p>
+              <p>
+                Sourced from trusted local farmers and markets every morning.
+              </p>
             </div>
             <div className="about-card">
               <div className="about-card-image">
                 <img src={img1} alt="Family Tradition" />
               </div>
               <h3>Family Tradition</h3>
-              <p>Three-generation recipes passed down with care and precision.</p>
+              <p>
+                Three-generation recipes passed down with care and precision.
+              </p>
             </div>
           </div>
 
@@ -126,12 +150,16 @@ const Landing = () => {
               <li>Hygiene-certified home kitchen</li>
             </ul>
             <button
-  className="btn-primary"
-  style={{ marginTop: "28px", backgroundColor: "black", color: "#fff8ef" }}
-  onClick={() => navigate("/about")}
->
-  Read Our Full Story →
-</button>
+              className="btn-primary"
+              style={{
+                marginTop: "28px",
+                backgroundColor: "black",
+                color: "#fff8ef",
+              }}
+              onClick={() => navigate("/about")}
+            >
+              Read Our Full Story →
+            </button>
           </div>
         </section>
 
@@ -140,7 +168,9 @@ const Landing = () => {
           <div className="menu-header">
             <div className="menu-header-left">
               <div className="section-label">Today's Specials</div>
-              <h2 className="section-title">What's <em>cooking</em> today</h2>
+              <h2 className="section-title">
+                What's <em>cooking</em> today
+              </h2>
             </div>
           </div>
 
@@ -185,7 +215,8 @@ const Landing = () => {
               From our <em>kitchen</em> to your table
             </h2>
             <p className="section-sub">
-              Ordering homemade food has never been easier. Just three simple steps.
+              Ordering homemade food has never been easier. Just three simple
+              steps.
             </p>
           </div>
 
@@ -205,18 +236,19 @@ const Landing = () => {
 
         <section className="cta-section">
           <div className="section-label">Ready to Eat?</div>
-          <h2 className="section-title">Order your first homemade meal today</h2>
+          <h2 className="section-title">
+            Order your first homemade meal today
+          </h2>
           <p className="section-sub">
-            Join hundreds of families enjoying fresh, authentic Nepali food every day.
+            Join hundreds of families enjoying fresh, authentic Nepali food
+            every day.
           </p>
           <div className="cta-btns">
             <button className="btn-accent" onClick={() => navigate("/Auth")}>
-              Order Now 
+              Order Now
             </button>
-        
           </div>
         </section>
-
       </main>
     </>
   );
