@@ -25,6 +25,7 @@ const {
   getVerificationRequestsController,
   updateVerificationStatusController,
   getDashboardStatsController,
+   expireSellerSubscriptionController,
 } = require("../controller/adminController");
 
 router.use(validateTokenMiddleware, adminOnlyMiddleware);
@@ -62,5 +63,6 @@ router.delete("/reviews/:id", deleteReviewController);
 // ── Verifications
 router.get("/verifications", getVerificationRequestsController);
 router.patch("/verifications/:id", updateVerificationStatusController);
+router.patch("/users/:id/expire-subscription", expireSellerSubscriptionController);
 
 module.exports = router;

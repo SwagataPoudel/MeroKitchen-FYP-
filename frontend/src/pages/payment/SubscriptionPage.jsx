@@ -13,7 +13,6 @@ const PLANS = [
     price: "Rs. 499",
     amount: 49900,
     duration: "30 days",
-    features: ["List up to 10 products", "Standard support", "Verified badge eligibility"],
     color: "#7a8fa6",
     popular: true,
   },
@@ -73,11 +72,7 @@ export default function SubscriptionPage() {
               <div className="sub-plan-name">{plan.label}</div>
               <div className="sub-plan-price">{plan.price}</div>
               <div className="sub-plan-duration">per {plan.duration}</div>
-              <ul className="sub-plan-features">
-                {plan.features.map((f) => (
-                  <li key={f}>✓ {f}</li>
-                ))}
-              </ul>
+        
               <div className="sub-plan-select-indicator">
                 {selectedPlan === plan.key ? "✅ Selected" : "Select"}
               </div>

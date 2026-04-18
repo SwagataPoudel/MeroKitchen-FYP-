@@ -9,7 +9,7 @@ const subscriptionSchema = new mongoose.Schema(
     },
     plan: {
       type: String,
-      enum: ["standard"],
+      enum: ["basic"],
       required: true,
     },
     amount: { type: Number, required: true }, // in paisa (Khalti)

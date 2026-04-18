@@ -83,6 +83,10 @@ export const deleteReview = (id) =>
 export const fetchVerificationRequests = () =>
   axios.get(`${BASE_URL}/verifications`, getAuthHeader());
 
+// ── Subscriptions
+export const expireSellerSubscription = (id) =>
+  axios.patch(`${BASE_URL}/users/${id}/expire-subscription`, {}, getAuthHeader());
+
 export const updateVerificationStatus = (id, status, note = "") =>
   axios.patch(
     `${BASE_URL}/verifications/${id}`,

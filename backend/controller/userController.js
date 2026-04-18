@@ -30,6 +30,11 @@ async function createUserController(req, res) {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Only include storeLocation if coordinates are fully valid
+    const hasValidLocation =
+      storeLocation?.coordinates?.length === 2 &&
+      storeLocation.coordinates.every((c) => typeof c === "number");
+
     const newUser = new User({
       name,
       email,
@@ -39,7 +44,7 @@ async function createUserController(req, res) {
       city: city || "",
       defaultDeliveryAddress: defaultDeliveryAddress || "",
       kitchenName: kitchenName || "",
-      ...(storeLocation?.coordinates?.length === 2 && {
+      ...(hasValidLocation && {
         storeLocation: {
           type: "Point",
           coordinates: storeLocation.coordinates,
@@ -55,6 +60,12 @@ async function createUserController(req, res) {
       .status(201)
       .json({ message: "User created successfully", user: userResponse });
   } catch (error) {
+    if (error.code === 11000) {
+      return res
+        .status(400)
+        .json({ message: "User with this email already exists" });
+    }
+    console.error("createUserController error:", error);
     res
       .status(500)
       .json({ message: "Internal Server Error", error: error.message });
@@ -120,30 +131,42 @@ async function updateProfileController(req, res) {
       "isAvailable",
       "storeLocation",
     ];
+
     const updates = {};
+    const unsets = {};
+
     for (const field of allowedFields) {
       if (req.body[field] !== undefined) updates[field] = req.body[field];
     }
 
-    // Validate storeLocation if provided
-    if (updates.storeLocation) {
+    // Validate storeLocation — only set if coordinates are fully valid
+    if (updates.storeLocation !== undefined) {
       const loc = updates.storeLocation;
-      if (!loc.coordinates || loc.coordinates.length !== 2) {
-        delete updates.storeLocation;
-      } else {
+      const hasValidLocation =
+        loc?.coordinates?.length === 2 &&
+        loc.coordinates.every((c) => typeof c === "number");
+
+      if (hasValidLocation) {
         updates.storeLocation = {
           type: "Point",
           coordinates: loc.coordinates,
           address: loc.address || "",
         };
+      } else {
+        // Remove invalid storeLocation instead of saving a partial object
+        delete updates.storeLocation;
+        unsets.storeLocation = "";
       }
     }
 
-    const user = await User.findByIdAndUpdate(
-      req.user.id,
-      { $set: updates },
-      { new: true },
-    );
+    const updateOp = {};
+    if (Object.keys(updates).length > 0) updateOp.$set = updates;
+    if (Object.keys(unsets).length > 0) updateOp.$unset = unsets;
+
+    const user = await User.findByIdAndUpdate(req.user.id, updateOp, {
+      new: true,
+    });
+
     res.status(200).json({ message: "Profile updated", user });
   } catch (error) {
     res

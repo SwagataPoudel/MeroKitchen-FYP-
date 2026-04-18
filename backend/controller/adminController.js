@@ -34,6 +34,45 @@ async function getAllUsersController(req, res) {
   }
 }
 
+// ─── SUBSCRIPTIONS ────────────────────────────────────────
+
+async function expireSellerSubscriptionController(req, res) {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    if (user.role !== "seller")
+      return res.status(400).json({ message: "User is not a seller" });
+
+    // Mark the linked subscription record as expired (if one exists)
+    if (user.subscription) {
+      await Subscription.findByIdAndUpdate(user.subscription, {
+        status: "expired",
+      });
+    }
+
+    // Update user: expired subscription + strip verified badge
+    const updated = await User.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: {
+          subscriptionStatus: "expired",
+          isVerifiedSeller: false, // remove the verified badge
+        },
+      },
+      { new: true },
+    ).select("-password");
+
+    res.status(200).json({
+      message: "Subscription expired and verified badge removed.",
+      user: updated,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Internal Server Error", error: error.message });
+  }
+}
+
 async function getUserByIdController(req, res) {
   try {
     const user = await User.findById(req.params.id)
@@ -276,12 +315,10 @@ async function bulkUpdateOrderStatusController(req, res) {
       { _id: { $in: ids } },
       { $set: { status } },
     );
-    res
-      .status(200)
-      .json({
-        message: `${result.modifiedCount} orders updated`,
-        modifiedCount: result.modifiedCount,
-      });
+    res.status(200).json({
+      message: `${result.modifiedCount} orders updated`,
+      modifiedCount: result.modifiedCount,
+    });
   } catch (error) {
     res
       .status(500)
@@ -651,4 +688,6 @@ module.exports = {
   updateVerificationStatusController,
   // Dashboard
   getDashboardStatsController,
+  // Subscriptions
+expireSellerSubscriptionController,
 };

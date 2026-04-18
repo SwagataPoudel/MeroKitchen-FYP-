@@ -41,9 +41,8 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
 const SmartHome = () => {
   const token = localStorage.getItem("token");
   const role = localStorage.getItem("role");
-  const location = useLocation();
 
-  if (token && location.pathname === "/") {
+  if (token) {
     if (role === "customer") return <Navigate to="/home" replace />;
     if (role === "seller") return <Navigate to="/sell-with-us" replace />;
     if (role === "admin") return <Navigate to="/admin" replace />;
@@ -52,13 +51,23 @@ const SmartHome = () => {
   return <Landing />;
 };
 
-function App() {
+const Layout = ({ children }) => {
   const location = useLocation();
+  return (
+    <>
+      <Header />
+      {children}
+      {location.pathname !== "/auth" && <Footer />}
+    </>
+  );
+};
 
+function App() {
   return (
     <>
       <ScrollToTop />
       <Routes>
+        {/* Admin - no Header/Footer */}
         <Route
           path="/admin"
           element={
@@ -68,133 +77,125 @@ function App() {
           }
         />
 
-        <Route
-          path="*"
-          element={
-            <>
-              <Header />
-              <Routes>
-                <Route path="/" element={<SmartHome />} />
+        {/* All other routes - with Header/Footer */}
+        <Route path="/" element={<Layout><SmartHome /></Layout>} />
+        <Route path="/auth" element={<Layout><Auth /></Layout>} />
+        <Route path="/about" element={<Layout><AboutUs /></Layout>} />
+        <Route path="/users/:id" element={<Layout><PublicProfile /></Layout>} />
 
-                <Route
-                  path="/home"
-                  element={
-                    <ProtectedRoute allowedRoles={["customer"]}>
-                      <CustomerHome />
-                    </ProtectedRoute>
-                  }
-                />
+        <Route path="/home" element={
+          <Layout>
+            <ProtectedRoute allowedRoles={["customer"]}>
+              <CustomerHome />
+            </ProtectedRoute>
+          </Layout>
+        } />
 
-                <Route path="/auth" element={<Auth />} />
+        <Route path="/products" element={
+          <Layout>
+            <ProtectedRoute allowedRoles={["customer"]}>
+              <BrowseProducts />
+            </ProtectedRoute>
+          </Layout>
+        } />
 
-                  <Route
-                  path="/products"
-                  element={
-                    <ProtectedRoute allowedRoles={["customer"]}>
-                      <BrowseProducts />
-                    </ProtectedRoute>
-                  }
-                />
+        <Route path="/products/:id" element={
+          <Layout>
+            <ProtectedRoute allowedRoles={["customer"]}>
+              <ProductDetail />
+            </ProtectedRoute>
+          </Layout>
+        } />
 
-                <Route
-                  path="/products/:id"
-                  element={
-                    <ProtectedRoute allowedRoles={["customer"]}>
-                      <ProductDetail />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route path="/about" element={<AboutUs />} />
+        <Route path="/cart" element={
+          <Layout>
+            <ProtectedRoute allowedRoles={["customer"]}>
+              <Cart />
+            </ProtectedRoute>
+          </Layout>
+        } />
 
-                <Route
-                  path="/seller/dashboard"
-                  element={
-                    <ProtectedRoute allowedRoles={["seller"]}>
-                      <SellerDashboard />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/seller/analytics"
-                  element={
-                    <ProtectedRoute allowedRoles={["seller"]}>
-                      <SellerAnalytics />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route path="/sell-with-us" element={<SellerLanding />} />
-                <Route
-                  path="/seller/orders"
-                  element={
-                    <ProtectedRoute allowedRoles={["seller"]}>
-                      <SellerOrders />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/cart"
-                  element={
-                    <ProtectedRoute allowedRoles={["customer"]}>
-                      <Cart />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/orders"
-                  element={
-                    <ProtectedRoute allowedRoles={["customer"]}>
-                      <MyOrders />
-                    </ProtectedRoute>
-                  }
-                />
-                
-                <Route
-                  path="/order-history"
-                  element={
-                    <ProtectedRoute allowedRoles={["customer"]}>
-                      <OrderHistory />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/payment/verify"
-                  element={
-                    <ProtectedRoute allowedRoles={["customer"]}>
-                      <PaymentVerify />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/subscription"
-                  element={
-                    <ProtectedRoute allowedRoles={["seller"]}>
-                      <SubscriptionPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/subscription/verify"
-                  element={
-                    <ProtectedRoute allowedRoles={["seller"]}>
-                      <SubscriptionVerify />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/profile"
-                  element={
-                    <ProtectedRoute allowedRoles={["customer", "seller"]}>
-                      <Profile />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route path="/users/:id" element={<PublicProfile />} />
-                <Route path="*" element={<Navigate to="/" replace />} />
-              </Routes>
-              {location.pathname !== "/auth" && <Footer />}
-            </>
-          }
-        />
+        <Route path="/orders" element={
+          <Layout>
+            <ProtectedRoute allowedRoles={["customer"]}>
+              <MyOrders />
+            </ProtectedRoute>
+          </Layout>
+        } />
+
+        <Route path="/order-history" element={
+          <Layout>
+            <ProtectedRoute allowedRoles={["customer"]}>
+              <OrderHistory />
+            </ProtectedRoute>
+          </Layout>
+        } />
+
+        <Route path="/payment/verify" element={
+          <Layout>
+            <ProtectedRoute allowedRoles={["customer"]}>
+              <PaymentVerify />
+            </ProtectedRoute>
+          </Layout>
+        } />
+
+        <Route path="/sell-with-us" element={
+          <Layout>
+            <ProtectedRoute allowedRoles={["seller"]}>
+              <SellerLanding />
+            </ProtectedRoute>
+          </Layout>
+        } />
+
+        <Route path="/seller/dashboard" element={
+          <Layout>
+            <ProtectedRoute allowedRoles={["seller"]}>
+              <SellerDashboard />
+            </ProtectedRoute>
+          </Layout>
+        } />
+
+        <Route path="/seller/analytics" element={
+          <Layout>
+            <ProtectedRoute allowedRoles={["seller"]}>
+              <SellerAnalytics />
+            </ProtectedRoute>
+          </Layout>
+        } />
+
+        <Route path="/seller/orders" element={
+          <Layout>
+            <ProtectedRoute allowedRoles={["seller"]}>
+              <SellerOrders />
+            </ProtectedRoute>
+          </Layout>
+        } />
+
+        <Route path="/subscription" element={
+          <Layout>
+            <ProtectedRoute allowedRoles={["seller"]}>
+              <SubscriptionPage />
+            </ProtectedRoute>
+          </Layout>
+        } />
+
+        <Route path="/subscription/verify" element={
+          <Layout>
+            <ProtectedRoute allowedRoles={["seller"]}>
+              <SubscriptionVerify />
+            </ProtectedRoute>
+          </Layout>
+        } />
+
+        <Route path="/profile" element={
+          <Layout>
+            <ProtectedRoute allowedRoles={["customer", "seller"]}>
+              <Profile />
+            </ProtectedRoute>
+          </Layout>
+        } />
+
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>
   );

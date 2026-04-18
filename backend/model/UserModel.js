@@ -24,13 +24,11 @@ const userSchema = new mongoose.Schema(
       type: {
         type: String,
         enum: ["Point"],
-        required: false,
       },
       coordinates: {
         type: [Number],
-        default: undefined, // ← keep this on coordinates, it's valid here
       },
-      address: { type: String, default: "" },
+      address: { type: String },
     },
 
     verificationStatus: {
@@ -42,7 +40,6 @@ const userSchema = new mongoose.Schema(
     verificationNote: { type: String, default: "" },
     isVerifiedSeller: { type: Boolean, default: false },
 
-    // ── Subscription ────────────────────────────────────
     subscription: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Subscription",
@@ -57,18 +54,7 @@ const userSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-// Prevent empty storeLocation object from being saved (breaks 2dsphere index)
-userSchema.pre("save", function (next) {
-  if (
-    this.storeLocation &&
-    (!this.storeLocation.coordinates ||
-      this.storeLocation.coordinates.length !== 2)
-  ) {
-    this.storeLocation = undefined;
-  }
-  next();
-});
-
+// sparse: true skips indexing documents without valid geo data
 userSchema.index({ storeLocation: "2dsphere" }, { sparse: true });
 
 const User = mongoose.model("User", userSchema);

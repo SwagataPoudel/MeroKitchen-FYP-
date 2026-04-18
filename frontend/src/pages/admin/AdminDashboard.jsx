@@ -23,6 +23,7 @@ import {
   deleteReview,
   fetchVerificationRequests,
   updateVerificationStatus,
+  expireSellerSubscription,
 } from "../../api/adminApi";
 import "../../css/AdminDashboard.css";
 
@@ -99,6 +100,29 @@ export default function AdminDashboard() {
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ text: "", error: false });
+
+  const handleExpireSubscription = async (userId) => {
+    if (
+      !window.confirm(
+        "Are you sure you want to expire this seller's subscription? This will also remove their verified badge.",
+      )
+    )
+      return;
+    try {
+      const res = await expireSellerSubscription(userId);
+      // Refresh the user in your local state
+      setSelectedUser((prev) =>
+        prev ? { ...prev, user: res.data.user } : prev,
+      );
+      // Also update the users list if you're displaying it
+      setUsers((prev) =>
+        prev.map((u) => (u._id === userId ? res.data.user : u)),
+      );
+      alert("Subscription expired and verified badge removed.");
+    } catch (err) {
+      alert(err?.response?.data?.message || "Failed to expire subscription.");
+    }
+  };
 
   const showMsg = (text, error = false) => {
     setMessage({ text, error });
@@ -458,10 +482,14 @@ export default function AdminDashboard() {
       <aside className="adm-sidebar">
         <div className="adm-brand">
           <div className="adm-brand-header">
-          <img src="/src/assets/logo.png" alt="Mero Kitchen Logo" className="adm-logo-img" />
-          <div className="logo-text">
-            Mero <span>Kitchen</span>
-          </div>
+            <img
+              src="/src/assets/logo.png"
+              alt="Mero Kitchen Logo"
+              className="adm-logo-img"
+            />
+            <div className="logo-text">
+              Mero <span>Kitchen</span>
+            </div>
           </div>
           <div className="adm-brand-sub">Admin Panel</div>
         </div>
@@ -473,24 +501,22 @@ export default function AdminDashboard() {
               onClick={() => setActiveTab(tab)}
             >
               <span className="adm-nav-icon">
-                {tab === "Dashboard" }
-                {tab === "Users" }
-                {tab === "Orders" }
-                {tab === "Products" }
-                {tab === "Reviews" }
-                {tab === "Verifications" }
+                {tab === "Dashboard"}
+                {tab === "Users"}
+                {tab === "Orders"}
+                {tab === "Products"}
+                {tab === "Reviews"}
+                {tab === "Verifications"}
               </span>
               <span className="adm-nav-label">{tab}</span>
             </button>
           ))}
         </nav>
         <button className="adm-logout" onClick={handleLogout}>
-         
           <span>Logout</span>
         </button>
       </aside>
 
-      
       <main className="adm-main">
         <div className="adm-page-header">
           <h1>{activeTab}</h1>
@@ -505,7 +531,6 @@ export default function AdminDashboard() {
           <div className="adm-loading">Loading...</div>
         ) : (
           <>
-            
             {activeTab === "Dashboard" && stats && (
               <div>
                 <div className="adm-stats-grid">
@@ -636,7 +661,6 @@ export default function AdminDashboard() {
               </div>
             )}
 
-           
             {activeTab === "Users" && (
               <div>
                 <div className="adm-toolbar">
@@ -734,6 +758,7 @@ export default function AdminDashboard() {
                               {u.subscriptionStatus}
                             </span>
                           </td>
+
                           <td>
                             {u.role === "seller" ? (
                               <button
@@ -780,7 +805,6 @@ export default function AdminDashboard() {
                   )}
                 </div>
 
-                
                 {editingUser &&
                   (() => {
                     const u = users.find((x) => x._id === editingUser);
@@ -886,6 +910,20 @@ export default function AdminDashboard() {
                           >
                             Save Changes
                           </button>
+                          {(() => {
+                            const u = users.find((x) => x._id === editingUser);
+                            return u?.role === "seller" &&
+                              u?.subscriptionStatus === "active" ? (
+                              <button
+                                className="adm-btn danger"
+                                onClick={() =>
+                                  handleExpireSubscription(editingUser)
+                                }
+                              >
+                                Expire Subscription
+                              </button>
+                            ) : null;
+                          })()}
                           <button
                             className="adm-btn danger"
                             onClick={() => setEditingUser(null)}
@@ -897,7 +935,6 @@ export default function AdminDashboard() {
                     );
                   })()}
 
-                
                 {selectedUser && (
                   <Modal onClose={() => setSelectedUser(null)}>
                     <h2
@@ -1031,7 +1068,6 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            
             {activeTab === "Orders" && (
               <div>
                 <div className="adm-toolbar">
@@ -1090,7 +1126,6 @@ export default function AdminDashboard() {
                   </span>
                 </div>
 
-                
                 {selectedOrderIds.length > 0 && (
                   <div
                     style={{
@@ -1256,7 +1291,6 @@ export default function AdminDashboard() {
                   )}
                 </div>
 
-                
                 {selectedOrder && (
                   <Modal onClose={() => setSelectedOrder(null)}>
                     <h2
@@ -1388,7 +1422,6 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            
             {activeTab === "Products" && (
               <div>
                 <div className="adm-toolbar">
@@ -1490,7 +1523,6 @@ export default function AdminDashboard() {
                   )}
                 </div>
 
-                
                 {editingProduct && (
                   <Modal onClose={() => setEditingProduct(null)}>
                     <h2
@@ -1666,7 +1698,6 @@ export default function AdminDashboard() {
                   </Modal>
                 )}
 
-                
                 {selectedProduct && (
                   <Modal onClose={() => setSelectedProduct(null)}>
                     <h2
@@ -1799,7 +1830,6 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            
             {activeTab === "Reviews" && (
               <div>
                 <div className="adm-toolbar">
@@ -1889,7 +1919,6 @@ export default function AdminDashboard() {
               </div>
             )}
 
-           
             {activeTab === "Verifications" && (
               <div>
                 <div className="adm-toolbar">
