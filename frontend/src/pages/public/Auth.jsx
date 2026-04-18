@@ -54,7 +54,6 @@ const Auth = () => {
   });
   const [storeCoords, setStoreCoords] = useState(null);
   const [locationAddress, setLocationAddress] = useState("");
-  const [mapReady, setMapReady] = useState(false);
   const [message, setMessage] = useState({ text: "", type: "" });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -64,10 +63,27 @@ const Auth = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (
+      !isLogin &&
+      formData.role === "seller" &&
+      !formData.kitchenName.trim()
+    ) {
+      setMessage({ text: "Please enter your kitchen name.", type: "error" });
+      return;
+    }
+
+    if (!isLogin && formData.role === "seller" && !storeCoords) {
+      setMessage({
+        text: "Please pick your store location on the map.",
+        type: "error",
+      });
+      return;
+    }
+
     setLoading(true);
     const endpoint = isLogin ? "/users/login" : "/users/create";
 
-    // Build payload with storeLocation for sellers
     const payload = { ...formData };
     if (!isLogin && formData.role === "seller" && storeCoords) {
       payload.storeLocation = {
@@ -107,7 +123,6 @@ const Auth = () => {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        
         <div
           className="auth-card-image"
           style={{
@@ -121,7 +136,6 @@ const Auth = () => {
           </div>
         </div>
 
-      
         <div className="auth-card-form">
           <div className="auth-logo" onClick={() => navigate("/")}>
             <div className="auth-logo-icon">
@@ -160,7 +174,6 @@ const Auth = () => {
           <form onSubmit={handleSubmit}>
             {!isLogin && (
               <>
-                
                 <div className="form-row">
                   <div className="form-group">
                     <label className="form-label">Full Name</label>
@@ -180,11 +193,11 @@ const Auth = () => {
                       type="tel"
                       placeholder="e.g. 9XXXXXXXX"
                       onChange={handleChange}
+                      required
                     />
                   </div>
                 </div>
 
-                
                 <div className="form-row">
                   <div className="form-group">
                     <label className="form-label">City</label>
@@ -193,6 +206,7 @@ const Auth = () => {
                       name="city"
                       placeholder="e.g. Kathmandu"
                       onChange={handleChange}
+                      required
                     />
                   </div>
                   <div className="form-group">
@@ -217,10 +231,10 @@ const Auth = () => {
                     placeholder="••••••••"
                     onChange={handleChange}
                     required
+                    minLength={8}
                   />
                 </div>
 
-                
                 <div className="form-group">
                   <label className="form-label">I want to</label>
                   <div className="role-grid">
@@ -276,7 +290,6 @@ const Auth = () => {
                       />
                     </div>
 
-                    
                     <div className="form-group">
                       <label className="form-label">
                         Store Location{" "}
@@ -291,105 +304,83 @@ const Auth = () => {
                         </span>
                       </label>
 
-                      {!mapReady ? (
-                        <button
-                          type="button"
-                          className="form-input"
+                      {/* ✅ "Use My Current Location" button — no more "Open Map Picker" gate */}
+                      <button
+                        type="button"
+                        className="form-input"
+                        style={{
+                          cursor: "pointer",
+                          background: "#f0fdf4",
+                          border: "1.5px solid #4a9c5d",
+                          color: "#4a9c5d",
+                          textAlign: "center",
+                          fontWeight: 600,
+                          marginBottom: "8px",
+                        }}
+                        onClick={() => {
+                          if (!navigator.geolocation) {
+                            alert(
+                              "Geolocation is not supported by your browser.",
+                            );
+                            return;
+                          }
+                          navigator.geolocation.getCurrentPosition(
+                            (pos) =>
+                              setStoreCoords({
+                                lat: pos.coords.latitude,
+                                lng: pos.coords.longitude,
+                              }),
+                            () =>
+                              alert(
+                                "Unable to retrieve your location. Please pin it manually.",
+                              ),
+                          );
+                        }}
+                      >
+                        Use My Current Location
+                      </button>
+
+                      <MapContainer
+                        center={[27.7172, 85.324]}
+                        zoom={13}
+                        style={{
+                          height: "220px",
+                          width: "100%",
+                          borderRadius: "10px",
+                          marginBottom: "8px",
+                          zIndex: 0,
+                        }}
+                      >
+                        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                        <LocationPicker onPick={setStoreCoords} />
+                        {storeCoords && (
+                          <>
+                            <Marker
+                              position={[storeCoords.lat, storeCoords.lng]}
+                            />
+                            <FlyToLocation coords={storeCoords} />
+                          </>
+                        )}
+                      </MapContainer>
+
+                      <input
+                        className="form-input"
+                        placeholder="Address label (e.g. Baneshwor, Kathmandu)"
+                        value={locationAddress}
+                        onChange={(e) => setLocationAddress(e.target.value)}
+                      />
+
+                      {storeCoords && (
+                        <div
                           style={{
-                            cursor: "pointer",
-                            background: "#fff7ed",
-                            border: "1.5px dashed #e07b39",
-                            color: "#e07b39",
-                            textAlign: "center",
-                            fontWeight: 600,
+                            fontSize: "0.78rem",
+                            color: "#4a9c5d",
+                            marginTop: "4px",
                           }}
-                          onClick={() => setMapReady(true)}
                         >
-                           Open Map Picker
-                        </button>
-                      ) : (
-                        <>
-                        
-                          <button
-                            type="button"
-                            className="form-input"
-                            style={{
-                              cursor: "pointer",
-                              background: "#f0fdf4",
-                              border: "1.5px solid #4a9c5d",
-                              color: "#4a9c5d",
-                              textAlign: "center",
-                              fontWeight: 600,
-                              marginBottom: "8px",
-                            }}
-                            onClick={() => {
-                              if (!navigator.geolocation) {
-                                alert(
-                                  "Geolocation is not supported by your browser.",
-                                );
-                                return;
-                              }
-                              navigator.geolocation.getCurrentPosition(
-                                (pos) => {
-                                  const coords = {
-                                    lat: pos.coords.latitude,
-                                    lng: pos.coords.longitude,
-                                  };
-                                  setStoreCoords(coords);
-                                },
-                                () =>
-                                  alert(
-                                    "Unable to retrieve your location. Please pin it manually.",
-                                  ),
-                              );
-                            }}
-                          >
-                             Use My Current Location
-                          </button>
-
-                          <MapContainer
-                            center={[27.7172, 85.324]}
-                            zoom={13}
-                            style={{
-                              height: "220px",
-                              width: "100%",
-                              borderRadius: "10px",
-                              marginBottom: "8px",
-                              zIndex: 0,
-                            }}
-                          >
-                            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                            <LocationPicker onPick={setStoreCoords} />
-                            {storeCoords && (
-                              <>
-                                <Marker
-                                  position={[storeCoords.lat, storeCoords.lng]}
-                                />
-                                <FlyToLocation coords={storeCoords} />
-                              </>
-                            )}
-                          </MapContainer>
-
-                          <input
-                            className="form-input"
-                            placeholder="Address label (e.g. Baneshwor, Kathmandu)"
-                            value={locationAddress}
-                            onChange={(e) => setLocationAddress(e.target.value)}
-                          />
-
-                          {storeCoords && (
-                            <div
-                              style={{
-                                fontSize: "0.78rem",
-                                color: "#4a9c5d",
-                                marginTop: "4px",
-                              }}
-                            >
-                              ✅ Pinned: {storeCoords.lat.toFixed(5)},{" "}
-                              {storeCoords.lng.toFixed(5)}
-                            </div>
-                          )}
-                        </>
+                          ✅ Pinned: {storeCoords.lat.toFixed(5)},{" "}
+                          {storeCoords.lng.toFixed(5)}
+                        </div>
                       )}
                     </div>
                   </>

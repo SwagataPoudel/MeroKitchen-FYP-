@@ -20,21 +20,19 @@ const userSchema = new mongoose.Schema(
     openingHours: { type: String, default: "" },
     isAvailable: { type: Boolean, default: true },
 
-    // ── Store Location (Seller) ──────────────────────────
     storeLocation: {
       type: {
         type: String,
         enum: ["Point"],
-        default: "Point",
+        required: false,
       },
       coordinates: {
-        type: [Number], // [longitude, latitude]
-        default: undefined,
+        type: [Number],
+        default: undefined, // ← keep this on coordinates, it's valid here
       },
       address: { type: String, default: "" },
     },
 
-    // ── Verification ────────────────────────────────────
     verificationStatus: {
       type: String,
       enum: ["none", "pending", "approved", "rejected"],
@@ -56,10 +54,22 @@ const userSchema = new mongoose.Schema(
       default: "none",
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-userSchema.index({ storeLocation: "2dsphere" });
+// Prevent empty storeLocation object from being saved (breaks 2dsphere index)
+userSchema.pre("save", function (next) {
+  if (
+    this.storeLocation &&
+    (!this.storeLocation.coordinates ||
+      this.storeLocation.coordinates.length !== 2)
+  ) {
+    this.storeLocation = undefined;
+  }
+  next();
+});
+
+userSchema.index({ storeLocation: "2dsphere" }, { sparse: true });
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;

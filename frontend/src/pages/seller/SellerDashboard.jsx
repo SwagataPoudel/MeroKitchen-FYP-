@@ -94,6 +94,27 @@ export default function SellerDashboard() {
   };
 
   const handleSubmit = async () => {
+    // Client-side validation
+    if (!form.name.trim()) {
+      setMessage({ text: "Dish name is required.", type: "error" });
+      return;
+    }
+    if (!form.price || isNaN(form.price) || Number(form.price) <= 0) {
+      setMessage({ text: "Price must be a positive number.", type: "error" });
+      return;
+    }
+    if (
+      !form.preparationTime ||
+      isNaN(form.preparationTime) ||
+      Number(form.preparationTime) <= 0
+    ) {
+      setMessage({
+        text: "Preparation time must be a positive number.",
+        type: "error",
+      });
+      return;
+    }
+
     setLoading(true);
     try {
       const data = new FormData();

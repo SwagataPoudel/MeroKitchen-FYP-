@@ -74,4 +74,15 @@ async function getProductReviewsController(req, res) {
   }
 }
 
-module.exports = { submitReviewController, getProductReviewsController };
+async function getMyReviewsController(req, res) {
+  try {
+    const reviews = await Review.find({ customer: req.user.id })
+      .select("product order");  // only need these two fields
+
+    res.status(200).json({ reviews });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
+  }
+}
+
+module.exports = { submitReviewController, getProductReviewsController, getMyReviewsController };

@@ -18,11 +18,16 @@
   --radius-sm: 10px;
   --radius-md: 16px;
   --radius-lg: 22px;
-  --shadow-card: 0 2px 12px rgba(30, 18, 8, 0.06), 0 1px 3px rgba(30, 18, 8, 0.04);
+  --shadow-card:
+    0 2px 12px rgba(30, 18, 8, 0.06), 0 1px 3px rgba(30, 18, 8, 0.04);
   --transition: 0.2s ease;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 body {
   background: var(--cream);
@@ -63,6 +68,27 @@ body {
   color: var(--gold);
 }
 
+.delivered-btn {
+  padding: 8px 22px;
+  background: var(--warm-dark);
+  color: #fdf5e8;
+  border: none;
+  border-radius: 50px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    transform var(--transition);
+}
+.delivered-btn:hover {
+  background: var(--spice);
+  transform: translateY(-1px);
+}
+
 /* ── Body ── */
 .history-body {
   max-width: 900px;
@@ -87,7 +113,9 @@ body {
   padding: 0;
   transition: color var(--transition);
 }
-.history-back-btn:hover { color: var(--spice); }
+.history-back-btn:hover {
+  color: var(--spice);
+}
 
 /* ── Summary bar ── */
 .history-summary {
@@ -274,7 +302,9 @@ body {
   font-weight: 600;
   letter-spacing: 0.04em;
   cursor: pointer;
-  transition: background var(--transition), color var(--transition);
+  transition:
+    background var(--transition),
+    color var(--transition);
 }
 .history-review-btn:hover:not(:disabled) {
   background: var(--gold);
@@ -313,7 +343,9 @@ body {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background var(--transition), transform var(--transition);
+  transition:
+    background var(--transition),
+    transform var(--transition);
 }
 .history-browse-btn:hover {
   background: var(--spice);
@@ -334,8 +366,12 @@ body {
   animation: fadeIn 0.2s ease;
 }
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 .history-modal-box {
   background: var(--cream);
@@ -349,8 +385,14 @@ body {
   animation: slideUp 0.22s ease;
 }
 @keyframes slideUp {
-  from { transform: translateY(18px); opacity: 0; }
-  to   { transform: translateY(0);    opacity: 1; }
+  from {
+    transform: translateY(18px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 .history-modal-close {
   position: absolute;
@@ -364,7 +406,9 @@ body {
   line-height: 1;
   transition: color var(--transition);
 }
-.history-modal-close:hover { color: var(--warm-dark); }
+.history-modal-close:hover {
+  color: var(--warm-dark);
+}
 .history-modal-label {
   font-size: 0.68rem;
   font-weight: 700;
@@ -393,12 +437,18 @@ body {
   font-size: 2rem;
   color: #ddd0bb;
   cursor: pointer;
-  transition: color var(--transition), transform 0.15s;
+  transition:
+    color var(--transition),
+    transform 0.15s;
   padding: 0;
   line-height: 1;
 }
-.history-star-btn.filled { color: var(--gold); }
-.history-star-btn:hover { transform: scale(1.15); }
+.history-star-btn.filled {
+  color: var(--gold);
+}
+.history-star-btn:hover {
+  transform: scale(1.15);
+}
 .history-star-label {
   font-size: 0.82rem;
   font-weight: 500;
@@ -421,15 +471,23 @@ body {
   margin-bottom: 14px;
   line-height: 1.6;
 }
-.history-review-textarea:focus { border-color: var(--spice); }
-.history-review-textarea::placeholder { color: var(--muted-light); }
+.history-review-textarea:focus {
+  border-color: var(--spice);
+}
+.history-review-textarea::placeholder {
+  color: var(--muted-light);
+}
 .history-review-msg {
   font-size: 0.83rem;
   font-weight: 600;
   margin-bottom: 12px;
 }
-.history-review-msg.success { color: var(--success); }
-.history-review-msg.error   { color: #991b1b; }
+.history-review-msg.success {
+  color: var(--success);
+}
+.history-review-msg.error {
+  color: #991b1b;
+}
 .history-submit-btn {
   width: 100%;
   padding: 13px;
@@ -443,7 +501,9 @@ body {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background var(--transition), transform var(--transition);
+  transition:
+    background var(--transition),
+    transform var(--transition);
 }
 .history-submit-btn:hover:not(:disabled) {
   background: var(--spice);
@@ -457,10 +517,18 @@ body {
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
-  .history-hero { padding: 92px 24px 40px; }
-  .history-body { padding: 28px 18px 60px; }
-  .history-card { padding: 22px 20px; }
-  .history-modal-box { padding: 32px 24px; }
+  .history-hero {
+    padding: 92px 24px 40px;
+  }
+  .history-body {
+    padding: 28px 18px 60px;
+  }
+  .history-card {
+    padding: 22px 20px;
+  }
+  .history-modal-box {
+    padding: 32px 24px;
+  }
 }
 
 .history-delivered-badge.declined {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getMyOrders, markDelivered, cancelOrder } from "../../api/orderApi";
+import { getMyOrders, cancelOrder } from "../../api/orderApi";
 import { submitReview } from "../../api/reviewApi";
 import { useNavigate } from "react-router-dom";
 import "../../css/MyOrders.css";
@@ -35,31 +35,22 @@ export default function MyOrders() {
   const [cancellingId, setCancellingId] = useState(null);
   const navigate = useNavigate();
 
-const fetchOrders = () => {
-  getMyOrders()
-    .then((res) =>
-      setOrders(
-        res.data.orders.filter((o) =>
-          ["pending", "accepted", "preparing"].includes(o.status),
+  const fetchOrders = () => {
+    getMyOrders()
+      .then((res) =>
+        setOrders(
+          res.data.orders.filter((o) =>
+            ["pending", "accepted", "preparing"].includes(o.status),
+          ),
         ),
-      ),
-    )
-    .catch(console.error)
-    .finally(() => setLoading(false));
-};
+      )
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  };
 
   useEffect(() => {
     fetchOrders();
   }, []);
-
-  const handleMarkDelivered = async (orderId) => {
-    try {
-      await markDelivered(orderId);
-      fetchOrders();
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   const handleCancelOrder = async (orderId) => {
     if (!window.confirm("Are you sure you want to cancel this order?")) return;
@@ -244,15 +235,6 @@ const fetchOrders = () => {
                       <div className="order-address">
                         {order.deliveryAddress}
                       </div>
-
-                      {order.status === "completed" && (
-                        <button
-                          className="delivered-btn"
-                          onClick={() => handleMarkDelivered(order._id)}
-                        >
-                          Mark as Delivered
-                        </button>
-                      )}
 
                       {order.status === "delivered" && (
                         <div className="review-items">

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { getOrderHistory } from "../../api/orderApi";
+import { getMyReviews } from "../../api/reviewApi";
 import { submitReview } from "../../api/reviewApi";
 import { useNavigate } from "react-router-dom";
+import { getOrderHistory, markDelivered } from "../../api/orderApi";
 import "../../css/OrderHistory.css";
 
 export default function OrderHistory() {
@@ -17,19 +18,23 @@ export default function OrderHistory() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getOrderHistory()
-      .then((res) =>
-        setOrders(
-          res.data.orders.filter((o) =>
-            ["completed", "declined", "delivered", "cancelled"].includes(
-              o.status,
-            ),
+    Promise.all([getOrderHistory(), getMyReviews()])
+      .then(([ordersRes, reviewsRes]) => {
+        const filtered = ordersRes.data.orders.filter((o) =>
+          ["completed", "declined", "delivered", "cancelled"].includes(
+            o.status,
           ),
-        ),
-      )
+        );
+        setOrders(filtered);
+
+        const alreadyReviewed = new Set(
+          reviewsRes.data.reviews.map((r) => `${r.order}_${r.product}`),
+        );
+        setReviewedSet(alreadyReviewed);
+      })
       .catch(console.error)
       .finally(() => setLoading(false));
-  }, []); // ← empty dep array = runs once on mount
+  }, []);
 
   const openReviewModal = (orderId, productId, productName) => {
     setReviewModal({ orderId, productId, productName });
@@ -63,6 +68,27 @@ export default function OrderHistory() {
       setReviewMsg(err.response?.data?.message || "Failed to submit review.");
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const handleMarkDelivered = async (orderId) => {
+    try {
+      await markDelivered(orderId);
+      // Re-fetch orders after marking delivered
+      const [ordersRes, reviewsRes] = await Promise.all([
+        getOrderHistory(),
+        getMyReviews(),
+      ]);
+      const filtered = ordersRes.data.orders.filter((o) =>
+        ["completed", "declined", "delivered", "cancelled"].includes(o.status),
+      );
+      setOrders(filtered);
+      const alreadyReviewed = new Set(
+        reviewsRes.data.reviews.map((r) => `${r.order}_${r.product}`),
+      );
+      setReviewedSet(alreadyReviewed);
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -197,7 +223,14 @@ export default function OrderHistory() {
                     <div className="history-address">
                       {order.deliveryAddress}
                     </div>
-                    {/* Review buttons - only allow reviews for delivered/completed orders */}
+                    {order.status === "completed" && (
+                      <button
+                        className="delivered-btn"
+                        onClick={() => handleMarkDelivered(order._id)}
+                      >
+                        Mark as Delivered
+                      </button>
+                    )}
                     <div className="history-review-items">
                       {order.status === "declined" ||
                       order.status === "cancelled" ? (

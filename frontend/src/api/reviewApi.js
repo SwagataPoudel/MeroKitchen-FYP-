@@ -9,3 +9,4 @@ API.interceptors.request.use((req) => {
 
 export const submitReview = (data) => API.post("/reviews", data);
 export const getProductReviews = (productId) => API.get(`/reviews/product/${productId}`);
+export const getMyReviews = () => API.get("/reviews/my-reviews");
