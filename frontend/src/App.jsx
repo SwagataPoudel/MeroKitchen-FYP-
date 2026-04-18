@@ -25,9 +25,16 @@ import SubscriptionVerify from "./pages/payment/SubscriptionVerify";
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const token = localStorage.getItem("token");
   const role = localStorage.getItem("role");
+
   if (!token) return <Navigate to="/auth" replace />;
-  if (allowedRoles && !allowedRoles.includes(role))
+
+  if (allowedRoles && !allowedRoles.includes(role)) {
+    if (role === "customer") return <Navigate to="/home" replace />;
+    if (role === "seller") return <Navigate to="/sell-with-us" replace />;
+    if (role === "admin") return <Navigate to="/admin" replace />;
     return <Navigate to="/" replace />;
+  }
+
   return children;
 };
 
@@ -38,7 +45,7 @@ const SmartHome = () => {
 
   if (token && location.pathname === "/") {
     if (role === "customer") return <Navigate to="/home" replace />;
-    if (role === "seller") return <Navigate to="/seller_with_us" replace />; 
+    if (role === "seller") return <Navigate to="/sell-with-us" replace />;
     if (role === "admin") return <Navigate to="/admin" replace />;
   }
 
@@ -79,8 +86,24 @@ function App() {
                 />
 
                 <Route path="/auth" element={<Auth />} />
-                <Route path="/products" element={<BrowseProducts />} />
-                <Route path="/products/:id" element={<ProductDetail />} />
+
+                  <Route
+                  path="/products"
+                  element={
+                    <ProtectedRoute allowedRoles={["customer"]}>
+                      <BrowseProducts />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route
+                  path="/products/:id"
+                  element={
+                    <ProtectedRoute allowedRoles={["customer"]}>
+                      <ProductDetail />
+                    </ProtectedRoute>
+                  }
+                />
                 <Route path="/about" element={<AboutUs />} />
 
                 <Route
