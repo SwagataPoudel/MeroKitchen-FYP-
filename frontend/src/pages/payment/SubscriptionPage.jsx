@@ -36,7 +36,7 @@ export default function SubscriptionPage() {
         { plan: selectedPlan },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      // Redirect to Khalti payment page
+      
       window.location.href = res.data.payment_url;
     } catch (err) {
       setError(err.response?.data?.message || "Failed to initiate payment.");
@@ -47,7 +47,7 @@ export default function SubscriptionPage() {
   return (
     <div className="auth-page profile-page sub-page">
       <div className="auth-card profile-card sub-card">
-        {/* Logo */}
+       
         <div className="auth-logo" onClick={() => navigate("/")}>
           <div className="auth-logo-icon">
             <img src={logoImg} alt="Mero Kitchen" />

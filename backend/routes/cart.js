@@ -10,8 +10,7 @@ const {
 const { validateTokenMiddleware } = require("../middleware/AuthMiddleware");
 const { customerOnlyMiddleware } = require("../middleware/RoleMiddleware");
 
-router.use(validateTokenMiddleware, customerOnlyMiddleware); // all cart routes: customers only
-
+router.use(validateTokenMiddleware, customerOnlyMiddleware); 
 router.get("/", getCartController);
 router.post("/add", addToCartController);
 router.put("/update", updateCartItemController);

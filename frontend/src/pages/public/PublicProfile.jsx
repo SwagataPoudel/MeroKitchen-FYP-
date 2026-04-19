@@ -48,7 +48,6 @@ export default function PublicProfile() {
             <h1 className="pub-name">
               {isSeller ? user.kitchenName || user.name : user.name}
             </h1>
-            {/* ── Verified Badge ── */}
             {isSeller && user.isVerifiedSeller && (
               <span className="verified-badge" title="Verified Homemade Seller">
                 ✅ Verified Homemade
@@ -72,8 +71,6 @@ export default function PublicProfile() {
           )}
         </div>
       </div>
-
-      {/* Stats Row */}
       <div className="pub-stats">
         {isSeller ? (
           <>
@@ -91,7 +88,7 @@ export default function PublicProfile() {
               </div>
               <div className="pub-stat-label">Avg Rating</div>
             </div>
-            {/* ── Verified stat pill ── */}
+          
             {user.isVerifiedSeller && (
               <div className="pub-stat">
                
@@ -122,7 +119,6 @@ export default function PublicProfile() {
         )}
       </div>
 
-      {/* Seller: About + Cuisine */}
       {isSeller && (
         <div className="pub-section">
           {user.kitchenDescription && (
@@ -146,7 +142,6 @@ export default function PublicProfile() {
         </div>
       )}
 
-      {/* Customer: Basic info */}
       {!isSeller && (
         <div className="pub-section">
           <h2 className="pub-section-title">About</h2>
@@ -162,7 +157,6 @@ export default function PublicProfile() {
         </div>
       )}
 
-      {/* Seller: Products */}
       {isSeller && products?.length > 0 && (
         <div className="pub-section">
           <h2 className="pub-section-title">Menu ({products.length})</h2>
@@ -200,7 +194,6 @@ export default function PublicProfile() {
         </div>
       )}
 
-      {/* Seller: Reviews */}
       {isSeller && reviews?.length > 0 && (
         <div className="pub-section">
           <h2 className="pub-section-title">Customer Reviews</h2>

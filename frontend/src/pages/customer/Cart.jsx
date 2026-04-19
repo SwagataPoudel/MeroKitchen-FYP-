@@ -55,7 +55,6 @@ export default function Cart() {
       });
 
       if (paymentMethod === "khalti" && res.data.payment_url) {
-        // Redirect to Khalti payment page
         window.location.href = res.data.payment_url;
       } else {
         setMessage({ text: "Order placed successfully! 🎉", type: "success" });

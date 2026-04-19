@@ -20,12 +20,10 @@ router.get("/", (req, res) =>
   res.json({ message: "User Controller is working" }),
 );
 
-// Public
 router.post("/create", createUserController);
 router.post("/login", loginHandleController);
 router.get("/:id/public", getPublicProfileController);
 
-// Protected
 router.get("/profile", validateTokenMiddleware, getProfileController);
 router.put("/profile", validateTokenMiddleware, updateProfileController);
 router.put(
@@ -35,7 +33,6 @@ router.put(
   updateProfilePhotoController,
 );
 
-// ── NEW: Seller submits verification docs ───────────────────
 router.post(
   "/verify/submit",
   validateTokenMiddleware,

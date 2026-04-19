@@ -14,7 +14,6 @@ import "../../css/Auth.css";
 import loginImg from "../../assets/login.jpg";
 import logoImg from "../../assets/logo.png";
 
-// Fix Leaflet marker icon bug with Vite
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl:
@@ -23,7 +22,6 @@ L.Icon.Default.mergeOptions({
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
 
-// Click-to-pin handler inside map
 function LocationPicker({ onPick }) {
   useMapEvents({
     click(e) {
@@ -304,7 +302,6 @@ const Auth = () => {
                         </span>
                       </label>
 
-                      {/* ✅ "Use My Current Location" button — no more "Open Map Picker" gate */}
                       <button
                         type="button"
                         className="form-input"
@@ -388,7 +385,6 @@ const Auth = () => {
               </>
             )}
 
-            {/* Login fields */}
             {isLogin && (
               <>
                 <div className="form-group">

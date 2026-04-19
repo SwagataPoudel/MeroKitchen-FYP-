@@ -33,7 +33,6 @@ export default function SellerAnalytics() {
 
   return (
     <div className="sa-page">
-      {/* ── HERO ── */}
       <div className="sa-hero">
         <div className="sa-hero-inner">
           <div>
@@ -44,8 +43,7 @@ export default function SellerAnalytics() {
            Manage Listings
           </button>
         </div>
-
-        {/* Section nav */}
+]
         <div className="sa-nav">
           {[
             { key: "overview",  label: "Overview" },
@@ -71,7 +69,7 @@ export default function SellerAnalytics() {
           <p className="sa-loading">Could not load data. Please refresh.</p>
         ) : (
           <>
-            {/* ══ OVERVIEW ══ */}
+   
             {activeSection === "overview" && (
               <>
                 <div className="sa-stat-grid">
@@ -129,7 +127,6 @@ export default function SellerAnalytics() {
                   </div>
                 </div>
 
-                {/* Quick links */}
                 <div className="sa-quick-links">
                   <div className="sa-quick-card" onClick={() => navigate("/seller/orders")}>
                     
@@ -159,11 +156,10 @@ export default function SellerAnalytics() {
               </>
             )}
 
-            {/* ══ REVENUE ══ */}
             {activeSection === "revenue" && (
               <>
                 <div className="sa-two-col">
-                  {/* Monthly chart */}
+                
                   <div className="sa-panel">
                     <div className="sa-panel-title">Monthly Revenue — Last 6 Months</div>
                     <div className="sa-bar-chart">
@@ -186,7 +182,6 @@ export default function SellerAnalytics() {
                     </div>
                   </div>
 
-                  {/* Revenue summary */}
                   <div className="sa-panel">
                     <div className="sa-panel-title">Revenue Summary</div>
                     <div className="sa-rev-summary">
@@ -226,11 +221,10 @@ export default function SellerAnalytics() {
               </>
             )}
 
-            {/* ══ ORDERS ══ */}
             {activeSection === "orders" && (
               <>
                 <div className="sa-two-col">
-                  {/* Status breakdown */}
+        
                   <div className="sa-panel">
                     <div className="sa-panel-title">Orders by Status</div>
                     <div className="sa-status-list">
@@ -263,7 +257,6 @@ export default function SellerAnalytics() {
                     </div>
                   </div>
 
-                  {/* Order stats */}
                   <div className="sa-panel">
                     <div className="sa-panel-title">Order Insights</div>
                     <div className="sa-rev-summary">
@@ -300,7 +293,6 @@ export default function SellerAnalytics() {
                   </div>
                 </div>
 
-                {/* Recent orders table */}
                 <div className="sa-panel" style={{ marginTop: "24px" }}>
                   <div className="sa-panel-title">Recent Orders</div>
                   {stats.recentOrders.length === 0 ? (
@@ -349,7 +341,6 @@ export default function SellerAnalytics() {
               </>
             )}
 
-            {/* ══ REVIEWS ══ */}
             {activeSection === "reviews" && (
               <>
                 <div className="sa-review-hero">

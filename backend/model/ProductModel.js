@@ -26,11 +26,11 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     preparationTime: {
-      type: Number, // in minutes
+      type: Number, 
       required: true,
     },
     photos: {
-      type: [String], // array of file paths/URLs
+      type: [String], 
       default: [],
     },
     availability: {

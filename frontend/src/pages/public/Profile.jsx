@@ -38,7 +38,6 @@ export default function Profile() {
   const [photoFile, setPhotoFile] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
 
-  // ── Verification state ──────────────────────────────────
   const [verificationStatus, setVerificationStatus] = useState("none");
   const [verificationNote, setVerificationNote] = useState("");
   const [verifyDocs, setVerifyDocs] = useState([]);
@@ -68,7 +67,7 @@ export default function Profile() {
         });
         if (u.profilePhoto)
           setPhotoPreview(`http://localhost:3000${u.profilePhoto}`);
-        // load verification info
+    
         setVerificationStatus(u.verificationStatus || "none");
         setVerificationNote(u.verificationNote || "");
         setSubscriptionStatus(u.subscriptionStatus || "none");
@@ -121,8 +120,6 @@ export default function Profile() {
       setSaving(false);
     }
   };
-
-  // ── Submit verification docs ────────────────────────────
   const handleVerifySubmit = async () => {
     if (verifyDocs.length === 0)
       return setVerifyMessage({
@@ -164,7 +161,6 @@ export default function Profile() {
       </div>
     );
 
-  // ── Verification UI helper ──────────────────────────────
   const renderVerificationSection = () => {
     const hasSubscription = subscriptionStatus === "active";
     const docStatus = verificationStatus;
@@ -173,7 +169,6 @@ export default function Profile() {
 
     return (
       <div className="verify-upload-box">
-        {/* Dual checklist */}
         <div className="verify-checklist">
           <div className="verify-check-item">
             {statusIcon(hasSubscription)}{" "}
@@ -203,7 +198,7 @@ export default function Profile() {
           </div>
         </div>
 
-        {/* Both complete */}
+       
         {hasSubscription && docStatus === "approved" && (
           <div
             className="verify-status-box verify-approved"
@@ -217,7 +212,6 @@ export default function Profile() {
           </div>
         )}
 
-        {/* Docs approved but no subscription */}
         {!hasSubscription && docStatus === "approved" && (
           <div
             className="verify-status-box verify-pending"
@@ -240,7 +234,7 @@ export default function Profile() {
           </div>
         )}
 
-        {/* Subscribed but docs pending */}
+        
         {hasSubscription && docStatus === "pending" && (
           <div
             className="verify-status-box verify-pending"
@@ -254,7 +248,7 @@ export default function Profile() {
           </div>
         )}
 
-        {/* Rejection note */}
+        
         {docStatus === "rejected" && (
           <div
             className="verify-status-box verify-rejected"
@@ -270,7 +264,7 @@ export default function Profile() {
           </div>
         )}
 
-        {/* Upload form — show if not yet submitted or rejected */}
+        
         {(docStatus === "none" || docStatus === "rejected") &&
           renderUploadForm()}
       </div>
@@ -319,7 +313,7 @@ export default function Profile() {
   return (
     <div className="auth-page profile-page">
       <div className="auth-card profile-card">
-        {/* Logo */}
+        
         <div className="auth-logo" onClick={() => navigate("/")}>
           <div className="auth-logo-icon">
             <img src={logoImg} alt="Mero Kitchen" />
@@ -344,7 +338,7 @@ export default function Profile() {
           </div>
         )}
 
-        {/* Profile Photo */}
+       
         <div className="profile-photo-section">
           <div className="profile-avatar">
             {photoPreview ? (
@@ -405,7 +399,7 @@ export default function Profile() {
             />
           </div>
 
-          {/* ── Customer Fields ── */}
+          
           {role === "customer" && (
             <>
               <div className="profile-section-label">Delivery</div>
@@ -422,7 +416,7 @@ export default function Profile() {
             </>
           )}
 
-          {/* ── Seller Fields ── */}
+          
           {role === "seller" && (
             <>
               <div className="profile-section-label">Kitchen Info</div>
@@ -528,7 +522,7 @@ export default function Profile() {
 </button>
         </form>
 
-        {/* ── Verification Section (sellers only) ── */}
+        
         {role === "seller" && (
           <div className="verify-section">
             <div className="profile-section-label">Verification</div>

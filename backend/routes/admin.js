@@ -41,7 +41,6 @@ router.patch("/users/:id/role", updateUserRoleController);
 router.patch("/users/:id/profile", updateUserProfileController);
 router.patch("/users/:id/availability", toggleUserAvailabilityController);
 
-// ── Orders
 router.get("/orders", getAllOrdersController);
 router.get("/orders/:id", getOrderByIdController);
 router.patch("/orders/:id/status", updateOrderStatusController);
@@ -49,18 +48,15 @@ router.patch("/orders/:id/payment-status", updateOrderPaymentStatusController);
 router.delete("/orders/:id", deleteOrderController);
 router.patch("/orders/bulk/status", bulkUpdateOrderStatusController);
 
-// ── Products
 router.get("/products", getAllProductsController);
 router.get("/products/:id", getProductByIdController);
 router.patch("/products/:id", updateProductController);
 router.delete("/products/:id", deleteProductController);
 router.patch("/products/:id/availability", toggleProductAvailabilityController);
 
-// ── Reviews
 router.get("/reviews", getAllReviewsController);
 router.delete("/reviews/:id", deleteReviewController);
 
-// ── Verifications
 router.get("/verifications", getVerificationRequestsController);
 router.patch("/verifications/:id", updateVerificationStatusController);
 router.patch("/users/:id/expire-subscription", expireSellerSubscriptionController);

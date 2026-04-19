@@ -23,7 +23,6 @@ const reviewSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// One review per customer per product per order
 reviewSchema.index({ product: 1, customer: 1, order: 1 }, { unique: true });
 
 const Review = mongoose.model("Review", reviewSchema);

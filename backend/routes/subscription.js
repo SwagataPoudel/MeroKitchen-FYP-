@@ -8,7 +8,6 @@ const {
 const { validateTokenMiddleware } = require("../middleware/AuthMiddleware");
 const { sellerOnlyMiddleware } = require("../middleware/RoleMiddleware");
 
-// All routes require auth
 router.post(
   "/initiate",
   validateTokenMiddleware,
@@ -16,7 +15,6 @@ router.post(
   initiateSubscriptionController
 );
 
-// verify-payment has no sellerOnly — Khalti redirect may not carry role context
 router.post("/verify-payment", verifySubscriptionPaymentController);
 
 router.get(

@@ -103,7 +103,7 @@ export default function MyOrders() {
   return (
     <>
       <div>
-        {/* ── Hero ── */}
+        
         <div className="orders-hero">
           <div className="orders-hero-inner">
             <div className="section-label">Active Orders</div>
@@ -113,7 +113,7 @@ export default function MyOrders() {
           </div>
         </div>
 
-        {/* ── Body ── */}
+        
         <div className="orders-body">
           <div
             style={{
@@ -176,7 +176,7 @@ export default function MyOrders() {
               const label = STATUS_LABELS[order.status] || order.status;
               return (
                 <div key={order._id} className="order-card">
-                  {/* Header */}
+                  
                   <div className="order-header">
                     <div>
                       <div className="order-id">
@@ -198,12 +198,10 @@ export default function MyOrders() {
                     </span>
                   </div>
 
-                  {/* Seller */}
                   <div className="order-seller">
                     From <strong>{order.seller?.name}</strong>
                   </div>
 
-                  {/* Items */}
                   <div className="order-items">
                     {order.items.map((item, i) => (
                       <div key={i} className="order-item">
@@ -228,7 +226,6 @@ export default function MyOrders() {
                       </div>
                     ))}
                   </div>
-
                   {/* Footer */}
                   <div className="order-footer">
                     <div>
@@ -264,7 +261,6 @@ export default function MyOrders() {
                         </div>
                       )}
 
-                      {/* ── Cancel Action ── */}
                       {["pending", "accepted", "preparing"].includes(
                         order.status,
                       ) && (
@@ -285,7 +281,6 @@ export default function MyOrders() {
                     <div className="order-total">Rs. {order.totalAmount}</div>
                   </div>
 
-                  {/* Chat with Seller */}
                   <div style={{ marginTop: "16px" }}>
                     <button
                       className="chat-seller-btn"
@@ -318,7 +313,6 @@ export default function MyOrders() {
         </div>
       </div>
 
-      {/* ── Review Modal ── */}
       {reviewModal && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>

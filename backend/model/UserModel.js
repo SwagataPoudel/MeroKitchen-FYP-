@@ -54,7 +54,6 @@ const userSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-// sparse: true skips indexing documents without valid geo data
 userSchema.index({ storeLocation: "2dsphere" }, { sparse: true });
 
 const User = mongoose.model("User", userSchema);

@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const messageSchema = new mongoose.Schema({
-  roomId: String,       // "userId1_userId2" sorted
+  roomId: String,       
   senderId: String,
-  senderRole: String,   // "customer" or "seller"
+  senderRole: String,  
   text: String,
 }, { timestamps: true });
 

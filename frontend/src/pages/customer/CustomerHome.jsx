@@ -32,7 +32,6 @@ export default function CustomerHome() {
       try {
         const res = await getAllProducts({ availability: true });
         const all = res.data.products || [];
-        // Show top 6 available products
         setFeaturedProducts(all.slice(0, 3));
       } catch (err) {
         console.error(err);
@@ -45,9 +44,9 @@ export default function CustomerHome() {
 
   return (
     <div className="ch-page">
-      {/* ── HERO WITH SLIDER ── */}
+
       <section className="ch-hero">
-        {/* CSS-only background slider — same pattern as SellerLanding */}
+
         <div className="ch-slider">
           <div className="ch-slide" style={{ backgroundImage: `url(${banner1})` }} />
           <div className="ch-slide" style={{ backgroundImage: `url(${banner2})` }} />
@@ -84,7 +83,6 @@ export default function CustomerHome() {
           </div>
       </section>
 
-      {/* ── QUICK CATEGORY SHORTCUTS ── */}
       <section className="ch-section">
         <div className="ch-section-inner">
           <div className="ch-section-header">
@@ -110,7 +108,6 @@ export default function CustomerHome() {
         </div>
       </section>
 
-      {/* ── FEATURED DISHES ── */}
       <section className="ch-section ch-section-alt">
         <div className="ch-section-inner">
           <div className="ch-section-header">
@@ -194,7 +191,6 @@ export default function CustomerHome() {
         </div>
       </section>
 
-      {/* ── QUICK ACTIONS ── */}
       <section className="ch-section">
         <div className="ch-section-inner">
           <div className="ch-section-header">
@@ -246,7 +242,6 @@ export default function CustomerHome() {
         </div>
       </section>
 
-      {/* ── TRUST STRIP ── */}
       <section className="ch-trust-strip">
         <div className="ch-trust-inner">
           <div className="ch-trust-item">

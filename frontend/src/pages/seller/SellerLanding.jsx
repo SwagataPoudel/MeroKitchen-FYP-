@@ -78,10 +78,8 @@ const SellerLanding = () => {
   return (
     <div className="sl-page">
 
-      {/* ── HERO ─────────────────────────────── */}
       <section className="sl-hero">
 
-        {/* CSS-only background slider */}
         <div className="sl-slider">
           <div className="sl-slide" style={{ backgroundImage: `url(${banner1})` }} />
           <div className="sl-slide" style={{ backgroundImage: `url(${banner2})` }} />
@@ -110,7 +108,6 @@ const SellerLanding = () => {
 
       </section>
 
-      {/* ── WHY SELL ─────────────────────────── */}
       <section className="sl-perks-section">
         <div className="sl-section-label">Why Choose Us</div>
         <h2 className="sl-section-title">Everything you need to <em>grow</em></h2>
@@ -128,7 +125,6 @@ const SellerLanding = () => {
         </div>
       </section>
 
-      {/* ── HOW IT WORKS ─────────────────────── */}
       <section className="sl-steps-section" id="how-it-works">
         <div className="sl-section-label">Simple Process</div>
         <h2 className="sl-section-title">From sign-up to <em>first order</em></h2>
@@ -148,7 +144,6 @@ const SellerLanding = () => {
         </div>
       </section>
 
-      {/* ── COMMUNITY ─────────────────────── */}
 <section className="sl-testimonials-section">
   <div className="sl-section-label">Our Community</div>
   <h2 className="sl-section-title" style={{ color: '#ce742a' }}>
@@ -188,7 +183,6 @@ const SellerLanding = () => {
   </div>
 </section>
 
-      {/* ── CTA ──────────────────────────────── */}
       <section className="sl-cta-section">
         <div className="sl-cta-inner">
           <div className="sl-section-label" style={{ color: "#fff8ef" }}>Ready to Cook?</div>

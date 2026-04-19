@@ -41,7 +41,6 @@ const orderSchema = new mongoose.Schema(
     specialRequest: { type: String, default: "" },
     deliveryAddress: { type: String, required: true },
 
-    // 👇 ADD THESE
     paymentMethod: { type: String, enum: ["cod", "khalti"], default: "cod" },
     paymentStatus: {
       type: String,

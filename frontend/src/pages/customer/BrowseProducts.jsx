@@ -6,7 +6,6 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "../../css/BrowseProducts.css";
 
-// Fix Leaflet marker icon bug with Vite
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl:
@@ -128,7 +127,6 @@ export default function BrowseProducts() {
         </div>
 
         <div className="browse-body">
-          {/* Filter Bar */}
           <div className="filter-bar">
             <label>Category</label>
             {CATEGORIES.map((c) => (
@@ -174,7 +172,6 @@ export default function BrowseProducts() {
 
             <div className="divider" />
 
-            {/* Near Me Button */}
             <button
               className={`filter-tab ${nearbyMode ? "active" : ""}`}
               onClick={handleNearMe}
@@ -219,8 +216,6 @@ export default function BrowseProducts() {
               </>
             )}
           </div>
-
-          {/* Nearby Map View */}
           {nearbyMode && showMap && userCoords && (
             <div
               style={{
@@ -265,7 +260,7 @@ export default function BrowseProducts() {
                         <br />
                         {p.name} — Rs. {p.price}
                         <br />
-                         {formatDistance(p.distanceMeters)} away
+                        {formatDistance(p.distanceMeters)} away
                       </Popup>
                     </Marker>
                   ) : null,
@@ -287,7 +282,7 @@ export default function BrowseProducts() {
                 color: "#a05c2e",
               }}
             >
-               Showing kitchens within{" "}
+              Showing kitchens within{" "}
               <strong>{formatDistance(maxDistance)}</strong> of your location —
               sorted by nearest first.
             </div>
@@ -368,7 +363,7 @@ export default function BrowseProducts() {
                             fontWeight: 600,
                           }}
                         >
-                           {formatDistance(p.distanceMeters)}
+                          {formatDistance(p.distanceMeters)}
                         </span>
                       )}
                     </div>

@@ -74,7 +74,7 @@ export default function OrderHistory() {
   const handleMarkDelivered = async (orderId) => {
     try {
       await markDelivered(orderId);
-      // Re-fetch orders after marking delivered
+
       const [ordersRes, reviewsRes] = await Promise.all([
         getOrderHistory(),
         getMyReviews(),
@@ -92,7 +92,6 @@ export default function OrderHistory() {
     }
   };
 
-  // Summary stats
   const totalSpent = orders.reduce((sum, o) => sum + o.totalAmount, 0);
   const totalItems = orders.reduce(
     (sum, o) => sum + o.items.reduce((s, i) => s + i.quantity, 0),
@@ -101,7 +100,6 @@ export default function OrderHistory() {
 
   return (
     <>
-      {/* ── Hero ── */}
       <div className="history-hero">
         <div className="history-hero-inner">
           <div className="history-section-label">Completed Orders</div>
@@ -111,7 +109,6 @@ export default function OrderHistory() {
         </div>
       </div>
 
-      {/* ── Body ── */}
       <div className="history-body">
         <button
           className="history-back-btn"
@@ -142,7 +139,6 @@ export default function OrderHistory() {
           </div>
         ) : (
           <>
-            {/* Summary chips */}
             <div className="history-summary">
               <div className="history-summary-chip">
                 <span className="history-summary-value">{orders.length}</span>
@@ -158,10 +154,8 @@ export default function OrderHistory() {
               </div>
             </div>
 
-            {/* Order cards */}
             {orders.map((order) => (
               <div key={order._id} className="history-card">
-                {/* Header */}
                 <div className="history-card-header">
                   <div>
                     <div className="history-order-id">
@@ -186,12 +180,10 @@ export default function OrderHistory() {
                   </span>
                 </div>
 
-                {/* Seller */}
                 <div className="history-seller">
                   From <strong>{order.seller?.name}</strong>
                 </div>
 
-                {/* Items */}
                 <div className="history-items">
                   {order.items.map((item, i) => (
                     <div key={i} className="history-item">
@@ -217,7 +209,6 @@ export default function OrderHistory() {
                   ))}
                 </div>
 
-                {/* Footer */}
                 <div className="history-card-footer">
                   <div>
                     <div className="history-address">
@@ -274,7 +265,6 @@ export default function OrderHistory() {
         )}
       </div>
 
-      {/* ── Review Modal ── */}
       {reviewModal && (
         <div className="history-modal-overlay" onClick={closeModal}>
           <div

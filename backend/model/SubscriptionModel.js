@@ -12,7 +12,7 @@ const subscriptionSchema = new mongoose.Schema(
       enum: ["basic"],
       required: true,
     },
-    amount: { type: Number, required: true }, // in paisa (Khalti)
+    amount: { type: Number, required: true }, 
     status: {
       type: String,
       enum: ["pending_payment", "active", "expired", "failed"],

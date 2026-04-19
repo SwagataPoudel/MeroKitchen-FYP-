@@ -15,7 +15,6 @@ const makeStorage = (folder) =>
     },
   });
 
-// Images only (jpeg, jpg, png, webp) — for products and profiles
 const imageFilter = (req, file, cb) => {
   const allowedTypes = /jpeg|jpg|png|webp/;
   const isValid = allowedTypes.test(path.extname(file.originalname).toLowerCase());
@@ -23,7 +22,6 @@ const imageFilter = (req, file, cb) => {
   else cb(new Error("Only image files are allowed (jpeg, jpg, png, webp)"));
 };
 
-// Images + PDF — for verification documents
 const docFilter = (req, file, cb) => {
   const allowedTypes = /jpeg|jpg|png|webp|pdf/;
   const isValid = allowedTypes.test(path.extname(file.originalname).toLowerCase());
@@ -43,15 +41,13 @@ const uploadProfile = multer({
   fileFilter: imageFilter,
 });
 
-// NEW: for seller verification documents
 const uploadVerification = multer({
   storage: makeStorage("verification"),
   limits: { fileSize: 10 * 1024 * 1024, files: 5 },
   fileFilter: docFilter,
 });
 
-// Keep default export so existing product routes don't break
 module.exports = uploadProduct;
 module.exports.uploadProduct = uploadProduct;
 module.exports.uploadProfile = uploadProfile;
-module.exports.uploadVerification = uploadVerification; // NEW
+module.exports.uploadVerification = uploadVerification; 

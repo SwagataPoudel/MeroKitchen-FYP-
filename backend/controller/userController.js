@@ -30,7 +30,6 @@ async function createUserController(req, res) {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Only include storeLocation if coordinates are fully valid
     const hasValidLocation =
       storeLocation?.coordinates?.length === 2 &&
       storeLocation.coordinates.every((c) => typeof c === "number");
@@ -139,7 +138,6 @@ async function updateProfileController(req, res) {
       if (req.body[field] !== undefined) updates[field] = req.body[field];
     }
 
-    // Validate storeLocation — only set if coordinates are fully valid
     if (updates.storeLocation !== undefined) {
       const loc = updates.storeLocation;
       const hasValidLocation =
@@ -153,7 +151,7 @@ async function updateProfileController(req, res) {
           address: loc.address || "",
         };
       } else {
-        // Remove invalid storeLocation instead of saving a partial object
+
         delete updates.storeLocation;
         unsets.storeLocation = "";
       }

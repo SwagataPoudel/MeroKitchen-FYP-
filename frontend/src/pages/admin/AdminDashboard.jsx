@@ -110,11 +110,11 @@ export default function AdminDashboard() {
       return;
     try {
       const res = await expireSellerSubscription(userId);
-      // Refresh the user in your local state
+    
       setSelectedUser((prev) =>
         prev ? { ...prev, user: res.data.user } : prev,
       );
-      // Also update the users list if you're displaying it
+   
       setUsers((prev) =>
         prev.map((u) => (u._id === userId ? res.data.user : u)),
       );

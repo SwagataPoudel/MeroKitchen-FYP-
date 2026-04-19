@@ -194,8 +194,6 @@ export default function SellerDashboard() {
             {message.text}
           </div>
         )}
-
-        {/* Form */}
         {showForm && (
           <div className="form-panel">
             <h3>{editingId ? "Update Listing" : "New Food Listing"}</h3>

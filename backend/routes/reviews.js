@@ -7,7 +7,7 @@ const { customerOnlyMiddleware } = require("../middleware/RoleMiddleware");
 
 router.post("/", validateTokenMiddleware, customerOnlyMiddleware, submitReviewController);
 
-router.get("/my-reviews", validateTokenMiddleware, customerOnlyMiddleware, getMyReviewsController); // add before :productId route
+router.get("/my-reviews", validateTokenMiddleware, customerOnlyMiddleware, getMyReviewsController); 
 router.get("/product/:productId", getProductReviewsController);
 
 module.exports = router;
