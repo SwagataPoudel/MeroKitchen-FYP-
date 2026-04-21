@@ -272,7 +272,6 @@ body {
   color: #b8956a;
 }
 
-/* ── Listing Actions ── */
 .listing-actions {
   display: flex;
   flex-direction: column;
@@ -339,7 +338,6 @@ body {
   border-color: #dc2626;
 }
 
-/* ── Cuisine chips in form ── */
 .cuisine-chips {
   display: flex;
   flex-wrap: wrap;
@@ -368,7 +366,6 @@ body {
   color: #fff;
 }
 
-/* ── Cuisine tags on listing card ── */
 .listing-cuisines {
   display: flex;
   flex-wrap: wrap;
@@ -385,7 +382,6 @@ body {
   border: 1px solid rgba(200, 117, 58, 0.2);
 }
 
-/* ── Responsive ── */
 @media (max-width: 768px) {
   .dash-hero {
     padding: 100px 24px 40px;

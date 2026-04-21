@@ -73,7 +73,7 @@
   flex-direction: column;
   justify-content: center;
 }
-/* ── Logo ────────────────────────────────────────────────── */
+
 .auth-logo {
   display: flex;
   align-items: center;
@@ -113,7 +113,6 @@
   font-style: italic;
 }
 
-/* ── Headings ────────────────────────────────────────────── */
 .auth-heading {
   font-family: "Playfair Display", serif;
   font-size: 2rem;
@@ -136,7 +135,6 @@
   line-height: 1.6;
 }
 
-/* ── Form ────────────────────────────────────────────────── */
 .form-group {
   margin-bottom: 16px;
 }
@@ -176,7 +174,6 @@
   color: #c4a882;
 }
 
-/* ── Role Selector ───────────────────────────────────────── */
 .role-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -226,7 +223,6 @@
   font-size: 1.5rem;
 }
 
-/* ── Submit Button ───────────────────────────────────────── */
 .submit-btn {
   width: 100%;
   padding: 15px;
@@ -257,7 +253,6 @@
   transform: none;
 }
 
-/* ── Divider ─────────────────────────────────────────────── */
 .divider {
   display: flex;
   align-items: center;
@@ -276,7 +271,6 @@
   background: rgba(45, 26, 14, 0.1);
 }
 
-/* ── Switch ──────────────────────────────────────────────── */
 .auth-switch {
   text-align: center;
   margin-top: 20px;
@@ -301,7 +295,6 @@
   color: var(--warm-dark);
 }
 
-/* ── Messages ────────────────────────────────────────────── */
 .msg-banner {
   padding: 12px 18px;
   border-radius: 10px;

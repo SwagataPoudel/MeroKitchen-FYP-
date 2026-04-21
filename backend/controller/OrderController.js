@@ -191,7 +191,7 @@ async function updateOrderStatusController(req, res) {
     await order.save();
     res.status(200).json({ message: "Order status updated", order });
   } catch (error) {
-    console.error("updateOrderStatus error:", error.message); // ← will show exact cause
+    console.error("updateOrderStatus error:", error.message); 
     res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 }

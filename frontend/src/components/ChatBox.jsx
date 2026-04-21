@@ -28,9 +28,7 @@ export default function ChatBox({ currentUserId, currentUserRole, otherUserId, r
     };
   }, [roomId]);
 
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+
 
   const sendMessage = () => {
     if (!input.trim()) return;

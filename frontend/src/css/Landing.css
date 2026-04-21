@@ -178,7 +178,6 @@ body {
   border-radius: inherit;
 }
 
-/* ── SECTION SHARED ──────────────────────── */
 section {
   padding: 100px 80px;
 }
@@ -212,7 +211,6 @@ section {
   max-width: 520px;
 }
 
-/* ── ABOUT ───────────────────────────────── */
 .about-section {
   background-color: #ce742a;
   display: grid;
@@ -284,7 +282,6 @@ section {
   flex-shrink: 0;
 }
 
-/* ── MENU ────────────────────────────────── */
 .menu-section {
   padding-top: 80px;
   position: relative;
@@ -330,7 +327,6 @@ section {
   color: var(--cream);
 }
 
-/* ── MENU MOSAIC ─────────────────────────── */
 .menu-mosaic {
   display: grid;
   grid-template-columns: 2fr 1.2fr 1fr;
@@ -338,7 +334,6 @@ section {
   gap: 12px;
 }
 
-/* Row 1 */
 .mosaic-large {
   grid-column: 1 / 2;
   grid-row: 1 / 2;
@@ -346,7 +341,7 @@ section {
 
 .mosaic-tall {
   grid-column: 2 / 3;
-  grid-row: 1 / 3; /* spans 2 rows */
+  grid-row: 1 / 3; 
 }
 
 .mosaic-cell:nth-child(3) {
@@ -354,18 +349,16 @@ section {
   grid-row: 1 / 2;
 }
 
-/* Row 2 */
 .mosaic-cell:nth-child(4) {
   grid-column: 1 / 2;
   grid-row: 2 / 3;
 }
 
-.mosaic-cell:nth-child(5) { /* wide */
+.mosaic-cell:nth-child(5) { 
   grid-column: 3 / 4;
   grid-row: 2 / 3;
 }
 
-/* Row 3 — bottom strip */
 .mosaic-cell:nth-child(6) {
   grid-column: 1 / 2;
   grid-row: 3 / 4;
@@ -381,7 +374,6 @@ section {
   grid-row: 3 / 4;
 }
 
-/* Mosaic cell base */
 .mosaic-cell {
   position: relative;
   border-radius: 16px;
@@ -401,7 +393,6 @@ section {
   transform: scale(1.06);
 }
 
-/* Overlay */
 .mosaic-overlay {
   position: absolute;
   inset: 0;
@@ -433,7 +424,7 @@ section {
   );
 }
 
-/* Tag */
+
 .mosaic-tag {
   align-self: flex-start;
   padding: 4px 12px;
@@ -445,7 +436,6 @@ section {
   text-transform: uppercase;
 }
 
-/* Info block at bottom */
 .mosaic-info {
   display: flex;
   flex-direction: column;
@@ -478,7 +468,6 @@ section {
   color: var(--gold);
 }
 
-/* Wide card with description */
 .mosaic-info--wide {
   display: flex;
   flex-direction: column;
@@ -520,7 +509,6 @@ section {
   transform: scale(1.1);
 }
 
-/* ── HOW IT WORKS ────────────────────────── */
 .how-section {
   background: #221710;
   color: #fff8ef;
@@ -601,7 +589,6 @@ section {
   line-height: 1.65;
 }
 
-/* ── REVIEWS ─────────────────────────────── */
 .reviews-section { background: var(--section-bg); }
 
 .reviews-header {
@@ -685,7 +672,6 @@ section {
   color: var(--muted);
 }
 
-/* ── CTA ─────────────────────────────────── */
 .cta-section {
   background: #ce742a;
   text-align: center;
@@ -756,7 +742,7 @@ section {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.5);
 }
-/* TEAM GRID */
+
 .au-team-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -764,7 +750,6 @@ section {
   margin-top: 40px;
 }
 
-/* TEAM CARD */
 .au-team-card {
   background: #fff;
   border-radius: 20px;
@@ -779,7 +764,6 @@ section {
   box-shadow: 0 12px 35px rgba(0,0,0,0.1);
 }
 
-/* IMAGE AVATAR */
 .au-team-avatar {
   width: 200px;
   height: 200px;
@@ -795,8 +779,6 @@ section {
   object-fit: cover;
 }
 
-
-/* TEXT */
 .au-team-card h3 {
   margin: 10px 0 5px;
   font-size: 1.2rem;
@@ -815,7 +797,6 @@ section {
   line-height: 1.5;
 }
 
-/* ── RESPONSIVE ──────────────────────────── */
 @media (max-width: 1024px) {
   section { padding: 80px 40px; }
   .hero { padding: 120px 40px 80px; gap: 40px; }

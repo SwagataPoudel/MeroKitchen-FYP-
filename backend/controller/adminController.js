@@ -4,8 +4,6 @@ const Product = require("../model/ProductModel");
 const Review = require("../model/ReviewModel");
 const Subscription = require("../model/SubscriptionModel");
 
-// ─── USERS ───────────────────────────────────────────────
-
 async function getAllUsersController(req, res) {
   try {
     const { role, verificationStatus, subscriptionStatus, search } = req.query;
@@ -34,8 +32,6 @@ async function getAllUsersController(req, res) {
   }
 }
 
-// ─── SUBSCRIPTIONS ────────────────────────────────────────
-
 async function expireSellerSubscriptionController(req, res) {
   try {
     const user = await User.findById(req.params.id);
@@ -43,20 +39,18 @@ async function expireSellerSubscriptionController(req, res) {
     if (user.role !== "seller")
       return res.status(400).json({ message: "User is not a seller" });
 
-    // Mark the linked subscription record as expired (if one exists)
     if (user.subscription) {
       await Subscription.findByIdAndUpdate(user.subscription, {
         status: "expired",
       });
     }
 
-    // Update user: expired subscription + strip verified badge
     const updated = await User.findByIdAndUpdate(
       req.params.id,
       {
         $set: {
           subscriptionStatus: "expired",
-          isVerifiedSeller: false, // remove the verified badge
+          isVerifiedSeller: false, 
         },
       },
       { new: true },
@@ -181,7 +175,6 @@ async function toggleUserAvailabilityController(req, res) {
   }
 }
 
-// ─── ORDERS ──────────────────────────────────────────────
 
 async function getAllOrdersController(req, res) {
   try {
@@ -326,8 +319,6 @@ async function bulkUpdateOrderStatusController(req, res) {
   }
 }
 
-// ─── PRODUCTS ─────────────────────────────────────────────
-
 async function getAllProductsController(req, res) {
   try {
     const { category, availability, search } = req.query;
@@ -443,8 +434,6 @@ async function toggleProductAvailabilityController(req, res) {
   }
 }
 
-// ─── REVIEWS ──────────────────────────────────────────────
-
 async function getAllReviewsController(req, res) {
   try {
     const { rating, search } = req.query;
@@ -475,7 +464,7 @@ async function deleteReviewController(req, res) {
   try {
     const review = await Review.findByIdAndDelete(req.params.id);
     if (!review) return res.status(404).json({ message: "Review not found" });
-    // Recalculate product rating
+  
     const avgResult = await Review.aggregate([
       { $match: { product: review.product } },
       { $group: { _id: null, avg: { $avg: "$rating" }, count: { $sum: 1 } } },
@@ -493,8 +482,6 @@ async function deleteReviewController(req, res) {
       .json({ message: "Internal Server Error", error: error.message });
   }
 }
-
-// ─── VERIFICATIONS ────────────────────────────────────────
 
 async function getVerificationRequestsController(req, res) {
   try {
@@ -549,8 +536,6 @@ async function updateVerificationStatusController(req, res) {
       .json({ message: "Internal Server Error", error: error.message });
   }
 }
-
-// ─── DASHBOARD STATS ──────────────────────────────────────
 
 async function getDashboardStatsController(req, res) {
   try {
@@ -660,34 +645,34 @@ async function getDashboardStatsController(req, res) {
 }
 
 module.exports = {
-  // Users
+  
   getAllUsersController,
   getUserByIdController,
   deleteUserController,
   updateUserRoleController,
   updateUserProfileController,
   toggleUserAvailabilityController,
-  // Orders
+
   getAllOrdersController,
   getOrderByIdController,
   updateOrderStatusController,
   updateOrderPaymentStatusController,
   deleteOrderController,
   bulkUpdateOrderStatusController,
-  // Products
+  
   getAllProductsController,
   getProductByIdController,
   updateProductController,
   deleteProductController,
   toggleProductAvailabilityController,
-  // Reviews
+  
   getAllReviewsController,
   deleteReviewController,
-  // Verifications
+  
   getVerificationRequestsController,
   updateVerificationStatusController,
-  // Dashboard
+  
   getDashboardStatsController,
-  // Subscriptions
+  
 expireSellerSubscriptionController,
 };

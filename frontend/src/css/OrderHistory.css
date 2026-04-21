@@ -89,7 +89,6 @@ body {
   transform: translateY(-1px);
 }
 
-/* ── Body ── */
 .history-body {
   max-width: 900px;
   margin: 0 auto;
@@ -117,7 +116,6 @@ body {
   color: var(--spice);
 }
 
-/* ── Summary bar ── */
 .history-summary {
   display: flex;
   gap: 16px;
@@ -150,7 +148,6 @@ body {
   color: var(--muted-light);
 }
 
-/* ── Order Card ── */
 .history-card {
   background: var(--white);
   border-radius: var(--radius-lg);
@@ -208,7 +205,6 @@ body {
   font-weight: 600;
 }
 
-/* ── Items ── */
 .history-items {
   display: flex;
   flex-direction: column;
@@ -261,7 +257,6 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-/* ── Footer ── */
 .history-card-footer {
   display: flex;
   justify-content: space-between;
@@ -284,7 +279,6 @@ body {
   letter-spacing: -0.01em;
 }
 
-/* ── Review tags ── */
 .history-review-items {
   display: flex;
   flex-wrap: wrap;
@@ -318,7 +312,6 @@ body {
   cursor: default;
 }
 
-/* ── Empty state ── */
 .history-empty {
   text-align: center;
   padding: 80px 20px;
@@ -352,7 +345,6 @@ body {
   transform: translateY(-1px);
 }
 
-/* ── Modal ── */
 .history-modal-overlay {
   position: fixed;
   inset: 0;
@@ -515,7 +507,6 @@ body {
   transform: none;
 }
 
-/* ── Responsive ── */
 @media (max-width: 768px) {
   .history-hero {
     padding: 92px 24px 40px;

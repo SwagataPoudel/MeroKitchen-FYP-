@@ -30,7 +30,6 @@ const values = [
   },
 ];
 
-// ✅ Updated team with images
 const team = [
   {
     name: "Swagata Poudel",
@@ -72,7 +71,7 @@ const milestones = [
 const AboutUs = () => {
   return (
     <main className="about-page">
-      {/* HERO */}
+    
       <section className="au-hero">
         <div className="au-hero-image">
           <img src={img1} alt="Our kitchen" />
@@ -119,7 +118,6 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* STORY */}
       <section className="au-story">
         <div className="au-story-text">
           <div className="au-label">Our Story</div>
@@ -148,7 +146,6 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* VALUES */}
       <section className="au-values">
         <div className="au-label" style={{ textAlign: "center" }}>
           What We Stand For
@@ -168,7 +165,6 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* TEAM */}
       <section className="au-team">
         <div className="au-team-header">
           <div className="au-label">The People Behind the Food</div>
@@ -180,7 +176,7 @@ const AboutUs = () => {
         <div className="au-team-grid">
           {team.map((t) => (
             <div key={t.name} className="au-team-card">
-              {/* ✅ IMAGE INSTEAD OF INITIAL */}
+             
               <div className="au-team-avatar">
                 <img src={t.image} alt={t.name} />
               </div>
@@ -193,7 +189,6 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="au-cta">
         <div className="au-cta-image">
           <img src={hero1} alt="Our food" />

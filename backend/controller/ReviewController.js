@@ -2,7 +2,6 @@ const Review = require("../model/ReviewModel");
 const Product = require("../model/ProductModel");
 const Order = require("../model/OrderModel");
 
-// POST /reviews — customer submits a review
 async function submitReviewController(req, res) {
   try {
     const { productId, orderId, rating, comment } = req.body;
@@ -12,7 +11,6 @@ async function submitReviewController(req, res) {
         .status(400)
         .json({ message: "productId, orderId and rating are required" });
 
-    // Verify order belongs to customer and is delivered
     const order = await Order.findById(orderId);
     if (!order) return res.status(404).json({ message: "Order not found" });
     if (order.customer.toString() !== req.user.id)
@@ -22,14 +20,21 @@ async function submitReviewController(req, res) {
         .status(400)
         .json({ message: "Order must be delivered before reviewing" });
 
-    // Check product is actually in the order
     const inOrder = order.items.some((i) => i.product.toString() === productId);
     if (!inOrder)
       return res
         .status(400)
         .json({ message: "Product not part of this order" });
 
-    // Create review (unique index prevents duplicates)
+    const existingReview = await Review.findOne({
+      product: productId,
+      customer: req.user.id,
+    });
+    if (existingReview)
+      return res.status(400).json({
+        message: "You have already reviewed this product",
+      });
+
     const review = new Review({
       product: productId,
       customer: req.user.id,
@@ -39,7 +44,6 @@ async function submitReviewController(req, res) {
     });
     await review.save();
 
-    // Recalculate product average rating
     const allReviews = await Review.find({ product: productId });
     const avg =
       allReviews.reduce((sum, r) => sum + r.rating, 0) / allReviews.length;
@@ -53,14 +57,13 @@ async function submitReviewController(req, res) {
     if (error.code === 11000)
       return res
         .status(400)
-        .json({ message: "You already reviewed this product for this order" });
+        .json({ message: "You have already reviewed this product" });
     res
       .status(500)
       .json({ message: "Internal Server Error", error: error.message });
   }
 }
 
-// GET /reviews/product/:productId — get all reviews for a product
 async function getProductReviewsController(req, res) {
   try {
     const reviews = await Review.find({ product: req.params.productId })
@@ -76,13 +79,20 @@ async function getProductReviewsController(req, res) {
 
 async function getMyReviewsController(req, res) {
   try {
-    const reviews = await Review.find({ customer: req.user.id })
-      .select("product order");  // only need these two fields
+    const reviews = await Review.find({ customer: req.user.id }).select(
+      "product order",
+    );
 
     res.status(200).json({ reviews });
   } catch (error) {
-    res.status(500).json({ message: "Internal Server Error", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Internal Server Error", error: error.message });
   }
 }
 
-module.exports = { submitReviewController, getProductReviewsController, getMyReviewsController };
+module.exports = {
+  submitReviewController,
+  getProductReviewsController,
+  getMyReviewsController,
+};

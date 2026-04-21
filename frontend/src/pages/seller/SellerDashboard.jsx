@@ -42,7 +42,7 @@ export default function SellerDashboard() {
   const [form, setForm] = useState(emptyForm);
   const [photos, setPhotos] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  const [editingId, setEditingId] = useState(null); // null = create, id = update
+  const [editingId, setEditingId] = useState(null); 
   const [message, setMessage] = useState({ text: "", type: "" });
   const [loading, setLoading] = useState(false);
 
@@ -94,7 +94,6 @@ export default function SellerDashboard() {
   };
 
   const handleSubmit = async () => {
-    // Client-side validation
     if (!form.name.trim()) {
       setMessage({ text: "Dish name is required.", type: "error" });
       return;
@@ -120,7 +119,7 @@ export default function SellerDashboard() {
       const data = new FormData();
       Object.entries(form).forEach(([k, v]) => {
         if (k === "cuisineTypes") {
-          // Send as comma-separated string so backend can parse it
+ 
           data.append(k, v.join(","));
         } else {
           data.append(k, v);
@@ -347,7 +346,6 @@ export default function SellerDashboard() {
           </div>
         )}
 
-        {/* Listings */}
         <div className="section-heading">
           Your <em>Listings</em> ({products.length})
         </div>

@@ -6,7 +6,6 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-grid">
 
-        {/* Brand */}
         <div className="footer-brand">
           <div className="logo-text">
             <img src={logoImg} alt="Mero Kitchen" className="logo-img" />
@@ -15,7 +14,6 @@ const Footer = () => {
           <p>Handcrafted meals made with love, traditional recipes, and the freshest local ingredients.</p>
         </div>
 
-        {/* Quick Links */}
         <div className="footer-col">
           <h4>Quick Links</h4>
           <ul>
@@ -25,7 +23,6 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Contact */}
         <div className="footer-col">
           <h4>Contact</h4>
           <ul>
@@ -37,7 +34,6 @@ const Footer = () => {
 
       </div>
 
-      {/* Bottom bar */}
       <div className="footer-bottom">
         <p>© {new Date().getFullYear()} Mero Kitchen. Made with <span>♥</span> in Nepal.</p>
       </div>

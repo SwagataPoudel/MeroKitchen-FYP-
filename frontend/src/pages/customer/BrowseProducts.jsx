@@ -232,19 +232,16 @@ export default function BrowseProducts() {
               >
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-                {/* Customer marker */}
                 <Marker position={[userCoords.lat, userCoords.lng]}>
                   <Popup> You are here</Popup>
                 </Marker>
 
-                {/* Radius circle */}
                 <Circle
                   center={[userCoords.lat, userCoords.lng]}
                   radius={maxDistance}
                   pathOptions={{ color: "#e07b39", fillOpacity: 0.08 }}
                 />
 
-                {/* Kitchen markers */}
                 {products.map((p) =>
                   p.seller?.storeLocation?.coordinates?.length === 2 ? (
                     <Marker
@@ -269,7 +266,6 @@ export default function BrowseProducts() {
             </div>
           )}
 
-          {/* Nearby mode info banner */}
           {nearbyMode && (
             <div
               style={{
@@ -288,7 +284,6 @@ export default function BrowseProducts() {
             </div>
           )}
 
-          {/* Grid */}
           {loading ? (
             <p className="loading-text"> Loading delicious food...</p>
           ) : products.length === 0 ? (
@@ -351,7 +346,7 @@ export default function BrowseProducts() {
                       >
                         {p.availability ? "Available" : "Unavailable"}
                       </span>
-                      {/* Distance badge */}
+  
                       {nearbyMode && p.distanceMeters != null && (
                         <span
                           style={{

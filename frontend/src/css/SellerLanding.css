@@ -16,7 +16,6 @@
   overflow-x: hidden;
 }
 
-/* ── SHARED ──────────────────────────────── */
 .sl-section-label {
   font-size: 0.75rem;
   letter-spacing: 0.2em;
@@ -49,7 +48,6 @@
   margin-right: auto;
 }
 
-/* ── HERO ────────────────────────────────── */
 .sl-hero {
   min-height: 100vh;
   padding: 140px 80px 100px;
@@ -68,12 +66,11 @@
   height: 100%;
   overflow: hidden;
   z-index: 0;
-  background-size: cover;    /* fills entire area (default) */
-  background-size: contain;  /* fits whole image, may leave gaps */
-  background-size: 90%;      /* custom percentage */
-  background-position: center top; /* shift focal point */
+  background-size: cover;    
+  background-size: contain;  
+  background-size: 90%;     
+  background-position: center top; 
 }
-
 
 .sl-slide {
   position: absolute;
@@ -222,7 +219,6 @@
   margin-top: 4px;
 }
 
-/* ── PERKS ───────────────────────────────── */
 .sl-perks-section {
   padding: 100px 80px;
   background: #ce742a;
@@ -281,7 +277,6 @@
   line-height: 1.65;
 }
 
-/* ── HOW IT WORKS ────────────────────────── */
 .sl-steps-section {
   padding: 100px 80px;
   background: #221710;
@@ -362,7 +357,6 @@
   line-height: 1.65;
 }
 
-/* ── TESTIMONIALS ────────────────────────── */
 .sl-testimonials-section {
   padding: 100px 80px;
   background: var(--cream);
@@ -454,7 +448,6 @@
   color: var(--muted);
 }
 
-/* ── CTA ─────────────────────────────────── */
 .sl-cta-section {
   padding: 100px 80px;
   background: #ce742a;
@@ -528,7 +521,6 @@
   border-color: rgba(255, 255, 255, 0.6);
 }
 
-/* ── RESPONSIVE ──────────────────────────── */
 @media (max-width: 1024px) {
   .sl-hero { padding: 120px 40px 80px; gap: 40px; }
   .sl-perks-grid { grid-template-columns: repeat(2, 1fr); }

@@ -89,7 +89,6 @@ async function getNearbyProductsController(req, res) {
       .populate("seller", "name email kitchenName storeLocation isVerifiedSeller")
       .sort({ createdAt: -1 });
 
-    // Haversine distance for each seller
     const sellerDistanceMap = {};
     nearbySellers.forEach((s) => {
       const [sLng, sLat] = s.storeLocation.coordinates;

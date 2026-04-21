@@ -151,7 +151,6 @@ body { background: var(--cream); font-family: "Lato", sans-serif; }
 .action-btn.decline { background: #fee2e2; color: #991b1b; }
 .action-btn.decline:hover { background: #991b1b; color: #fff; }
 
-/* Chat */
 .order-chat-wrapper {
   width: 100%;
   padding-top: 14px;
@@ -184,7 +183,6 @@ body { background: var(--cream); font-family: "Lato", sans-serif; }
   border: 1px solid rgba(45, 26, 14, 0.08);
 }
 
-/* Empty state */
 .empty-state { text-align: center; padding: 80px 20px; }
 .empty-state p {
   font-family: "Playfair Display", serif;

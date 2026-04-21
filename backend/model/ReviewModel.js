@@ -18,12 +18,11 @@ const reviewSchema = new mongoose.Schema(
       required: true,
     },
     rating: { type: Number, required: true, min: 1, max: 5 },
-    comment: { type: String, default: "", trim: true },
+    comment: { type: String, default: "" },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-reviewSchema.index({ product: 1, customer: 1, order: 1 }, { unique: true });
+reviewSchema.index({ customer: true, product: true }, { unique: true });
 
-const Review = mongoose.model("Review", reviewSchema);
-module.exports = Review;
+module.exports = mongoose.model("Review", reviewSchema);

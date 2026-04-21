@@ -89,7 +89,6 @@ export default function PaymentVerify() {
         textAlign: "center",
       }}>
 
-        {/* Icon circle */}
         <div style={{
           width: "72px",
           height: "72px",
@@ -106,7 +105,6 @@ export default function PaymentVerify() {
           {s.icon}
         </div>
 
-        {/* Status badge */}
         <div style={{
           display: "inline-block",
           background: s.badgeBg,
@@ -122,7 +120,6 @@ export default function PaymentVerify() {
           {s.badgeText}
         </div>
 
-        {/* Heading */}
         <h1 style={{
           fontFamily: "'Playfair Display', serif",
           fontSize: "1.55rem",
@@ -134,7 +131,6 @@ export default function PaymentVerify() {
           {s.heading}
         </h1>
 
-        {/* Subtitle */}
         <p style={{
           fontSize: "0.95rem",
           color: "#7a5c40",
@@ -144,7 +140,6 @@ export default function PaymentVerify() {
           {s.sub}
         </p>
 
-        {/* Progress bar — only on verifying */}
         {status === "verifying" && (
           <div style={{
             height: "3px",
@@ -163,7 +158,6 @@ export default function PaymentVerify() {
           </div>
         )}
 
-        {/* Redirect note — only on success */}
         {status === "success" && (
           <p style={{
             fontSize: "0.8rem",
@@ -174,7 +168,6 @@ export default function PaymentVerify() {
           </p>
         )}
 
-        {/* Buttons */}
         <div style={{ display: "flex", gap: "10px", justifyContent: "center", flexWrap: "wrap" }}>
           {status === "success" && (
             <button

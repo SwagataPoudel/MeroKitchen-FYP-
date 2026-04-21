@@ -1,7 +1,6 @@
 const Cart = require("../model/CartModel");
 const Product = require("../model/ProductModel");
 
-// GET /cart — get current customer's cart
 async function getCartController(req, res) {
   try {
     const cart = await Cart.findOne({ customer: req.user.id }).populate(
@@ -17,7 +16,6 @@ async function getCartController(req, res) {
   }
 }
 
-// POST /cart/add — add item to cart
 async function addToCartController(req, res) {
   try {
     const { productId, quantity = 1 } = req.body;
@@ -30,13 +28,13 @@ async function addToCartController(req, res) {
     let cart = await Cart.findOne({ customer: req.user.id });
 
     if (!cart) {
-      // create new cart
+  
       cart = new Cart({
         customer: req.user.id,
         items: [{ product: productId, quantity }],
       });
     } else {
-      // check if item already exists
+      
       const existingItem = cart.items.find(
         (i) => i.product.toString() === productId,
       );
@@ -56,7 +54,6 @@ async function addToCartController(req, res) {
   }
 }
 
-// PUT /cart/update — update item quantity
 async function updateCartItemController(req, res) {
   try {
     const { productId, quantity } = req.body;
@@ -79,7 +76,6 @@ async function updateCartItemController(req, res) {
   }
 }
 
-// DELETE /cart/remove/:productId — remove item from cart
 async function removeFromCartController(req, res) {
   try {
     const cart = await Cart.findOne({ customer: req.user.id });
@@ -97,7 +93,6 @@ async function removeFromCartController(req, res) {
   }
 }
 
-// DELETE /cart/clear — clear entire cart
 async function clearCartController(req, res) {
   try {
     await Cart.findOneAndDelete({ customer: req.user.id });

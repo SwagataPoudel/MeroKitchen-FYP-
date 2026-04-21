@@ -5,12 +5,10 @@ export default function ScrollToTop() {
   const { pathname } = useLocation();
   const [visible, setVisible] = useState(false);
 
-  // Scroll to top on route change
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
-  // Show/hide button based on scroll position
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > 300);
     window.addEventListener("scroll", onScroll);

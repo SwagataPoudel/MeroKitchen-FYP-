@@ -4,9 +4,7 @@ const User = require("../model/UserModel");
 
 // Plan definitions
 const PLANS = {
-  basic: { amount: 49900, label: "Basic Plan", durationDays: 30 }, // Rs. 499
-  standard: { amount: 99900, label: "Standard Plan", durationDays: 30 }, // Rs. 999
-  premium: { amount: 199900, label: "Premium Plan", durationDays: 30 }, // Rs. 1999
+  basic: { amount: 49900, label: "Basic Plan", durationDays: 30 },
 };
 
 // Step 1: Seller initiates subscription payment

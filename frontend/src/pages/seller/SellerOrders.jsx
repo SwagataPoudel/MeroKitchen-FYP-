@@ -66,7 +66,12 @@ export default function SellerOrders() {
         <div className="orders-body">
           <SellerChatRequests />
           {loading ? (
-            <p style={{ fontFamily: "Playfair Display, serif", color: "var(--muted)" }}>
+            <p
+              style={{
+                fontFamily: "Playfair Display, serif",
+                color: "var(--muted)",
+              }}
+            >
               Loading orders...
             </p>
           ) : orders.length === 0 ? (
@@ -121,60 +126,71 @@ export default function SellerOrders() {
                         ) : (
                           <div className="order-item-placeholder"></div>
                         )}
-                        <span className="order-item-name">{item.product?.name}</span>
-                        <span className="order-item-qty">× {item.quantity}</span>
-                        <span className="order-item-price">Rs. {item.price * item.quantity}</span>
+                        <span className="order-item-name">
+                          {item.product?.name}
+                        </span>
+                        <span className="order-item-qty">
+                          × {item.quantity}
+                        </span>
+                        <span className="order-item-price">
+                          Rs. {item.price * item.quantity}
+                        </span>
                       </div>
                     ))}
                   </div>
 
                   <div className="order-footer">
                     <div className="order-total">Rs. {order.totalAmount}</div>
-                    <div className="action-btns">
-                      {actions.includes("accepted") && (
-                        <button
-                          className="action-btn accept"
-                          onClick={() => handleStatus(order._id, "accepted")}
-                        >
-                          Accept
-                        </button>
-                      )}
-                      {actions.includes("preparing") && (
-                        <button
-                          className="action-btn prepare"
-                          onClick={() => handleStatus(order._id, "preparing")}
-                        >
-                          Preparing
-                        </button>
-                      )}
-                      {actions.includes("completed") && (
-                        <button
-                          className="action-btn complete"
-                          onClick={() => handleStatus(order._id, "completed")}
-                        >
-                          Complete
-                        </button>
-                      )}
-                      {actions.includes("declined") && (
-                        <button
-                          className="action-btn decline"
-                          onClick={() => handleStatus(order._id, "declined")}
-                        >
-                          Decline
-                        </button>
-                      )}
-                    </div>
+                    {actions.length > 0 && (
+                      <div className="action-btns">
+                        Action:
+                        {actions.includes("accepted") && (
+                          <button
+                            className="action-btn accept"
+                            onClick={() => handleStatus(order._id, "accepted")}
+                          >
+                            Accept
+                          </button>
+                        )}
+                        {actions.includes("preparing") && (
+                          <button
+                            className="action-btn prepare"
+                            onClick={() => handleStatus(order._id, "preparing")}
+                          >
+                            Preparing
+                          </button>
+                        )}
+                        {actions.includes("completed") && (
+                          <button
+                            className="action-btn complete"
+                            onClick={() => handleStatus(order._id, "completed")}
+                          >
+                            Complete
+                          </button>
+                        )}
+                        {actions.includes("declined") && (
+                          <button
+                            className="action-btn decline"
+                            onClick={() => handleStatus(order._id, "declined")}
+                          >
+                            Decline
+                          </button>
+                        )}
+                      </div>
+                    )}
 
                     <div className="order-chat-wrapper">
                       <button
                         className="chat-toggle-btn"
                         onClick={() =>
                           setOpenOrderChat(
-                            openOrderChat === order._id ? null : order._id
+                            openOrderChat === order._id ? null : order._id,
                           )
                         }
                       >
-                        {openOrderChat === order._id ? "Close Chat" : "Chat with Customer"}
+                        {openOrderChat === order._id
+                          ? "Close Chat"
+                          : "Chat with Customer"}
                       </button>
                       {openOrderChat === order._id && (
                         <div className="order-chatbox">

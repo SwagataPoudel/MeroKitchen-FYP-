@@ -6,7 +6,6 @@
   max-width: 600px !important;
 }
 
-/* ── Plans grid ── */
 .sub-plans-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -14,7 +13,6 @@
   margin: 32px 0 28px;
 }
 
-/* ── Plan card ── */
 .sub-plan-card {
   position: relative;
   border: 2px solid rgba(45, 26, 14, 0.12);
@@ -43,7 +41,6 @@
   border-color: #c8753a;
 }
 
-/* ── Popular badge ── */
 .sub-popular-badge {
   position: absolute;
   top: -13px;
@@ -62,7 +59,6 @@
   box-shadow: 0 4px 12px rgba(200, 117, 58, 0.3);
 }
 
-/* ── Plan name ── */
 .sub-plan-name {
   font-family: "Playfair Display", serif;
   font-size: 1.25rem;
@@ -71,7 +67,6 @@
   margin-bottom: 12px;
 }
 
-/* ── Price ── */
 .sub-plan-price {
   font-size: 2rem;
   font-weight: 800;
@@ -80,7 +75,6 @@
   line-height: 1.1;
 }
 
-/* ── Duration ── */
 .sub-plan-duration {
   font-size: 0.78rem;
   color: #999;
@@ -90,7 +84,6 @@
   letter-spacing: 0.03em;
 }
 
-/* ── Features list ── */
 .sub-plan-features {
   list-style: none;
   padding: 0;
@@ -115,7 +108,6 @@
   border-bottom: none;
 }
 
-/* ── Select indicator ── */
 .sub-plan-select-indicator {
   font-size: 0.82rem;
   font-weight: 700;
@@ -127,7 +119,6 @@
   letter-spacing: 0.04em;
 }
 
-/* ── Pay button ── */
 .sub-pay-btn {
   width: 100%;
   margin-top: 8px;
@@ -150,7 +141,6 @@
   cursor: not-allowed;
 }
 
-/* ── Security note ── */
 .sub-note {
   text-align: center;
   font-size: 0.78rem;
@@ -160,7 +150,6 @@
   line-height: 1.6;
 }
 
-/* ── Responsive ── */
 @media (max-width: 480px) {
   .sub-card {
     padding: 32px 20px !important;

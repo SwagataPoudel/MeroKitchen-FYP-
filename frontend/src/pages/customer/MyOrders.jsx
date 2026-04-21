@@ -226,7 +226,7 @@ export default function MyOrders() {
                       </div>
                     ))}
                   </div>
-                  {/* Footer */}
+             
                   <div className="order-footer">
                     <div>
                       <div className="order-address">

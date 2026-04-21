@@ -4,6 +4,7 @@ import { submitReview } from "../../api/reviewApi";
 import { useNavigate } from "react-router-dom";
 import { getOrderHistory, markDelivered } from "../../api/orderApi";
 import "../../css/OrderHistory.css";
+import ChatBox from "../../components/ChatBox";
 
 export default function OrderHistory() {
   const [orders, setOrders] = useState([]);
@@ -15,6 +16,7 @@ export default function OrderHistory() {
   const [comment, setComment] = useState("");
   const [reviewMsg, setReviewMsg] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [openOrderChat, setOpenOrderChat] = useState(null); // NEW
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -212,12 +214,13 @@ export default function OrderHistory() {
                 <div className="history-card-footer">
                   <div>
                     <div className="history-address">
-                      {order.deliveryAddress}
+                      Delivery Address: {order.deliveryAddress}
                     </div>
                     {order.status === "completed" && (
                       <button
                         className="delivered-btn"
                         onClick={() => handleMarkDelivered(order._id)}
+                        style={{ marginTop: "5px" }}
                       >
                         Mark as Delivered
                       </button>
@@ -229,6 +232,10 @@ export default function OrderHistory() {
                           {order.status === "cancelled"
                             ? "Order was cancelled"
                             : "No reviews available for declined orders"}
+                        </span>
+                      ) : order.status === "completed" && !order.isDelivered ? (
+                        <span className="history-no-review">
+                          Mark as delivered to review
                         </span>
                       ) : (
                         order.items.map((item, i) => {
@@ -259,6 +266,34 @@ export default function OrderHistory() {
                   </div>
                   <div className="history-total">Rs. {order.totalAmount}</div>
                 </div>
+
+                {["delivered", "completed"].includes(order.status) && (
+                  <div style={{ marginTop: "16px" }}>
+                    <button
+                      className="chat-seller-btn"
+                      onClick={() =>
+                        setOpenOrderChat(
+                          openOrderChat === order._id ? null : order._id,
+                        )
+                      }
+                    >
+                      {openOrderChat === order._id
+                        ? "Close Chat"
+                        : "Chat with Seller"}
+                    </button>
+
+                    {openOrderChat === order._id && (
+                      <div style={{ marginTop: "1rem" }}>
+                        <ChatBox
+                          currentUserId={localStorage.getItem("userId")}
+                          currentUserRole="customer"
+                          otherUserId={order.seller?._id}
+                          roomId={`order_${order._id}`}
+                        />
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             ))}
           </>
@@ -310,9 +345,7 @@ export default function OrderHistory() {
 
             {reviewMsg && (
               <p
-                className={`history-review-msg ${
-                  reviewMsg.includes("✓") ? "success" : "error"
-                }`}
+                className={`history-review-msg ${reviewMsg.includes("✓") ? "success" : "error"}`}
               >
                 {reviewMsg}
               </p>

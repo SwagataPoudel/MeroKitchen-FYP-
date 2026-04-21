@@ -22,7 +22,6 @@
   padding: 100px 24px 80px;
 }
 
-/* Hero */
 .pub-hero {
   display: flex;
   align-items: center;
@@ -121,7 +120,6 @@
   border: 1px solid #fecaca;
 }
 
-/* Stats */
 .pub-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -154,7 +152,6 @@
   font-weight: 700;
 }
 
-/* Sections */
 .pub-section {
   background: #fff;
   border-radius: 20px;
@@ -179,7 +176,6 @@
   line-height: 1.7;
 }
 
-/* Cuisine chips */
 .pub-chips {
   display: flex;
   flex-wrap: wrap;
@@ -198,7 +194,6 @@
   color: var(--spice);
 }
 
-/* Products grid */
 .pub-products {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -277,7 +272,6 @@
   color: var(--muted);
 }
 
-/* Reviews */
 .pub-reviews {
   display: flex;
   flex-direction: column;
@@ -389,7 +383,6 @@
   }
 }
 
-/* ── Verified Badge ──────────────────────────────────────── */
 .pub-name-row {
   display: flex;
   align-items: center;

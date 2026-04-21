@@ -79,6 +79,15 @@ const Auth = () => {
       return;
     }
 
+    const emailRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(formData.email)) {
+      setMessage({
+        text: "Please enter a valid email address.",
+        type: "error",
+      });
+      return;
+    }
+
     setLoading(true);
     const endpoint = isLogin ? "/users/login" : "/users/create";
 
@@ -216,6 +225,8 @@ const Auth = () => {
                       placeholder="you@example.com"
                       onChange={handleChange}
                       required
+                      pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
+                      title="Please enter a valid email address (e.g. you@example.com)"
                     />
                   </div>
                 </div>
@@ -396,6 +407,8 @@ const Auth = () => {
                     placeholder="you@example.com"
                     onChange={handleChange}
                     required
+                    pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
+                    title="Please enter a valid email address (e.g. you@example.com)"
                   />
                 </div>
                 <div className="form-group">

@@ -79,7 +79,6 @@ const Landing = () => {
   return (
     <>
       <main>
-        {/* ── HERO ─────────────────────────────── */}
         <section className="hero" style={{ backgroundImage: `url(${heroBg})` }}>
           <div className="hero-content">
             <h1>
@@ -112,7 +111,6 @@ const Landing = () => {
           <div className="hero-visual"></div>
         </section>
 
-        {/* ── ABOUT ────────────────────────────── */}
         <section id="about" className="about-section">
           <div className="about-visual">
             <div className="about-card">
@@ -162,8 +160,6 @@ const Landing = () => {
             </button>
           </div>
         </section>
-
-        {/* ── MENU ─────────────────────────────── */}
         <section id="menu" className="menu-section">
           <div className="menu-header">
             <div className="menu-header-left">

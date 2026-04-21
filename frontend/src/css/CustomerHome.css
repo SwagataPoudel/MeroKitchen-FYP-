@@ -15,7 +15,6 @@
   min-height: 100vh;
 }
 
-/* ── HERO ─────────────────────────────── */
 .ch-hero {
   min-height: 100vh;
   padding: 140px 80px 100px;
@@ -26,7 +25,6 @@
   overflow: hidden;
 }
 
-/* Slider */
 .ch-slider {
   position: absolute;
   inset: 0;
@@ -49,24 +47,23 @@
   image-rendering: auto;
 }
 
-/* Per-slide position tuning to show the best part of each image */
 .ch-slide:nth-child(1) {
   animation-delay: 0s;
-  background-position: center top;    /* top-down food shot — keep top */
+  background-position: center top;    
 }
 .ch-slide:nth-child(2) {
   animation-delay: 5s;
-  background-position: center center; /* dal bhat thali — centered */
+  background-position: center center; 
 }
 .ch-slide:nth-child(3) {
   animation-delay: 10s;
-  background-size: contain;           /* momo image is smaller — contain avoids stretch blur */
-  background-color: #111;             /* fill letterbox gaps with dark bg */
+  background-size: contain;           
+  background-color: #111;             
   background-position: center center;
 }
 .ch-slide:nth-child(4) {
   animation-delay: 15s;
-  background-size: contain;           /* naan image is smaller — contain avoids stretch blur */
+  background-size: contain;           
   background-color: #1a1a1a;
   background-position: center center;
 }
@@ -204,7 +201,6 @@
   background: rgba(255, 255, 255, 0.18);
 }
 
-/* ── SECTIONS ─────────────────────────── */
 .ch-section {
   padding: 72px 0;
 }
@@ -238,7 +234,6 @@
   color: white;
 }
 
-/* ── CATEGORIES ───────────────────────── */
 .ch-categories {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -275,7 +270,6 @@
   text-transform: capitalize;
 }
 
-/* ── PRODUCTS GRID ────────────────────── */
 .ch-products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -384,7 +378,6 @@
   color: var(--muted);
 }
 
-/* ── QUICK ACTIONS ────────────────────── */
 .ch-actions-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
@@ -438,7 +431,6 @@
   font-weight: 700;
 }
 
-/* ── TRUST STRIP ──────────────────────── */
 .ch-trust-strip {
   background: #ce742a;
   padding: 28px 80px;
@@ -470,7 +462,7 @@
   background: rgba(255, 248, 239, 0.18);
 }
 
-/* ── RESPONSIVE ───────────────────────── */
+
 @media (max-width: 1024px) {
   .ch-hero {
     padding: 100px 48px 56px;
