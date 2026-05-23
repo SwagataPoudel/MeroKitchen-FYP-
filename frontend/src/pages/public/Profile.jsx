@@ -402,7 +402,7 @@ export default function Profile() {
           
           {role === "customer" && (
             <>
-              <div className="profile-section-label">Delivery</div>
+            
               <div className="form-group">
                 <label className="form-label">Default Delivery Address</label>
                 <input

@@ -85,7 +85,6 @@ async function initiateSubscriptionController(req, res) {
   }
 }
 
-// Step 2: Verify payment after Khalti redirect
 async function verifySubscriptionPaymentController(req, res) {
   try {
     const { pidx } = req.body;
@@ -127,7 +126,6 @@ async function verifySubscriptionPaymentController(req, res) {
     const user = await User.findById(subscription.seller);
     const isFullyVerified = user?.verificationStatus === "approved";
 
-    // DO NOT touch verificationStatus here — only update subscription fields + badge if earned
     await User.findByIdAndUpdate(subscription.seller, {
       subscription: subscription._id,
       subscriptionStatus: "active",

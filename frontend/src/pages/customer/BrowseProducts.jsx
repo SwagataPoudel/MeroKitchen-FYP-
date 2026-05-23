@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAllProducts, getNearbyProducts } from "../../api/productApi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
@@ -25,10 +25,13 @@ const CATEGORIES = [
 ];
 
 export default function BrowseProducts() {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
-    category: "all",
+    category: searchParams.get("category") || "all",
     minPrice: "",
     maxPrice: "",
     availability: "",
@@ -39,8 +42,6 @@ export default function BrowseProducts() {
   const [locationLoading, setLocationLoading] = useState(false);
   const [maxDistance, setMaxDistance] = useState(3000);
   const [showMap, setShowMap] = useState(false);
-
-  const navigate = useNavigate();
 
   const fetchProducts = async () => {
     setLoading(true);
@@ -346,7 +347,7 @@ export default function BrowseProducts() {
                       >
                         {p.availability ? "Available" : "Unavailable"}
                       </span>
-  
+
                       {nearbyMode && p.distanceMeters != null && (
                         <span
                           style={{

@@ -16,7 +16,7 @@ export default function OrderHistory() {
   const [comment, setComment] = useState("");
   const [reviewMsg, setReviewMsg] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [openOrderChat, setOpenOrderChat] = useState(null); // NEW
+  const [openOrderChat, setOpenOrderChat] = useState(null); 
   const navigate = useNavigate();
 
   useEffect(() => {
