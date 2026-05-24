@@ -157,8 +157,13 @@ async function updateOrderStatusController(req, res) {
   try {
     const { status } = req.body;
     const validStatuses = [
-      "pending", "accepted", "preparing",
-      "completed", "declined", "delivered", "cancelled",
+      "pending",
+      "accepted",
+      "preparing",
+      "completed",
+      "declined",
+      "delivered",
+      "cancelled",
     ];
     if (!validStatuses.includes(status))
       return res.status(400).json({ message: "Invalid status" });
@@ -169,19 +174,30 @@ async function updateOrderStatusController(req, res) {
 
     if (!order) return res.status(404).json({ message: "Order not found" });
 
-    const customerId = order.customer?._id?.toString() ?? order.customer?.toString();
+    const customerId =
+      order.customer?._id?.toString() ?? order.customer?.toString();
     const sellerId = order.seller?._id?.toString() ?? order.seller?.toString();
 
     if (status === "delivered") {
       if (customerId !== req.user.id)
-        return res.status(403).json({ message: "Only the customer can mark as delivered" });
+        return res
+          .status(403)
+          .json({ message: "Only the customer can mark as delivered" });
       if (order.status !== "completed")
-        return res.status(400).json({ message: "Order must be completed before marking delivered" });
+        return res
+          .status(400)
+          .json({
+            message: "Order must be completed before marking delivered",
+          });
     } else if (status === "cancelled") {
       if (customerId !== req.user.id)
-        return res.status(403).json({ message: "Only the customer can cancel" });
+        return res
+          .status(403)
+          .json({ message: "Only the customer can cancel" });
       if (!["pending", "accepted", "preparing"].includes(order.status))
-        return res.status(400).json({ message: "Order cannot be cancelled at this stage" });
+        return res
+          .status(400)
+          .json({ message: "Order cannot be cancelled at this stage" });
     } else {
       if (sellerId !== req.user.id)
         return res.status(403).json({ message: "Not your order" });
@@ -191,8 +207,10 @@ async function updateOrderStatusController(req, res) {
     await order.save();
     res.status(200).json({ message: "Order status updated", order });
   } catch (error) {
-    console.error("updateOrderStatus error:", error.message); 
-    res.status(500).json({ message: "Internal Server Error", error: error.message });
+    console.error("updateOrderStatus error:", error.message);
+    res
+      .status(500)
+      .json({ message: "Internal Server Error", error: error.message });
   }
 }
 
@@ -290,7 +308,12 @@ async function getSellerStatsController(req, res) {
       status: o.status,
     }));
 
-    const reviews = await Review.find({ seller: sellerId })
+    const sellerProducts = await Product.find({ seller: sellerId }).select(
+      "_id",
+    );
+    const sellerProductIds = sellerProducts.map((p) => p._id);
+
+    const reviews = await Review.find({ product: { $in: sellerProductIds } })
       .populate("customer", "name")
       .populate("product", "name")
       .sort({ createdAt: -1 });
